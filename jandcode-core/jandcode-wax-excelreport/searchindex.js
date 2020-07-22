@@ -1,0 +1,1 @@
+Search.setIndex({docnames:["index"],envversion:53,filenames:["index.rst"],objects:{},objnames:{},objtypes:{},terms:{"\u0434\u043b\u044f":0,"\u043c\u043e\u0434\u0443\u043b":0,"\u043e\u0442\u0447\u0435\u0442":0,"\u0444\u043e\u0440\u043c\u0438\u0440\u043e\u0432\u0430\u043d":0,excel:0},titles:["jandcode-wax-excelreport"],titleterms:{excelreport:0,jandcode:0,wax:0}})

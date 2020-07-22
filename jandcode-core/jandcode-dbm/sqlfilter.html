@@ -1,0 +1,250 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Фильтр запросов SqlFilter &mdash; jandcode-dbm</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="top" title="jandcode-dbm" href="index.html" />
+    <link rel="next" title="Rt конфигурация" href="rtdoc.html" />
+    <link rel="prev" title="Howto: validate" href="validate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             accesskey="I">указатель</a></li>
+        <li class="right" >
+          <a href="rtdoc.html" title="Rt конфигурация"
+             accesskey="N">вперёд</a> |</li>
+        <li class="right" >
+          <a href="validate.html" title="Howto: validate"
+             accesskey="P">назад</a> |</li>
+        <li><a href="index.html">jandcode-dbm</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sqlfilter">
+<h1>Фильтр запросов SqlFilter<a class="headerlink" href="#sqlfilter" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Часто приходится писать sql, который собирается по некоторым параметрам и поддерживает
+пагинацию. Возьмем к примеру таблицу «Абоненты». Данных в ней много, нужно ее фильтровать
+при показе, показывать по странично, и еще (ко всему прочему) в заголовке окна
+показывать, какой фильтр был использован. Для решения этой задачи и предназначен
+SqlFilter.</p>
+<p>Для детального описания см:
+<code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.SqlFilter</span></code>,
+<code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.SqlFilterItem</span></code>,
+<code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.ISqlFilterBuilder</span></code></p>
+<p>Примеры реализации элементов фильтра см:
+<code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.SqlFilter_contains</span></code>,
+<code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.SqlFilter_equal</span></code>,
+<code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.SqlFilter_year</span></code></p>
+<p>Как пользоваться:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="c1">// текст на groovy</span>
+<span class="nd">@DaoMethod</span>
+<span class="n">DataStore</span> <span class="nf">loadFiltered</span><span class="o">(</span><span class="n">Map</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// создаем фильтр</span>
+    <span class="n">SqlFilter</span> <span class="n">f</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="na">createSqlFilter</span><span class="o">(</span><span class="s">&quot;Abonent.filter&quot;</span><span class="o">,</span> <span class="n">params</span><span class="o">)</span>
+    <span class="c1">// задаем базовый sql</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">sql</span> <span class="o">=</span> <span class="s">&quot;select * from Abonent where 0=0 order by id&quot;</span>
+    <span class="c1">// требуем пагинации</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">paginate</span><span class="o">(</span><span class="kc">true</span><span class="o">)</span>
+    <span class="c1">// добавляем фильтры</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">field</span><span class="o">:</span> <span class="s">&quot;name&quot;</span><span class="o">,</span> <span class="n">type</span><span class="o">:</span> <span class="s">&quot;contains&quot;</span><span class="o">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">field</span><span class="o">:</span> <span class="s">&quot;tel&quot;</span><span class="o">,</span> <span class="n">type</span><span class="o">:</span> <span class="s">&quot;equal&quot;</span><span class="o">)</span>
+    <span class="c1">// загружаем</span>
+    <span class="n">def</span> <span class="n">res</span> <span class="o">=</span> <span class="n">ut</span><span class="o">.</span><span class="na">createStore</span><span class="o">(</span><span class="s">&quot;Abonent&quot;</span><span class="o">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="na">load</span><span class="o">(</span><span class="n">res</span><span class="o">)</span>
+    <span class="c1">// все</span>
+    <span class="k">return</span> <span class="n">res</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>Метод <code class="docutils literal notranslate"><span class="pre">ut.createSqlFilter(&quot;Abonent.filter&quot;,</span> <span class="pre">params)</span></code> создает фильтр и указывает
+базовый домен и параметры.</p>
+<p>Метод <code class="docutils literal notranslate"><span class="pre">f.filter</span></code> создает элемент фильтра (описан ниже).</p>
+<div class="section" id="id1">
+<h2>Элемент фильтра<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Элемент фильтра - это средство предоставления кусочка where в sql, который основан на
+параметра, полученных от пользователя.
+Элемент фильтра наследуется от класса <code class="docutils literal notranslate"><span class="pre">jandcode.dbm.sqlfilter.SqlFilterItem</span></code>
+и ему реализуется метод <code class="docutils literal notranslate"><span class="pre">onBuild</span></code>.
+Регистрация элементов фильтра делается в модели в теге <code class="docutils literal notranslate"><span class="pre">&lt;sqlfilter/&gt;</span></code>. Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&quot;sys&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;sqlfilter</span> <span class="na">name=</span><span class="s">&quot;equal&quot;</span>
+                   <span class="na">class=</span><span class="s">&quot;jandcode.dbm.sqlfilter.SqlFilter_equal&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/model&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>В атрибуте <code class="docutils literal notranslate"><span class="pre">class</span></code> указывается класс реализатор. В случае, когда элемент фильтра для
+конкретного типа СУБД отличается, можно сделать реализацию для конкретной СУБД и
+указать ее в атрибуте <code class="docutils literal notranslate"><span class="pre">class.DBTYPE</span></code>. Например:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;model</span> <span class="na">name=</span><span class="s">&quot;sys&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;sqlfilter</span> <span class="na">name=</span><span class="s">&quot;equal&quot;</span>
+                   <span class="na">class=</span><span class="s">&quot;jandcode.dbm.sqlfilter.SqlFilter_equal&quot;</span>
+                   <span class="na">class.oracle=</span><span class="s">&quot;jandcode.dbm.sqlfilter.SqlFilter_equal_oracle&quot;</span>
+                   <span class="na">class.mysql=</span><span class="s">&quot;jandcode.dbm.sqlfilter.SqlFilter_equal_mysql&quot;</span>
+                   <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/model&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sql">
+<h2>Базовый sql<a class="headerlink" href="#sql" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Базовый sql должен содержать явно выделяемые части.</p>
+<div class="section" id="select">
+<h3>select<a class="headerlink" href="#select" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Часть текста sql между <code class="docutils literal notranslate"><span class="pre">select</span></code> и <code class="docutils literal notranslate"><span class="pre">from</span></code>. Для сложных sql,
+где и <code class="docutils literal notranslate"><span class="pre">select</span></code> и <code class="docutils literal notranslate"><span class="pre">from</span></code> может встречаться много раз, слова помечаются коментарием
+<code class="docutils literal notranslate"><span class="pre">/**/</span></code>, который ставится до слова:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+
+<span class="o">/**/</span><span class="n">select</span> <span class="o">*</span> <span class="o">/**/</span><span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span> <span class="ow">in</span> <span class="n">select</span> <span class="n">a</span> <span class="kn">from</span> <span class="nn">c</span><span class="p">)</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+</pre></div>
+</div>
+<p>Используется для подмены списка полей. Например запрос общего количества записей
+заменяет поля в select на <code class="docutils literal notranslate"><span class="pre">count(*)</span></code>, а пагинированный запрос oracle требует еще
+одно дополнительное поле в списке select.</p>
+</div>
+<div class="section" id="where">
+<h3>where<a class="headerlink" href="#where" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Место вставки условия фильтрации. Автоматически выявляется по наличию слова <code class="docutils literal notranslate"><span class="pre">where</span></code>
+в тексте запроса, после которого и вставляется условие фильтрации.
+Если в тексте sql несколько where, то нужный помечается коментарием <code class="docutils literal notranslate"><span class="pre">/**/</span></code> до where.
+В этом методе пустое условие фильтрации игнорируется, а существующее дополняется в <strong>конце</strong>
+оператором <code class="docutils literal notranslate"><span class="pre">and</span></code>.</p>
+<p>Если в тексте sql имеется несколько where, в которых нужно разместить условия
+фильтрации, то место вставки помечается коментарием <code class="docutils literal notranslate"><span class="pre">/*where:name*/</span></code>, где <code class="docutils literal notranslate"><span class="pre">name</span></code> -
+имя where, которое указывается в элементе фильтра в свойстве <code class="docutils literal notranslate"><span class="pre">whereName</span></code>.
+Коментарий <code class="docutils literal notranslate"><span class="pre">/*where*/</span></code> рассматривается как место вставки условия фильтрации
+по умолчанию.
+В этом методе пустое условие фильтрации игнорируется, а существующее дополняется в <strong>начале</strong>
+оператором <code class="docutils literal notranslate"><span class="pre">and</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="o">/**/</span><span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="o">/*</span><span class="n">where</span><span class="o">*/</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="o">/*</span><span class="n">where</span><span class="p">:</span><span class="n">default</span><span class="o">*/</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="o">/**/</span><span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="ow">and</span> <span class="p">(</span><span class="n">b</span> <span class="ow">in</span> <span class="n">select</span> <span class="n">a</span> <span class="kn">from</span> <span class="nn">c</span> <span class="n">where</span> <span class="n">c</span><span class="o">=</span><span class="mi">1</span> <span class="o">/*</span><span class="n">where</span><span class="p">:</span><span class="n">w1</span><span class="o">*/</span><span class="p">)</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="order-by">
+<h3>order by<a class="headerlink" href="#order-by" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Место вставки сортировки. Автоматически выявляется по фразе <code class="docutils literal notranslate"><span class="pre">order</span> <span class="pre">by</span></code>. Если
+в тексте sql несколько операторов order by, то нужный помечается коментарием <code class="docutils literal notranslate"><span class="pre">/**/</span></code>.
+Текст order by рассматривается до конца текста sql либо до коментария <code class="docutils literal notranslate"><span class="pre">/*end*/</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="n">order</span> <span class="n">by</span> <span class="nb">id</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">aaa</span> <span class="n">where</span> <span class="mi">0</span><span class="o">=</span><span class="mi">0</span> <span class="ow">and</span>
+<span class="p">(</span><span class="n">b</span> <span class="ow">in</span> <span class="n">select</span> <span class="n">a</span> <span class="kn">from</span> <span class="nn">c</span> <span class="n">where</span> <span class="n">c</span><span class="o">=</span><span class="mi">1</span> <span class="n">order</span> <span class="n">by</span> <span class="n">a</span><span class="p">)</span>
+<span class="o">/**/</span><span class="n">order</span> <span class="n">by</span> <span class="n">tab</span><span class="o">/*</span><span class="n">end</span><span class="o">*/</span> <span class="n">group</span> <span class="n">by</span> <span class="nb">id</span>
+</pre></div>
+</div>
+<p>Используется для подмены сортировки или ее исключения.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Фильтр запросов SqlFilter</a><ul>
+<li><a class="reference internal" href="#id1">Элемент фильтра</a></li>
+<li><a class="reference internal" href="#sql">Базовый sql</a><ul>
+<li><a class="reference internal" href="#select">select</a></li>
+<li><a class="reference internal" href="#where">where</a></li>
+<li><a class="reference internal" href="#order-by">order by</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Предыдущий раздел</h4>
+  <p class="topless"><a href="validate.html"
+                        title="предыдущая глава">Howto: validate</a></p>
+  <h4>Следующий раздел</h4>
+  <p class="topless"><a href="rtdoc.html"
+                        title="следующая глава">Rt конфигурация</a></p>
+  <h3>Эта страница</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/sqlfilter.rst.txt"
+           rel="nofollow">Исходный текст</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Быстрый поиск</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Искать" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             >указатель</a></li>
+        <li class="right" >
+          <a href="rtdoc.html" title="Rt конфигурация"
+             >вперёд</a> |</li>
+        <li class="right" >
+          <a href="validate.html" title="Howto: validate"
+             >назад</a> |</li>
+        <li><a href="index.html">jandcode-dbm</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

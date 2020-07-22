@@ -1,0 +1,1008 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rt конфигурация &mdash; jandcode-dbm</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="top" title="jandcode-dbm" href="index.html" />
+    <link rel="prev" title="Фильтр запросов SqlFilter" href="sqlfilter.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             accesskey="I">указатель</a></li>
+        <li class="right" >
+          <a href="sqlfilter.html" title="Фильтр запросов SqlFilter"
+             accesskey="P">назад</a> |</li>
+        <li><a href="index.html">jandcode-dbm</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rt">
+<h1>Rt конфигурация<a class="headerlink" href="#rt" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="contents local topic" id="id1">
+<ul class="simple">
+<li><a class="reference internal" href="#dbm" id="id33">&lt;dbm&gt;</a><ul>
+<li><a class="reference internal" href="#registermodel" id="id34">&lt;registermodel&gt;</a><ul>
+<li><a class="reference internal" href="#model-name" id="id35">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#model-string" id="id36">model=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#model" id="id37">&lt;model&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name" id="id38">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#service" id="id39">&lt;service&gt;</a><ul>
+<li><a class="reference internal" href="#service-name" id="id40">&lt;SERVICE-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field" id="id41">&lt;field&gt;</a><ul>
+<li><a class="reference internal" href="#field-name" id="id42">&lt;FIELD-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#db-refcascade-bool" id="id43">db.refcascade=»bool»</a></li>
+<li><a class="reference internal" href="#validator" id="id44">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#validator-name" id="id45">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domain" id="id46">&lt;domain&gt;</a><ul>
+<li><a class="reference internal" href="#domain-name" id="id47">&lt;DOMAIN-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#abstract-bool" id="id48">abstract=»bool»</a></li>
+<li><a class="reference internal" href="#tag-db-bool" id="id49">tag.db=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dbview-bool" id="id50">tag.dbview=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dao-bool" id="id51">tag.dao=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dict-bool" id="id52">tag.dict=»bool»</a></li>
+<li><a class="reference internal" href="#tablename-string" id="id53">tablename=»string»</a></li>
+<li><a class="reference internal" href="#db-genidstart-long" id="id54">db.genidstart=»long»</a></li>
+<li><a class="reference internal" href="#ref" id="id55">&lt;ref&gt;</a></li>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator" id="id56">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name" id="id57">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader" id="id58">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#dataloader-name" id="id59">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string" id="id60">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dbindex" id="id61">&lt;dbindex&gt;</a><ul>
+<li><a class="reference internal" href="#dbindex-name" id="id62">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string" id="id63">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id64">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddl" id="id65">&lt;ddl&gt;</a><ul>
+<li><a class="reference internal" href="#ddl-name" id="id66">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string" id="id67">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#db" id="id68">&lt;db&gt;</a><ul>
+<li><a class="reference internal" href="#db-name" id="id69">&lt;DB-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#database-string" id="id70">database=»string»</a></li>
+<li><a class="reference internal" href="#dbdriver-string" id="id71">dbdriver=»string»</a></li>
+<li><a class="reference internal" href="#host-string" id="id72">host=»string»</a></li>
+<li><a class="reference internal" href="#jdbcdriverclass-string" id="id73">jdbcDriverClass=»string»</a></li>
+<li><a class="reference internal" href="#username-string" id="id74">username=»string»</a></li>
+<li><a class="reference internal" href="#password-string" id="id75">password=»string»</a></li>
+<li><a class="reference internal" href="#url-string" id="id76">url=»string»</a></li>
+<li><a class="reference internal" href="#conn-xxx-string" id="id77">conn.XXX=»string»</a></li>
+<li><a class="reference internal" href="#config-path-string" id="id78">config.path=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader" id="id79">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader-dataloader-name" id="id80">&lt;DATALOADER-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="dbm">
+<span id="rt-dbm"></span><h2><a class="toc-backref" href="#id33">&lt;dbm&gt;</a><a class="headerlink" href="#dbm" title="Ссылка на этот заголовок">¶</a></h2>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">dbm</span></code></p>
+<div class="contents local topic" id="id2">
+<ul class="simple">
+<li><a class="reference internal" href="#registermodel" id="id81">&lt;registermodel&gt;</a><ul>
+<li><a class="reference internal" href="#model-name" id="id82">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#model-string" id="id83">model=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Настройки для модуля dbm</p>
+<div class="section" id="registermodel">
+<span id="rt-dbm-registermodel"></span><h3><a class="toc-backref" href="#id81">&lt;registermodel&gt;</a><a class="headerlink" href="#registermodel" title="Ссылка на этот заголовок">¶</a></h3>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">dbm/registermodel</span></code> , <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+<div class="contents local topic" id="id3">
+<ul class="simple">
+<li><a class="reference internal" href="#model-name" id="id84">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#model-string" id="id85">model=»string»</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Список зарегистрированных моделей</p>
+<div class="section" id="model-name">
+<span id="rt-dbm-registermodel-model-name"></span><h4><a class="toc-backref" href="#id84">&lt;MODEL-NAME&gt;</a><a class="headerlink" href="#model-name" title="Ссылка на этот заголовок">¶</a></h4>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">dbm/registermodel/MODEL-NAME</span></code></p>
+<div class="contents local topic" id="id4">
+<ul class="simple">
+<li><a class="reference internal" href="#model-string" id="id86">model=»string»</a></li>
+</ul>
+</div>
+<p>Регистрация модели, указанной в атрибуте <code class="docutils literal notranslate"><span class="pre">model</span></code> с именем <code class="docutils literal notranslate"><span class="pre">MODEL-NAME</span></code></p>
+<div class="section" id="model-string">
+<span id="rt-dbm-registermodel-model-name-model"></span><h5><a class="toc-backref" href="#id86">model=»string»</a><a class="headerlink" href="#model-string" title="Ссылка на этот заголовок">¶</a></h5>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">dbm/registermodel/MODEL-NAME:model</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Имя модели</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="model">
+<span id="rt-model"></span><h2><a class="toc-backref" href="#id37">&lt;model&gt;</a><a class="headerlink" href="#model" title="Ссылка на этот заголовок">¶</a></h2>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model</span></code> , <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">list</span></code></p>
+<div class="contents local topic" id="id5">
+<ul class="simple">
+<li><a class="reference internal" href="#rt-model-model-name" id="id87">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#service" id="id88">&lt;service&gt;</a><ul>
+<li><a class="reference internal" href="#service-name" id="id89">&lt;SERVICE-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field" id="id90">&lt;field&gt;</a><ul>
+<li><a class="reference internal" href="#field-name" id="id91">&lt;FIELD-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#db-refcascade-bool" id="id92">db.refcascade=»bool»</a></li>
+<li><a class="reference internal" href="#validator" id="id93">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#validator-name" id="id94">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domain" id="id95">&lt;domain&gt;</a><ul>
+<li><a class="reference internal" href="#domain-name" id="id96">&lt;DOMAIN-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#abstract-bool" id="id97">abstract=»bool»</a></li>
+<li><a class="reference internal" href="#tag-db-bool" id="id98">tag.db=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dbview-bool" id="id99">tag.dbview=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dao-bool" id="id100">tag.dao=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dict-bool" id="id101">tag.dict=»bool»</a></li>
+<li><a class="reference internal" href="#tablename-string" id="id102">tablename=»string»</a></li>
+<li><a class="reference internal" href="#db-genidstart-long" id="id103">db.genidstart=»long»</a></li>
+<li><a class="reference internal" href="#ref" id="id104">&lt;ref&gt;</a></li>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator" id="id105">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name" id="id106">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader" id="id107">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#dataloader-name" id="id108">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string" id="id109">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dbindex" id="id110">&lt;dbindex&gt;</a><ul>
+<li><a class="reference internal" href="#dbindex-name" id="id111">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string" id="id112">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id113">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddl" id="id114">&lt;ddl&gt;</a><ul>
+<li><a class="reference internal" href="#ddl-name" id="id115">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string" id="id116">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#db" id="id117">&lt;db&gt;</a><ul>
+<li><a class="reference internal" href="#db-name" id="id118">&lt;DB-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#database-string" id="id119">database=»string»</a></li>
+<li><a class="reference internal" href="#dbdriver-string" id="id120">dbdriver=»string»</a></li>
+<li><a class="reference internal" href="#host-string" id="id121">host=»string»</a></li>
+<li><a class="reference internal" href="#jdbcdriverclass-string" id="id122">jdbcDriverClass=»string»</a></li>
+<li><a class="reference internal" href="#username-string" id="id123">username=»string»</a></li>
+<li><a class="reference internal" href="#password-string" id="id124">password=»string»</a></li>
+<li><a class="reference internal" href="#url-string" id="id125">url=»string»</a></li>
+<li><a class="reference internal" href="#conn-xxx-string" id="id126">conn.XXX=»string»</a></li>
+<li><a class="reference internal" href="#config-path-string" id="id127">config.path=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader" id="id128">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader-dataloader-name" id="id129">&lt;DATALOADER-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Описание моделей.</p>
+<div class="section" id="rt-model-model-name">
+<span id="id6"></span><h3><a class="toc-backref" href="#id87">&lt;MODEL-NAME&gt;</a><a class="headerlink" href="#rt-model-model-name" title="Ссылка на этот заголовок">¶</a></h3>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME</span></code></p>
+<div class="contents local topic" id="id7">
+<ul class="simple">
+<li><a class="reference internal" href="#service" id="id130">&lt;service&gt;</a><ul>
+<li><a class="reference internal" href="#service-name" id="id131">&lt;SERVICE-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field" id="id132">&lt;field&gt;</a><ul>
+<li><a class="reference internal" href="#field-name" id="id133">&lt;FIELD-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#db-refcascade-bool" id="id134">db.refcascade=»bool»</a></li>
+<li><a class="reference internal" href="#validator" id="id135">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#validator-name" id="id136">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domain" id="id137">&lt;domain&gt;</a><ul>
+<li><a class="reference internal" href="#domain-name" id="id138">&lt;DOMAIN-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#abstract-bool" id="id139">abstract=»bool»</a></li>
+<li><a class="reference internal" href="#tag-db-bool" id="id140">tag.db=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dbview-bool" id="id141">tag.dbview=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dao-bool" id="id142">tag.dao=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dict-bool" id="id143">tag.dict=»bool»</a></li>
+<li><a class="reference internal" href="#tablename-string" id="id144">tablename=»string»</a></li>
+<li><a class="reference internal" href="#db-genidstart-long" id="id145">db.genidstart=»long»</a></li>
+<li><a class="reference internal" href="#ref" id="id146">&lt;ref&gt;</a></li>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator" id="id147">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name" id="id148">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader" id="id149">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#dataloader-name" id="id150">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string" id="id151">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dbindex" id="id152">&lt;dbindex&gt;</a><ul>
+<li><a class="reference internal" href="#dbindex-name" id="id153">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string" id="id154">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id155">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddl" id="id156">&lt;ddl&gt;</a><ul>
+<li><a class="reference internal" href="#ddl-name" id="id157">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string" id="id158">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#db" id="id159">&lt;db&gt;</a><ul>
+<li><a class="reference internal" href="#db-name" id="id160">&lt;DB-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#database-string" id="id161">database=»string»</a></li>
+<li><a class="reference internal" href="#dbdriver-string" id="id162">dbdriver=»string»</a></li>
+<li><a class="reference internal" href="#host-string" id="id163">host=»string»</a></li>
+<li><a class="reference internal" href="#jdbcdriverclass-string" id="id164">jdbcDriverClass=»string»</a></li>
+<li><a class="reference internal" href="#username-string" id="id165">username=»string»</a></li>
+<li><a class="reference internal" href="#password-string" id="id166">password=»string»</a></li>
+<li><a class="reference internal" href="#url-string" id="id167">url=»string»</a></li>
+<li><a class="reference internal" href="#conn-xxx-string" id="id168">conn.XXX=»string»</a></li>
+<li><a class="reference internal" href="#config-path-string" id="id169">config.path=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader" id="id170">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader-dataloader-name" id="id171">&lt;DATALOADER-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Описание модели</p>
+<div class="section" id="service">
+<span id="rt-model-model-name-service"></span><h4><a class="toc-backref" href="#id130">&lt;service&gt;</a><a class="headerlink" href="#service" title="Ссылка на этот заголовок">¶</a></h4>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/service</span></code></p>
+<div class="contents local topic" id="id8">
+<ul class="simple">
+<li><a class="reference internal" href="#service-name" id="id172">&lt;SERVICE-NAME&gt;</a></li>
+</ul>
+</div>
+<p>Сервисы модели</p>
+<div class="section" id="service-name">
+<span id="rt-model-model-name-service-service-name"></span><h5><a class="toc-backref" href="#id172">&lt;SERVICE-NAME&gt;</a><a class="headerlink" href="#service-name" title="Ссылка на этот заголовок">¶</a></h5>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/service/SERVICE-NAME</span></code></p>
+<p>Сервис модели</p>
+</div>
+</div>
+<div class="section" id="field">
+<span id="rt-model-model-name-field"></span><h4><a class="toc-backref" href="#id132">&lt;field&gt;</a><a class="headerlink" href="#field" title="Ссылка на этот заголовок">¶</a></h4>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/field</span></code></p>
+<div class="contents local topic" id="id10">
+<ul class="simple">
+<li><a class="reference internal" href="#field-name" id="id173">&lt;FIELD-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#db-refcascade-bool" id="id174">db.refcascade=»bool»</a></li>
+<li><a class="reference internal" href="#validator" id="id175">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#validator-name" id="id176">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Поля модели</p>
+<div class="section" id="field-name">
+<span id="rt-model-model-name-field-field-name"></span><h5><a class="toc-backref" href="#id173">&lt;FIELD-NAME&gt;</a><a class="headerlink" href="#field-name" title="Ссылка на этот заголовок">¶</a></h5>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/field/FIELD-NAME</span></code></p>
+<div class="contents local topic" id="id11">
+<ul class="simple">
+<li><a class="reference internal" href="#db-refcascade-bool" id="id177">db.refcascade=»bool»</a></li>
+<li><a class="reference internal" href="#validator" id="id178">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#validator-name" id="id179">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Поле модели</p>
+<div class="section" id="db-refcascade-bool">
+<span id="rt-model-model-name-field-field-name-db-refcascade"></span><h6><a class="toc-backref" href="#id177">db.refcascade=»bool»</a><a class="headerlink" href="#db-refcascade-bool" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/field/FIELD-NAME:db.refcascade</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>При значении <code class="docutils literal notranslate"><span class="pre">true</span></code> для поля необходимо генерировать в базе данных
+какскадную ссылку. Обычно указывается для <code class="docutils literal notranslate"><span class="pre">ref</span></code> поля.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;MyTable&quot;</span> <span class="na">parent=</span><span class="s">&quot;id&quot;</span> <span class="na">tag.db=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;ref</span> <span class="na">db.refcascade=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/domain&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="validator">
+<span id="rt-model-model-name-field-field-name-validator"></span><h6><a class="toc-backref" href="#id178">&lt;validator&gt;</a><a class="headerlink" href="#validator" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/field/FIELD-NAME/validator</span></code></p>
+<div class="contents local topic" id="id12">
+<ul class="simple">
+<li><a class="reference internal" href="#validator-name" id="id180">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</div>
+<p>Валидаторы поля</p>
+<div class="section" id="validator-name">
+<span id="rt-model-model-name-field-field-name-validator-validator-name"></span><h7><a class="toc-backref" href="#id180">&lt;VALIDATOR-NAME&gt;</a><a class="headerlink" href="#validator-name" title="Ссылка на этот заголовок">¶</a></h7>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/field/FIELD-NAME/validator/VALIDATOR-NAME</span></code></p>
+<p>Валидатор поля. См. <a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator"><span class="std std-ref">&lt;validator&gt;</span></a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="domain">
+<span id="rt-model-model-name-domain"></span><h4><a class="toc-backref" href="#id137">&lt;domain&gt;</a><a class="headerlink" href="#domain" title="Ссылка на этот заголовок">¶</a></h4>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain</span></code></p>
+<div class="contents local topic" id="id14">
+<ul class="simple">
+<li><a class="reference internal" href="#domain-name" id="id181">&lt;DOMAIN-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#abstract-bool" id="id182">abstract=»bool»</a></li>
+<li><a class="reference internal" href="#tag-db-bool" id="id183">tag.db=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dbview-bool" id="id184">tag.dbview=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dao-bool" id="id185">tag.dao=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dict-bool" id="id186">tag.dict=»bool»</a></li>
+<li><a class="reference internal" href="#tablename-string" id="id187">tablename=»string»</a></li>
+<li><a class="reference internal" href="#db-genidstart-long" id="id188">db.genidstart=»long»</a></li>
+<li><a class="reference internal" href="#ref" id="id189">&lt;ref&gt;</a></li>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator" id="id190">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name" id="id191">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader" id="id192">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#dataloader-name" id="id193">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string" id="id194">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dbindex" id="id195">&lt;dbindex&gt;</a><ul>
+<li><a class="reference internal" href="#dbindex-name" id="id196">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string" id="id197">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id198">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddl" id="id199">&lt;ddl&gt;</a><ul>
+<li><a class="reference internal" href="#ddl-name" id="id200">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string" id="id201">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Домены модели</p>
+<div class="section" id="domain-name">
+<span id="rt-model-model-name-domain-domain-name"></span><h5><a class="toc-backref" href="#id181">&lt;DOMAIN-NAME&gt;</a><a class="headerlink" href="#domain-name" title="Ссылка на этот заголовок">¶</a></h5>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME</span></code></p>
+<div class="contents local topic" id="id15">
+<ul class="simple">
+<li><a class="reference internal" href="#abstract-bool" id="id202">abstract=»bool»</a></li>
+<li><a class="reference internal" href="#tag-db-bool" id="id203">tag.db=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dbview-bool" id="id204">tag.dbview=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dao-bool" id="id205">tag.dao=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dict-bool" id="id206">tag.dict=»bool»</a></li>
+<li><a class="reference internal" href="#tablename-string" id="id207">tablename=»string»</a></li>
+<li><a class="reference internal" href="#db-genidstart-long" id="id208">db.genidstart=»long»</a></li>
+<li><a class="reference internal" href="#ref" id="id209">&lt;ref&gt;</a></li>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator" id="id210">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name" id="id211">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader" id="id212">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#dataloader-name" id="id213">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string" id="id214">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dbindex" id="id215">&lt;dbindex&gt;</a><ul>
+<li><a class="reference internal" href="#dbindex-name" id="id216">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string" id="id217">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id218">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddl" id="id219">&lt;ddl&gt;</a><ul>
+<li><a class="reference internal" href="#ddl-name" id="id220">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string" id="id221">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Домен модели</p>
+<div class="section" id="abstract-bool">
+<span id="rt-model-model-name-domain-domain-name-abstract"></span><h6><a class="toc-backref" href="#id202">abstract=»bool»</a><a class="headerlink" href="#abstract-bool" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:abstract</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>Признак того, что домен абстрактный. Такой домен не включается в модель.
+Используется как базовый предок. Атрибут не наследуется.</p>
+</div>
+<div class="section" id="tag-db-bool">
+<span id="rt-model-model-name-domain-domain-name-tag-db"></span><h6><a class="toc-backref" href="#id203">tag.db=»bool»</a><a class="headerlink" href="#tag-db-bool" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:tag.db</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>Признак того, что домен является описанием физической таблицы в базе данных.
+Атрибут не наследуется.</p>
+</div>
+<div class="section" id="tag-dbview-bool">
+<span id="rt-model-model-name-domain-domain-name-tag-dbview"></span><h6><a class="toc-backref" href="#id204">tag.dbview=»bool»</a><a class="headerlink" href="#tag-dbview-bool" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:tag.dbview</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>Признак того, что домен является описанием физического view в базе данных.
+Если атрибут указан, то атрибут <code class="docutils literal notranslate"><span class="pre">tag.db</span></code> проставляется автоматически.
+Текст sql для view должен быть в узле <code class="docutils literal notranslate"><span class="pre">ddl/view</span></code>. Атрибут не наследуется.
+Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;View1&quot;</span> <span class="na">parent=</span><span class="s">&quot;id&quot;</span> <span class="na">tag.dbview=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ddl</span> <span class="na">name=</span><span class="s">&quot;view&quot;</span><span class="nt">&gt;</span>
+        create view View1 as select * from Tab1
+    <span class="nt">&lt;/ddl&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tag-dao-bool">
+<span id="rt-model-model-name-domain-domain-name-tag-dao"></span><h6><a class="toc-backref" href="#id205">tag.dao=»bool»</a><a class="headerlink" href="#tag-dao-bool" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:tag.dao</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>Признак того, что домен содержит в себе dao-объекты.
+Если у домена имеются личные dao, то атрибут ставится
+автоматически.
+Атрибут не наследуется.</p>
+</div>
+<div class="section" id="tag-dict-bool">
+<span id="rt-model-model-name-domain-domain-name-tag-dict"></span><h6><a class="toc-backref" href="#id206">tag.dict=»bool»</a><a class="headerlink" href="#tag-dict-bool" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:tag.dict</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>Признак того, что домен является описанием словаря.
+Атрибуты словаря указываются в дочернем элементе <code class="docutils literal notranslate"><span class="pre">dict</span></code>.
+Атрибут не наследуется.</p>
+</div>
+<div class="section" id="tablename-string">
+<span id="rt-model-model-name-domain-domain-name-tablename"></span><h6><a class="toc-backref" href="#id207">tablename=»string»</a><a class="headerlink" href="#tablename-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:tablename</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Имя физической таблицы в базе данных для домена.
+Если у домена есть атрибут <code class="docutils literal notranslate"><span class="pre">tag.db</span></code> или <code class="docutils literal notranslate"><span class="pre">tag.dbview</span></code>,
+то значение атрибута автоматически устанавливается в
+имя домена.</p>
+</div>
+<div class="section" id="db-genidstart-long">
+<span id="rt-model-model-name-domain-domain-name-db-genidstart"></span><h6><a class="toc-backref" href="#id208">db.genidstart=»long»</a><a class="headerlink" href="#db-genidstart-long" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME:db.genidstart</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">long</span></code></p>
+<p>С какого числа начинать генерацию id. Этим числом инициализируется генератор
+id при создании базы данных. По умолчанию <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p>
+</div>
+<div class="section" id="ref">
+<span id="rt-model-model-name-domain-domain-name-ref"></span><h6><a class="toc-backref" href="#id209">&lt;ref&gt;</a><a class="headerlink" href="#ref" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/ref</span></code></p>
+<p>В этом узле описываются свойства поля, которое является
+ссылкой на этот домен. Все что можно указать для <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/field/FIELD-NAME</span></code>,
+можно указывать и тут. Что бы поле было унаследовано от этого узла,
+нужно указывать для него parent <code class="docutils literal notranslate"><span class="pre">DOMAIN-NAME/ref</span></code>.
+Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;Tree1&quot;</span> <span class="na">parent=</span><span class="s">&quot;dbtable&quot;</span> <span class="na">tag.db=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;ref</span> <span class="na">title=</span><span class="s">&quot;Ссылка на узел дерева&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">parent=</span><span class="s">&quot;string&quot;</span> <span class="na">size=</span><span class="s">&quot;30&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;parent&quot;</span> <span class="na">parent=</span><span class="s">&quot;Tree1/ref&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rt-model-model-name-domain-domain-name-validator">
+<span id="id17"></span><h6><a class="toc-backref" href="#id210">&lt;validator&gt;</a><a class="headerlink" href="#rt-model-model-name-domain-domain-name-validator" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/validator</span></code></p>
+<div class="contents local topic" id="id18">
+<ul class="simple">
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name" id="id222">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</div>
+<p>Валидаторы домена</p>
+<div class="section" id="rt-model-model-name-domain-domain-name-validator-validator-name">
+<span id="id19"></span><h7><a class="toc-backref" href="#id222">&lt;VALIDATOR-NAME&gt;</a><a class="headerlink" href="#rt-model-model-name-domain-domain-name-validator-validator-name" title="Ссылка на этот заголовок">¶</a></h7>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/validator/VALIDATOR-NAME</span></code></p>
+<p>Валидатор. Можно не указывать <code class="docutils literal notranslate"><span class="pre">parent</span></code>, тогда в качестве
+<code class="docutils literal notranslate"><span class="pre">parent</span></code> возмется имя валидатора, например:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;Domain1&quot;</span> <span class="na">parent=</span><span class="s">&quot;dbtable&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;validator</span> <span class="na">name=</span><span class="s">&quot;record&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+<p>соответствует:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;Domain1&quot;</span> <span class="na">parent=</span><span class="s">&quot;dbtable&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;validator</span> <span class="na">name=</span><span class="s">&quot;record&quot;</span> <span class="na">parent=</span><span class="s">&quot;record&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/domain&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dataloader">
+<span id="rt-model-model-name-domain-domain-name-dataloader"></span><h6><a class="toc-backref" href="#id212">&lt;dataloader&gt;</a><a class="headerlink" href="#dataloader" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dataloader</span></code></p>
+<div class="contents local topic" id="id21">
+<ul class="simple">
+<li><a class="reference internal" href="#dataloader-name" id="id223">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string" id="id224">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Загрузчики данных.</p>
+<div class="section" id="dataloader-name">
+<span id="rt-model-model-name-domain-domain-name-dataloader-dataloader-name"></span><h7><a class="toc-backref" href="#id223">&lt;DATALOADER-NAME&gt;</a><a class="headerlink" href="#dataloader-name" title="Ссылка на этот заголовок">¶</a></h7>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dataloader/DATALOADER-NAME</span></code></p>
+<div class="contents local topic" id="id22">
+<ul class="simple">
+<li><a class="reference internal" href="#dbdata-string" id="id225">dbdata=»string»</a></li>
+</ul>
+</div>
+<p>Загрузчик данных</p>
+<div class="section" id="dbdata-string">
+<span id="rt-model-model-name-domain-domain-name-dataloader-dataloader-name-dbdata"></span><h8><a class="toc-backref" href="#id225">dbdata=»string»</a><a class="headerlink" href="#dbdata-string" title="Ссылка на этот заголовок">¶</a></h8>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dataloader/DATALOADER-NAME:dbdata</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Тип загрузчика. Значением может быть:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">prod</span></code> - данные таблицы в базе по умолчанию</li>
+<li><code class="docutils literal notranslate"><span class="pre">test</span></code> - тестовые данные таблицы в базе</li>
+<li>любое другое - для каких-то других целей</li>
+</ul>
+</div></blockquote>
+<p>По умолчанию значение не установлено</p>
+</div>
+</div>
+</div>
+<div class="section" id="dbindex">
+<span id="rt-model-model-name-domain-domain-name-dbindex"></span><h6><a class="toc-backref" href="#id215">&lt;dbindex&gt;</a><a class="headerlink" href="#dbindex" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dbindex</span></code></p>
+<div class="contents local topic" id="id23">
+<ul class="simple">
+<li><a class="reference internal" href="#dbindex-name" id="id226">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string" id="id227">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id228">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Описание db-индексов для генерации базы данных</p>
+<div class="section" id="dbindex-name">
+<span id="rt-model-model-name-domain-domain-name-dbindex-dbindex-name"></span><h7><a class="toc-backref" href="#id226">&lt;DBINDEX-NAME&gt;</a><a class="headerlink" href="#dbindex-name" title="Ссылка на этот заголовок">¶</a></h7>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dbindex/DBINDEX-NAME</span></code></p>
+<div class="contents local topic" id="id24">
+<ul class="simple">
+<li><a class="reference internal" href="#fields-string" id="id229">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool" id="id230">unique=»bool»</a></li>
+</ul>
+</div>
+<p>Индекс таблицы для базы данных. Имя узла используется для
+генерации имени индекса.</p>
+<div class="section" id="fields-string">
+<span id="rt-model-model-name-domain-domain-name-dbindex-dbindex-name-fields"></span><h8><a class="toc-backref" href="#id229">fields=»string»</a><a class="headerlink" href="#fields-string" title="Ссылка на этот заголовок">¶</a></h8>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dbindex/DBINDEX-NAME:fields</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Список полей (через <code class="docutils literal notranslate"><span class="pre">','</span></code>), из которых состоит индекс.
+Если имя поля начинается с символа „*“, то это означает, что сортировать
+это поле нужно в обратном порядке (по убыванию).</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;MyTable&quot;</span> <span class="na">parent=</span><span class="s">&quot;id&quot;</span> <span class="na">tag.db=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">parent=</span><span class="s">&quot;string&quot;</span> <span class="na">size=</span><span class="s">&quot;20&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;dt&quot;</span> <span class="na">parent=</span><span class="s">&quot;date&quot;</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;dbindex</span> <span class="na">name=</span><span class="s">&quot;myindex1&quot;</span> <span class="na">fields=</span><span class="s">&quot;name,*dt&quot;</span> <span class="na">unique=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;dbindex</span> <span class="na">name=</span><span class="s">&quot;myindex2&quot;</span> <span class="na">fields=</span><span class="s">&quot;dt&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/domain&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unique-bool">
+<span id="rt-model-model-name-domain-domain-name-dbindex-dbindex-name-unique"></span><h8><a class="toc-backref" href="#id230">unique=»bool»</a><a class="headerlink" href="#unique-bool" title="Ссылка на этот заголовок">¶</a></h8>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/dbindex/DBINDEX-NAME:unique</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">bool</span></code></p>
+<p>Признак уникального индекса. По умолчанию <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="ddl">
+<span id="rt-model-model-name-domain-domain-name-ddl"></span><h6><a class="toc-backref" href="#id219">&lt;ddl&gt;</a><a class="headerlink" href="#ddl" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/ddl</span></code></p>
+<div class="contents local topic" id="id25">
+<ul class="simple">
+<li><a class="reference internal" href="#ddl-name" id="id231">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string" id="id232">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Поименнованые ddl-опрераторы.</p>
+<div class="section" id="ddl-name">
+<span id="rt-model-model-name-domain-domain-name-ddl-ddl-name"></span><h7><a class="toc-backref" href="#id231">&lt;DDL-NAME&gt;</a><a class="headerlink" href="#ddl-name" title="Ссылка на этот заголовок">¶</a></h7>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/ddl/DDL-NAME</span></code></p>
+<div class="contents local topic" id="id26">
+<ul class="simple">
+<li><a class="reference internal" href="#type-string" id="id233">type=»string»</a></li>
+</ul>
+</div>
+<p>ddl оператор</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;domain</span> <span class="na">name=</span><span class="s">&quot;MyTable&quot;</span> <span class="na">parent=</span><span class="s">&quot;id&quot;</span> <span class="na">tag.db=</span><span class="s">&quot;true&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">parent=</span><span class="s">&quot;string&quot;</span> <span class="na">size=</span><span class="s">&quot;20&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;dt&quot;</span> <span class="na">parent=</span><span class="s">&quot;date&quot;</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;ddl</span> <span class="na">name=</span><span class="s">&quot;myddl1&quot;</span> <span class="na">type=</span><span class="s">&quot;create&quot;</span><span class="nt">&gt;</span>
+            alter table my1 add _logfield varchar(20)
+        <span class="nt">&lt;/ddl&gt;</span>
+
+        <span class="nt">&lt;ddl</span> <span class="na">name=</span><span class="s">&quot;myddl2&quot;</span> <span class="na">type=</span><span class="s">&quot;create&quot;</span><span class="nt">&gt;</span>
+            alter table my1 add _logfield2 varchar(20)
+        <span class="nt">&lt;/ddl&gt;</span>
+    <span class="nt">&lt;/domain&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="type-string">
+<span id="rt-model-model-name-domain-domain-name-ddl-ddl-name-type"></span><h8><a class="toc-backref" href="#id233">type=»string»</a><a class="headerlink" href="#type-string" title="Ссылка на этот заголовок">¶</a></h8>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/domain/DOMAIN-NAME/ddl/DDL-NAME:type</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Если оператор имеет атрибут <code class="docutils literal notranslate"><span class="pre">type=&quot;create&quot;</span></code> (значение по умолчанию),
+то эти операторы попадают в сгенерированный sql для создания базы данных.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="db">
+<span id="rt-model-model-name-db"></span><h4><a class="toc-backref" href="#id159">&lt;db&gt;</a><a class="headerlink" href="#db" title="Ссылка на этот заголовок">¶</a></h4>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db</span></code></p>
+<div class="contents local topic" id="id27">
+<ul class="simple">
+<li><a class="reference internal" href="#db-name" id="id234">&lt;DB-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#database-string" id="id235">database=»string»</a></li>
+<li><a class="reference internal" href="#dbdriver-string" id="id236">dbdriver=»string»</a></li>
+<li><a class="reference internal" href="#host-string" id="id237">host=»string»</a></li>
+<li><a class="reference internal" href="#jdbcdriverclass-string" id="id238">jdbcDriverClass=»string»</a></li>
+<li><a class="reference internal" href="#username-string" id="id239">username=»string»</a></li>
+<li><a class="reference internal" href="#password-string" id="id240">password=»string»</a></li>
+<li><a class="reference internal" href="#url-string" id="id241">url=»string»</a></li>
+<li><a class="reference internal" href="#conn-xxx-string" id="id242">conn.XXX=»string»</a></li>
+<li><a class="reference internal" href="#config-path-string" id="id243">config.path=»string»</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<p>Базы данных, связанные с моделью. Обычно в модели
+одна база данных и она имеет имя <code class="docutils literal notranslate"><span class="pre">default</span></code>.</p>
+<div class="section" id="db-name">
+<span id="rt-model-model-name-db-db-name"></span><h5><a class="toc-backref" href="#id234">&lt;DB-NAME&gt;</a><a class="headerlink" href="#db-name" title="Ссылка на этот заголовок">¶</a></h5>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME</span></code></p>
+<div class="contents local topic" id="id28">
+<ul class="simple">
+<li><a class="reference internal" href="#database-string" id="id244">database=»string»</a></li>
+<li><a class="reference internal" href="#dbdriver-string" id="id245">dbdriver=»string»</a></li>
+<li><a class="reference internal" href="#host-string" id="id246">host=»string»</a></li>
+<li><a class="reference internal" href="#jdbcdriverclass-string" id="id247">jdbcDriverClass=»string»</a></li>
+<li><a class="reference internal" href="#username-string" id="id248">username=»string»</a></li>
+<li><a class="reference internal" href="#password-string" id="id249">password=»string»</a></li>
+<li><a class="reference internal" href="#url-string" id="id250">url=»string»</a></li>
+<li><a class="reference internal" href="#conn-xxx-string" id="id251">conn.XXX=»string»</a></li>
+<li><a class="reference internal" href="#config-path-string" id="id252">config.path=»string»</a></li>
+</ul>
+</div>
+<p>База данных связанная с моделью.</p>
+<div class="section" id="database-string">
+<span id="rt-model-model-name-db-db-name-database"></span><h6><a class="toc-backref" href="#id244">database=»string»</a><a class="headerlink" href="#database-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:database</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Имя базы данных.</p>
+</div>
+<div class="section" id="dbdriver-string">
+<span id="rt-model-model-name-db-db-name-dbdriver"></span><h6><a class="toc-backref" href="#id245">dbdriver=»string»</a><a class="headerlink" href="#dbdriver-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:dbdriver</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Имя драйвера базы данных. Драйвера описываются в <code class="docutils literal notranslate"><span class="pre">/dbdriver/DBDRIVER-NAME</span></code>.</p>
+</div>
+<div class="section" id="host-string">
+<span id="rt-model-model-name-db-db-name-host"></span><h6><a class="toc-backref" href="#id246">host=»string»</a><a class="headerlink" href="#host-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:host</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Адрес хоста.</p>
+</div>
+<div class="section" id="jdbcdriverclass-string">
+<span id="rt-model-model-name-db-db-name-jdbcdriverclass"></span><h6><a class="toc-backref" href="#id247">jdbcDriverClass=»string»</a><a class="headerlink" href="#jdbcdriverclass-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:jdbcDriverClass</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Имя класса jdbc-драйвера. Обычно не нужно его указывать, т.к. используется
+класс из <code class="docutils literal notranslate"><span class="pre">dbdriver</span></code>.</p>
+</div>
+<div class="section" id="username-string">
+<span id="rt-model-model-name-db-db-name-username"></span><h6><a class="toc-backref" href="#id248">username=»string»</a><a class="headerlink" href="#username-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:username</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Имя пользователя базы данных для коннекта.</p>
+</div>
+<div class="section" id="password-string">
+<span id="rt-model-model-name-db-db-name-password"></span><h6><a class="toc-backref" href="#id249">password=»string»</a><a class="headerlink" href="#password-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:password</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Пароль пользователя базы данных для коннекта.</p>
+</div>
+<div class="section" id="url-string">
+<span id="rt-model-model-name-db-db-name-url"></span><h6><a class="toc-backref" href="#id250">url=»string»</a><a class="headerlink" href="#url-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:url</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Строка соединения. Можно использовать подстановки <code class="docutils literal notranslate"><span class="pre">${property}</span></code>
+(например <code class="docutils literal notranslate"><span class="pre">'${username}'</span></code>). В качестве <code class="docutils literal notranslate"><span class="pre">property</span></code> можно использовать
+любые атрибуты из узла <code class="docutils literal notranslate"><span class="pre">db</span></code>.</p>
+<p>Обычно <code class="docutils literal notranslate"><span class="pre">url</span></code> явно не указывается, а берется из <code class="docutils literal notranslate"><span class="pre">dbdriver</span></code>.</p>
+</div>
+<div class="section" id="conn-xxx-string">
+<span id="rt-model-model-name-db-db-name-conn-xxx"></span><h6><a class="toc-backref" href="#id251">conn.XXX=»string»</a><a class="headerlink" href="#conn-xxx-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:conn.XXX</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Свойства соединения. В таких атрибутах отбрасывается префикс <code class="docutils literal notranslate"><span class="pre">conn.</span></code> и остаток
+используется как имя свойства соединения. Зависит от драйвера.</p>
+</div>
+<div class="section" id="config-path-string">
+<span id="rt-model-model-name-db-db-name-config-path"></span><h6><a class="toc-backref" href="#id252">config.path=»string»</a><a class="headerlink" href="#config-path-string" title="Ссылка на этот заголовок">¶</a></h6>
+<p><em>Атрибут:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/db/DB-NAME:config.path</span></code>, <em>тип:</em> <code class="docutils literal notranslate"><span class="pre">string</span></code></p>
+<p>Путь rt, относительно корня конфигурации приложения, откуда будут браться
+дополнительные свойства базы данных. Эти данные перекроют те, которые
+указаны в узле <code class="docutils literal notranslate"><span class="pre">db/DB-NAME</span></code> модели.</p>
+<p>Используется для выноса конфигурации в более приемлемое место для
+конечного пользователя.</p>
+<p>Если не установлено, то по умолчанию принимается равным <code class="docutils literal notranslate"><span class="pre">db/MODEL-NAME</span></code>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="rt-model-model-name-dataloader">
+<span id="id29"></span><h4><a class="toc-backref" href="#id170">&lt;dataloader&gt;</a><a class="headerlink" href="#rt-model-model-name-dataloader" title="Ссылка на этот заголовок">¶</a></h4>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/dataloader</span></code></p>
+<div class="contents local topic" id="id30">
+<ul class="simple">
+<li><a class="reference internal" href="#rt-model-model-name-dataloader-dataloader-name" id="id253">&lt;DATALOADER-NAME&gt;</a></li>
+</ul>
+</div>
+<p>Предки для загрузчиков данных.</p>
+<div class="section" id="rt-model-model-name-dataloader-dataloader-name">
+<span id="id31"></span><h5><a class="toc-backref" href="#id253">&lt;DATALOADER-NAME&gt;</a><a class="headerlink" href="#rt-model-model-name-dataloader-dataloader-name" title="Ссылка на этот заголовок">¶</a></h5>
+<p><em>Узел:</em> <code class="docutils literal notranslate"><span class="pre">model/MODEL-NAME/dataloader/DATALOADER-NAME</span></code></p>
+<p>Загрузчик данных</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rt конфигурация</a><ul>
+<li><a class="reference internal" href="#dbm">&lt;dbm&gt;</a><ul>
+<li><a class="reference internal" href="#registermodel">&lt;registermodel&gt;</a><ul>
+<li><a class="reference internal" href="#model-name">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#model-string">model=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#model">&lt;model&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name">&lt;MODEL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#service">&lt;service&gt;</a><ul>
+<li><a class="reference internal" href="#service-name">&lt;SERVICE-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#field">&lt;field&gt;</a><ul>
+<li><a class="reference internal" href="#field-name">&lt;FIELD-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#db-refcascade-bool">db.refcascade=»bool»</a></li>
+<li><a class="reference internal" href="#validator">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#validator-name">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domain">&lt;domain&gt;</a><ul>
+<li><a class="reference internal" href="#domain-name">&lt;DOMAIN-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#abstract-bool">abstract=»bool»</a></li>
+<li><a class="reference internal" href="#tag-db-bool">tag.db=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dbview-bool">tag.dbview=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dao-bool">tag.dao=»bool»</a></li>
+<li><a class="reference internal" href="#tag-dict-bool">tag.dict=»bool»</a></li>
+<li><a class="reference internal" href="#tablename-string">tablename=»string»</a></li>
+<li><a class="reference internal" href="#db-genidstart-long">db.genidstart=»long»</a></li>
+<li><a class="reference internal" href="#ref">&lt;ref&gt;</a></li>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator">&lt;validator&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-domain-domain-name-validator-validator-name">&lt;VALIDATOR-NAME&gt;</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dataloader">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#dataloader-name">&lt;DATALOADER-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#dbdata-string">dbdata=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dbindex">&lt;dbindex&gt;</a><ul>
+<li><a class="reference internal" href="#dbindex-name">&lt;DBINDEX-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#fields-string">fields=»string»</a></li>
+<li><a class="reference internal" href="#unique-bool">unique=»bool»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ddl">&lt;ddl&gt;</a><ul>
+<li><a class="reference internal" href="#ddl-name">&lt;DDL-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#type-string">type=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#db">&lt;db&gt;</a><ul>
+<li><a class="reference internal" href="#db-name">&lt;DB-NAME&gt;</a><ul>
+<li><a class="reference internal" href="#database-string">database=»string»</a></li>
+<li><a class="reference internal" href="#dbdriver-string">dbdriver=»string»</a></li>
+<li><a class="reference internal" href="#host-string">host=»string»</a></li>
+<li><a class="reference internal" href="#jdbcdriverclass-string">jdbcDriverClass=»string»</a></li>
+<li><a class="reference internal" href="#username-string">username=»string»</a></li>
+<li><a class="reference internal" href="#password-string">password=»string»</a></li>
+<li><a class="reference internal" href="#url-string">url=»string»</a></li>
+<li><a class="reference internal" href="#conn-xxx-string">conn.XXX=»string»</a></li>
+<li><a class="reference internal" href="#config-path-string">config.path=»string»</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader">&lt;dataloader&gt;</a><ul>
+<li><a class="reference internal" href="#rt-model-model-name-dataloader-dataloader-name">&lt;DATALOADER-NAME&gt;</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Предыдущий раздел</h4>
+  <p class="topless"><a href="sqlfilter.html"
+                        title="предыдущая глава">Фильтр запросов SqlFilter</a></p>
+  <h3>Эта страница</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/rtdoc.rst.txt"
+           rel="nofollow">Исходный текст</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Быстрый поиск</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Искать" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             >указатель</a></li>
+        <li class="right" >
+          <a href="sqlfilter.html" title="Фильтр запросов SqlFilter"
+             >назад</a> |</li>
+        <li><a href="index.html">jandcode-dbm</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>

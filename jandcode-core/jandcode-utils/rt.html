@@ -1,0 +1,490 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rt &mdash; jandcode-utils</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="top" title="jandcode-utils" href="index.html" />
+    <link rel="prev" title="Полезности модуля jandcode-utils" href="navigate.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             accesskey="I">указатель</a></li>
+        <li class="right" >
+          <a href="navigate.html" title="Полезности модуля jandcode-utils"
+             accesskey="P">назад</a> |</li>
+        <li><a href="index.html">jandcode-utils</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rt">
+<span id="id1"></span><h1>Rt<a class="headerlink" href="#rt" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Rt (<code class="docutils literal notranslate"><span class="pre">jandcode.utils.rt.Rt</span></code>) - это древовидная структура данных, где каждый
+узел дерева имеет имя, атрибуты, дочерние элементы и предка.</p>
+<p>Получить представление об Rt можно из этого примера (он будет использоваться в дальнейшем
+для объяснения некоторых понятий):</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;field&gt;</span>
+        <span class="nt">&lt;sys</span> <span class="na">attr1=</span><span class="s">&quot;1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;number</span> <span class="na">parent=</span><span class="s">&quot;field/sys&quot;</span> <span class="na">title=</span><span class="s">&quot;Int&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;long</span> <span class="na">parent=</span><span class="s">&quot;field/number&quot;</span> <span class="na">title=</span><span class="s">&quot;Long&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;int</span> <span class="na">parent=</span><span class="s">&quot;field/number&quot;</span> <span class="na">title=</span><span class="s">&quot;Int&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;string</span> <span class="na">parent=</span><span class="s">&quot;field/sys&quot;</span> <span class="na">title=</span><span class="s">&quot;String&quot;</span> <span class="na">size=</span><span class="s">&quot;20&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/field&gt;</span>
+    <span class="nt">&lt;table&gt;</span>
+        <span class="nt">&lt;sys</span> <span class="na">title=</span><span class="s">&quot;SysTable&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;id</span> <span class="na">parent=</span><span class="s">&quot;table/sys&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;field&gt;</span>
+                <span class="nt">&lt;id</span> <span class="na">parent=</span><span class="s">&quot;field/long&quot;</span> <span class="na">title=</span><span class="s">&quot;Id&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;/id&gt;</span>
+        <span class="nt">&lt;tab1</span> <span class="na">parent=</span><span class="s">&quot;table/sys&quot;</span> <span class="na">title=</span><span class="s">&quot;Table1&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;field&gt;</span>
+                <span class="nt">&lt;name</span> <span class="na">parent=</span><span class="s">&quot;field/string&quot;</span> <span class="na">title=</span><span class="s">&quot;Name&quot;</span> <span class="na">size=</span><span class="s">&quot;60&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;/tab1&gt;</span>
+        <span class="nt">&lt;tab2</span> <span class="na">parent=</span><span class="s">&quot;table/tab1&quot;</span> <span class="na">title=</span><span class="s">&quot;Table2&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;field&gt;</span>
+                <span class="nt">&lt;name</span> <span class="na">size=</span><span class="s">&quot;100&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;name2</span> <span class="na">parent=</span><span class="s">&quot;field/string&quot;</span> <span class="na">title=</span><span class="s">&quot;Name&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;/tab2&gt;</span>
+    <span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>В этом примере описан объект с именем <code class="docutils literal notranslate"><span class="pre">root</span></code>, который имеет дочерние объекты
+<code class="docutils literal notranslate"><span class="pre">field</span></code>, <code class="docutils literal notranslate"><span class="pre">table</span></code>. В свою очередь объект <code class="docutils literal notranslate"><span class="pre">field</span></code> имеет дочерние <code class="docutils literal notranslate"><span class="pre">sys</span></code>, <code class="docutils literal notranslate"><span class="pre">string</span></code>,
+<code class="docutils literal notranslate"><span class="pre">int</span></code> и т.д.</p>
+<p>Имена атрибутов и узлов - регистронезависимые.</p>
+<p>Точка допустима в имени узла и имени атрибута.</p>
+<p>Имена дочерних узлов (в пределах одного родителя) должны быть уникальны.</p>
+<p>Каждый элемент характеризуется путем, в котором перечислены все его родительские элементы,
+начиная (но не включая) корневой элемент. Элементы пути разделяются <code class="docutils literal notranslate"><span class="pre">/</span></code>.
+В примере мы можем увидеть объекты с путями:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>field/string
+table/tab2/field/name2
+</pre></div>
+</div>
+<p>Атрибут <code class="docutils literal notranslate"><span class="pre">parent</span></code> интерпретируется особым образом. В нем указывается путь объекта rt,
+который является предком для этого. Если такой атрибут присутствует, то поиск
+значения атрибута и дочерних элементов осуществляется вверх по иерерхии, начиная
+с искомого. Первый найденный элемент будет возвращен.</p>
+<div class="section" id="id2">
+<h2>Программный интерфейс<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Создание нового корневого объекта Rt:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>Rt root = new RtRoot()
+</pre></div>
+</div>
+<p>Для доступа к значениям атрибутов используются методы <code class="docutils literal notranslate"><span class="pre">getValue/setValue</span></code>.
+В качестве параметра используется:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">attribute_name</span></code> - значение атрибута <code class="docutils literal notranslate"><span class="pre">attribute_name</span></code> объекта</li>
+<li><code class="docutils literal notranslate"><span class="pre">path:attribute_name</span></code> - значение атрибута <code class="docutils literal notranslate"><span class="pre">attribute_name</span></code> у объекта по пути <code class="docutils literal notranslate"><span class="pre">path</span></code></li>
+</ul>
+</div></blockquote>
+<p>Например:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="o">.</span><span class="na">getValue</span><span class="o">(</span><span class="s">&quot;field/string:title&quot;</span><span class="o">)</span>    <span class="c1">// =&gt; String</span>
+
+<span class="n">Rt</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">root</span><span class="o">.</span><span class="na">findChild</span><span class="o">(</span><span class="s">&quot;field/string&quot;</span><span class="o">)</span>
+<span class="n">t1</span><span class="o">.</span><span class="na">getValue</span><span class="o">(</span><span class="s">&quot;title&quot;</span><span class="o">)</span>                   <span class="c1">// =&gt; String</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xml">
+<h2>Формат XML<a class="headerlink" href="#xml" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Для xml-файлов, которые написаны для хранения rt, используется расширение <code class="docutils literal notranslate"><span class="pre">.rt</span></code>.</p>
+<p>При загрузке Rt из xml-файлов, каждый узел, имя которого не начинается с <code class="docutils literal notranslate"><span class="pre">x-</span></code>,
+рассматривается как объект Rt. Его имя совпадает с именем узла.
+Все атрибуты узла xml, имена которых не начинаются с <code class="docutils literal notranslate"><span class="pre">x-</span></code> рассматриваются как атрибуты
+Rt-объекта. Все дочерние элементы xml рассматриваются как дочерние объекты Rt.</p>
+<p>Если узел имеет атрибут <code class="docutils literal notranslate"><span class="pre">name</span></code>, то значение атрибута <code class="docutils literal notranslate"><span class="pre">name</span></code> интерпретируется
+как имя дочернего узла, который описывается этим тегом. Например:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;table</span> <span class="na">name=</span><span class="s">&quot;Tab1&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;f1&quot;</span> <span class="na">title=</span><span class="s">&quot;F1&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;f2&quot;</span> <span class="na">title=</span><span class="s">&quot;F1&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>эквивалентно:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;table&gt;</span>
+        <span class="nt">&lt;Tab1&gt;</span>
+            <span class="nt">&lt;field&gt;</span>
+                <span class="nt">&lt;f1</span> <span class="na">title=</span><span class="s">&quot;F1&quot;</span><span class="nt">/&gt;</span>
+                <span class="nt">&lt;f2</span> <span class="na">title=</span><span class="s">&quot;F1&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/field&gt;</span>
+        <span class="nt">&lt;/Tab1&gt;</span>
+    <span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>Если имя узла <code class="docutils literal notranslate"><span class="pre">i</span></code>, то оно заменяется на уникальное значение. Используется для
+узлов, имя которых не важно:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;path&gt;</span>
+        <span class="nt">&lt;i</span> <span class="na">value=</span><span class="s">&quot;c:/temp&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;i</span> <span class="na">value=</span><span class="s">&quot;d:/temp&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/path&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="id3">
+<h3>Текст узла<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Если узел имеет текст, то он сохраняется в атрибуте <code class="docutils literal notranslate"><span class="pre">text</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;node&gt;</span>TEXT VALUE<span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>эквивалентно:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">text=</span><span class="s">&quot;TEXT VALUE&quot;</span><span class="nt">&gt;&lt;/node&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Документирующий коментарий<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Если коментарий начинается с символа <code class="docutils literal notranslate"><span class="pre">&#64;</span></code>, то он сохраняется в атрибуте <code class="docutils literal notranslate"><span class="pre">comment</span></code>
+того узла, внутри которого был встречен:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;node&gt;</span><span class="c">&lt;!--@ COMMENT VALUE --&gt;</span><span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>эквивалентно:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">comment=</span><span class="s">&quot;COMMENT VALUE&quot;</span><span class="nt">&gt;&lt;/node&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>Системные атрибуты<a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Атрибуты, имена которых начинается с <code class="docutils literal notranslate"><span class="pre">x-</span></code> обрабатываются специальным способом.</p>
+<div class="section" id="x-root">
+<h4>x-root<a class="headerlink" href="#x-root" title="Ссылка на этот заголовок">¶</a></h4>
+<p>Устанавливает для узла флаг «виртуального корня». Для таких узлов все parent дочерних
+элементов обрабатываются относительно этого «виртуального корня». А если не найдено тут,
+то относительно реального корня. Используется для выделения частично независимых
+узлов в rt:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;node</span> <span class="na">x-root=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>Системные узлы<a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Узлы, имена которых начинаются с <code class="docutils literal notranslate"><span class="pre">x-</span></code> обрабатываются особым способом.</p>
+<div class="section" id="x-include">
+<h4>x-include<a class="headerlink" href="#x-include" title="Ссылка на этот заголовок">¶</a></h4>
+<p>Включение в узел, внутри которого встретился, файла (файлов) или другого узла.
+Файл грузится в один узел только один раз. При повторной загрузке - игнорируется.
+Этой особенностью можно воспользоваться для организации зависимостей.</p>
+<p>Атрибуты:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code> - путь до включаемого файла относительно текущего загружаемого. Может
+включать „*“ для загрузки группы файлов</li>
+<li><code class="docutils literal notranslate"><span class="pre">recursive</span></code> - по умолчанию=false. При значении true - если в path есть „*“,
+то файлы рекурсивно ищутся в дочерних каталогах указанного пути.</li>
+<li><code class="docutils literal notranslate"><span class="pre">required</span></code> - по умолчанию=true. При значении true - если файл не найден, генерируется
+ошибка. Иначе ошибка игнорируется.</li>
+<li><code class="docutils literal notranslate"><span class="pre">rtpath</span></code> - если указан, рассматривается как путь уже загруженного объекта,
+содержимое которого накладывается на узел (и атрибуты и дети), внутри которого
+объявлена директива. Накладывается не только сам узел, указанный в атрибуте, но
+и все его предки. Раскрытие при наложении не производится.</li>
+<li><code class="docutils literal notranslate"><span class="pre">module</span></code> - если указан, рассматривается как java-пакет, в котором должен лежать файл
+<code class="docutils literal notranslate"><span class="pre">module.rt</span></code>, который и загружается. Эквивалентно загрузке файла <code class="docutils literal notranslate"><span class="pre">res:MODULEPATH/module.rt</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">plugin</span></code> - если указан, рассматривается как включение плагина загрузки в текущий
+узел. Т.е. выполняется метод плагина <code class="docutils literal notranslate"><span class="pre">jandcode.utils.rt.IRtPlugin#handleInclude</span></code>
+в контексте текущего узла.</li>
+</ul>
+</div></blockquote>
+<p>Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+     <span class="nt">&lt;x-include</span> <span class="na">path=</span><span class="s">&quot;data/*.rt&quot;</span> <span class="na">recursive=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;table</span> <span class="na">name=</span><span class="s">&quot;Abonent&quot;</span><span class="nt">&gt;</span>
+         <span class="nt">&lt;x-include</span> <span class="na">rtpath=</span><span class="s">&quot;includes/datatable&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;/table&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>Пример загрузки модулей:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+     <span class="nt">&lt;x-include</span> <span class="na">module=</span><span class="s">&quot;myapp.module1&quot;</span><span class="nt">/&gt;</span>
+     <span class="nt">&lt;x-include</span> <span class="na">module=</span><span class="s">&quot;myapp.module2&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="x-module">
+<h4>x-module<a class="headerlink" href="#x-module" title="Ссылка на этот заголовок">¶</a></h4>
+<p>Определение модуля.</p>
+<p>Модулем является java-пакет, в котором есть файл <code class="docutils literal notranslate"><span class="pre">module.rt</span></code> и системный узел <code class="docutils literal notranslate"><span class="pre">x-module</span></code>
+должен быть использован только в этом файле.</p>
+<p>Атрибуты:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code> - имя модуля. Должно совпадать с именем java-пакета, где расположен <code class="docutils literal notranslate"><span class="pre">module.rt</span></code></li>
+</ul>
+</div></blockquote>
+<p>Дочерние узлы:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">depend</span></code> - зависимость модуля. В атрибуте <code class="docutils literal notranslate"><span class="pre">name</span></code> указывается имя модуля, который
+должен быть включен до этого.</li>
+</ul>
+</div></blockquote>
+<p>Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="c">&lt;!-- file: d:/project/myproject/src/myproject/mymodule/module.rt --&gt;</span>
+<span class="nt">&lt;root&gt;</span>
+    <span class="nt">&lt;x-module</span> <span class="na">name=</span><span class="s">&quot;myproject.mymodule&quot;</span> <span class="na">any_attr=</span><span class="s">&quot;any_value&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;depend</span> <span class="na">name=</span><span class="s">&quot;jandcode.app&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;depend</span> <span class="na">name=</span><span class="s">&quot;jandcode.dbm&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;depend</span> <span class="na">name=</span><span class="s">&quot;jandcode.web&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/x-module&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>Узел отправляется на обработку всем плагинам загрузки (описанных в узлах <code class="docutils literal notranslate"><span class="pre">x-plugin</span></code>)
+в метод <code class="docutils literal notranslate"><span class="pre">handleSysChild</span></code>. После обработки, узел модуля сохраняется как дочерний узла <code class="docutils literal notranslate"><span class="pre">module</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+     <span class="nt">&lt;module&gt;</span>
+        <span class="nt">&lt;myproject.mymodule</span> <span class="na">any_attr=</span><span class="s">&quot;any_value&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;depend&gt;</span>
+                <span class="nt">&lt;jandcode.app/&gt;</span>
+                <span class="nt">&lt;jandcode.dbm/&gt;</span>
+                <span class="nt">&lt;jandcode.web/&gt;</span>
+            <span class="nt">&lt;/depend&gt;</span>
+        <span class="nt">&lt;/myproject.mymodule&gt;</span>
+     <span class="nt">&lt;/module&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="x-parentexpander">
+<h4>x-parentexpander<a class="headerlink" href="#x-parentexpander" title="Ссылка на этот заголовок">¶</a></h4>
+<p>Определение правила раскрытия сокращенных значений атрибута <code class="docutils literal notranslate"><span class="pre">parent</span></code>. Атрибуты:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code> regex для пути узла</li>
+<li><code class="docutils literal notranslate"><span class="pre">parentvalue</span></code> regex для значения атрибута parent</li>
+<li><code class="docutils literal notranslate"><span class="pre">replace</span></code> на что заменять</li>
+</ul>
+</div></blockquote>
+<p>Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+   <span class="nt">&lt;x-parentexpander</span>
+       <span class="na">path=</span><span class="s">&quot;.*domain/(.*?)/field/(.*?)&quot;</span>
+       <span class="na">parentvalue=</span><span class="s">&quot;^(\w*)$&quot;</span>
+       <span class="na">replace=</span><span class="s">&quot;field/$1&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+<p>Если для значения <code class="docutils literal notranslate"><span class="pre">parent</span></code> не определено правило и в нем нет <code class="docutils literal notranslate"><span class="pre">/</span></code>, то тогда используется
+значение <code class="docutils literal notranslate"><span class="pre">имя_владельца/значение_parent</span></code>.</p>
+<p>Если значение <code class="docutils literal notranslate"><span class="pre">parent</span></code> начинается с <code class="docutils literal notranslate"><span class="pre">/</span></code>, то раскрытие для него не производится.
+Считается что указан явный абсолютный путь.</p>
+</div>
+<div class="section" id="x-attr">
+<h4>x-attr<a class="headerlink" href="#x-attr" title="Ссылка на этот заголовок">¶</a></h4>
+<p>Определение атрибута с многострочным значением. В атрибуте <code class="docutils literal notranslate"><span class="pre">name</span></code> имя атрибута,
+в тексте узла - значение атрибута. Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+   <span class="nt">&lt;mynode</span> <span class="na">attr1=</span><span class="s">&quot;a1&quot;</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;x-attr</span> <span class="na">name=</span><span class="s">&quot;attr2&quot;</span><span class="nt">&gt;</span>
+         a2-1
+         a2-2
+       <span class="nt">&lt;/x-attr&gt;</span>
+   <span class="nt">&lt;/mynode&gt;</span>
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="x-plugin">
+<h4>x-plugin<a class="headerlink" href="#x-plugin" title="Ссылка на этот заголовок">¶</a></h4>
+<p>Определение плагина загрузки.</p>
+<p>Плагином является класс, который участвует в процессе загрузки и может изменять
+узел, внутри которого он был включен. Включение плагина в процесс загрузки
+осуществляется через тег <code class="docutils literal notranslate"><span class="pre">x-include</span></code>, в атрибуте <code class="docutils literal notranslate"><span class="pre">plugin</span></code> которого
+указывается имя включаемого плагина.</p>
+<p>Атрибуты:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">name</span></code> - имя плагина. Должно быть уникальным среди всех плагинов. Можно не указывать,
+тогда имя генерируется. Плагины без имени нельзя будет использовать в <code class="docutils literal notranslate"><span class="pre">x-include</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">class</span></code> - имя класса плагина загрузки. Должен реализовывать интерфейс <code class="docutils literal notranslate"><span class="pre">jandcode.utils.rt.IRtPlugin</span></code>.
+Если не указан, то должен быть указан атрибут <code class="docutils literal notranslate"><span class="pre">path</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code> - если указан и не указан атрибут <code class="docutils literal notranslate"><span class="pre">class</span></code>, то подразумеватся специальный
+плагин, который будет включать в узел файл(ы), указанный в этом атрибуте</li>
+<li><code class="docutils literal notranslate"><span class="pre">остальные</span></code> - атрибуты, которые передаются экземпляру плагина и используются им
+по своему усмотрению</li>
+</ul>
+</div></blockquote>
+<p>Дочерние узлы:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">depend</span></code> - зависимость плагина. В атрибуте <code class="docutils literal notranslate"><span class="pre">name</span></code> указывается имя плагина, который
+должен быть использован до этого.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>Подстановки<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h3>
+<p>В значениях атрибутов и текста узлов раскрываются подстановки <code class="docutils literal notranslate"><span class="pre">#{VAR}</span></code>, где <code class="docutils literal notranslate"><span class="pre">VAR</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code> - абсолютный путь до текущего файла</li>
+<li><code class="docutils literal notranslate"><span class="pre">pathup:FILENAME</span></code> - абсолютный путь вверх до каталога, содержащего файл <code class="docutils literal notranslate"><span class="pre">FILENAME</span></code>, начиная с текущего каталога</li>
+<li><code class="docutils literal notranslate"><span class="pre">pathprop:PROPNAME</span></code> - значение из <code class="docutils literal notranslate"><span class="pre">UtFile.getPathprop(String,</span> <span class="pre">String)</span></code>, начиная с текущего каталога</li>
+<li><code class="docutils literal notranslate"><span class="pre">rt:RTPATH</span></code> - значение по пути <code class="docutils literal notranslate"><span class="pre">RTPATH</span></code> из загруженной к этому времени rt</li>
+<li><code class="docutils literal notranslate"><span class="pre">остальные</span></code> - значение из <code class="docutils literal notranslate"><span class="pre">System.getProperties()</span></code></li>
+</ul>
+</div></blockquote>
+<p>В описаниях подстановок используются термины:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>текущий файл</strong> - файл, в котором встретилась подстановка</li>
+<li><strong>текущий каталог</strong> - каталог, в котором лежит файл в котором встретилась подстановка</li>
+</ul>
+</div></blockquote>
+<p>Пример:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;root&gt;</span>
+    <span class="c">&lt;!-- attr1 равен пути, в котором лежит текущий файл --&gt;</span>
+    <span class="nt">&lt;n1</span> <span class="na">attr1=</span><span class="s">&quot;#{path}&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- если текущий файл лежит в каталоге d:\projects\myproject\myconfig</span>
+<span class="c">         и существут каталог d:\projects\myproject\dir\subdir</span>
+<span class="c">         то значение attr1 равно d:\projects\myproject\dir\subdir\cfg1.rt</span>
+<span class="c">     --&gt;</span>
+    <span class="nt">&lt;n2</span> <span class="na">attr1=</span><span class="s">&quot;#{pathup:dir/subdir}/cfg1.rt&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- attr1 равен пути в временном каталоге d:\temp\myproject\myfile.txt --&gt;</span>
+    <span class="nt">&lt;n3</span> <span class="na">attr1=</span><span class="s">&quot;#{java.io.tmpdir}/myproject/myfile.txt&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;config&gt;</span>
+        <span class="nt">&lt;node1</span> <span class="na">value=</span><span class="s">&quot;123&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/config&gt;</span>
+
+    <span class="c">&lt;!-- attr1 равен 123 --&gt;</span>
+    <span class="nt">&lt;n4</span> <span class="na">attr1=</span><span class="s">&quot;#{rt:config/node1:value}&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/root&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Оглавление</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rt</a><ul>
+<li><a class="reference internal" href="#id2">Программный интерфейс</a></li>
+<li><a class="reference internal" href="#xml">Формат XML</a><ul>
+<li><a class="reference internal" href="#id3">Текст узла</a></li>
+<li><a class="reference internal" href="#id4">Документирующий коментарий</a></li>
+<li><a class="reference internal" href="#id5">Системные атрибуты</a><ul>
+<li><a class="reference internal" href="#x-root">x-root</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">Системные узлы</a><ul>
+<li><a class="reference internal" href="#x-include">x-include</a></li>
+<li><a class="reference internal" href="#x-module">x-module</a></li>
+<li><a class="reference internal" href="#x-parentexpander">x-parentexpander</a></li>
+<li><a class="reference internal" href="#x-attr">x-attr</a></li>
+<li><a class="reference internal" href="#x-plugin">x-plugin</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">Подстановки</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Предыдущий раздел</h4>
+  <p class="topless"><a href="navigate.html"
+                        title="предыдущая глава">Полезности модуля jandcode-utils</a></p>
+  <h3>Эта страница</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/rt.rst.txt"
+           rel="nofollow">Исходный текст</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Быстрый поиск</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Искать" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             >указатель</a></li>
+        <li class="right" >
+          <a href="navigate.html" title="Полезности модуля jandcode-utils"
+             >назад</a> |</li>
+        <li><a href="index.html">jandcode-utils</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+    </div>
+  </body>
+</html>
