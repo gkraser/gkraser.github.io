@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Содержание toc.xml</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class="cur "><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="folder "><a href="cm.html">Макрокоманды</a></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li class="active">Содержание toc.xml</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Содержание toc.xml</h1>
+</div>
+<div class="topic-body">
+  <p>Формат файла с описанием содержания:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;toc-root topic=&quot;topicId&quot;&gt;
+        &lt;toc topic=&quot;topicId|mask&quot; title=&quot;TitleToc&quot; type=&quot;auto|files|plain&quot;&gt;
+            &lt;toc topic=&quot;topicId|mask&quot; title=&quot;TitleToc&quot; type=&quot;auto|files|plain&quot;&gt;
+                ...
+            &lt;/toc&gt;
+            ...
+            &lt;include toc=&quot;path/to/toc.xml&quot;/&gt;
+            ...
+        &lt;/toc&gt;
+    &lt;/toc-root&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>На верхнем уровне указывается узел <code>toc-root</code>, определяющий корень содержания.
+Его атрибут <code>topic</code> должен указывать на статью с главной страницей
+документации.</p>
+<p>Дочерний узел <code>toc</code> определяет элемент содержания и может содержать свои дочерние
+узлы <code>toc</code>.</p>
+<p>Атрибуты узла <code>toc</code>:</p>
+<ul>
+<li><code>topic</code> - id статьи (или файл статьи). Может быть относительным (начинатся с <code>'.'</code>),
+тогда рассматривается относительно папки с родительским элементом содержания, если
+он есть. иначе - относительно расположения файла <code>toc.xml</code>
+Может отсутствовать, тогда элемент содержания указывает на виртуальную статью без текста.
+Может содержать <code>*</code>, тогда рассматривается как маска, указывающая какие статьи должны
+попасть в это место содержания.</li>
+<li><code>title</code> - заголовок статьи. Если указан, то заменяет заголовок статьи при генерации
+содержания. Если элемент содержания без статьи, то обязательно нужно указать
+<code>title</code></li>
+<li><code>type</code> - для элементов содержания с масками. Описывает алгоритм формирования элементов
+содержания:
+<ul>
+<li><code>auto</code> - автоматическое содержание: каждая статья, попавшая под маску -
+элемент содержания. Если имя файла со статьей имеет имя <code>index</code>, то статья попадает
+в содержание с именем папки, в которой она находится. Заголовком элемента
+содержания становится заголовок статьи.</li>
+<li><code>file</code> - автоматическое содержание по файлам. Каждая статья, попавшая под маску -
+элемент содержания. Имя элемента содержания - имя файла статьи без расширения.
+Учитывается иерархия файлов. Используется для отладочных целей.</li>
+<li><code>plain</code> - как <code>auto</code>, только игнорируется иерархия.</li>
+</ul>
+</li>
+</ul>
+<p>Дочерний узел <code>include</code> предназначен для вставки другого файла <code>toc.xml</code>.</p>
+<p>Атрибуты узла <code>include</code>:</p>
+<ul>
+<li><code>toc</code> - виртуальный путь файла <code>toc.xml</code> относительно корня документации.</li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

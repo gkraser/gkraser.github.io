@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Генерация исходников</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class=""><a href="base.html">Основы jc</a></li>
+<li class=""><a href="jc-bat.html">jc.bat</a></li>
+<li class=""><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class=""><a href="gradle-tools.html">GradleTools</a></li>
+<li class="cur "><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class=""><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class=""><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">Генерация исходников</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Генерация исходников</h1>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.jc.std.JavaProject</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>Иногда требуется сгенерировать часть исходных текстов модуля.
+Для этого в <code>jandcode.jc.std.JavaProject</code> имеется средство <code>genSrc</code>.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">def m = include(JavaProject)
+m.genSrc(OUTDIR) {t -&gt;         // генерация исходников
+    CODE;
+}
+m.genSrcTest(OUTDIR) {t -&gt;     // генерация тестовых исходников
+    CODE;
+}
+//...
+</code></pre>
+</div></div>
+<p>Наличие такого кода в <code>project.jc</code> создаст команду <code>gen-src</code> в проекте.
+Причем, если имеется корневой проект, который включает этот java-проект как модуль,
+то в корневом то же появится команда <code>gen-src</code>.</p>
+<p>Команда <code>gen-src</code> выполняется автоматически перед компиляцией проекта.</p>
+<p>Объявлений <code>m.genSrc(OUTDIR)</code> может быть несколько.</p>
+<p>В closure передается параметр <code>t</code> типа <code>jandcode.jc.std.JavaProject.GenTask</code>,
+который имеет свойства:</p>
+<ul>
+<li><code>dir</code> - куда генерировать. Этот каталог был указан в параметре <code>OUTDIR</code> при объявлении
+процедуры генерации. Перед выполнением каталог очищается.</li>
+<li><code>dirPackage</code> - каталог с пакетом модуля внутри каталога генерации.
+Физически этот каталог не создается.</li>
+</ul>
+<p>Каталоги, объявленные в <code>genSrc</code>, считаются частью исходных текстов и используются
+при компиляции исходников как их неотъемлемая часть, просто валяющаяся в особом месте.</p>
+<p>Каталоги, объявленные в <code>genSrc</code>, подключаются в IDE как каталоги с сгенерированными
+исходниками. Поэтому не следует генерировать их в исключаемую в IDE папку.
+Например каталог <code>temp</code> - неудачное место для генерации.</p>
+<p>По соглашению вся генерация производится в подкаталоги каталога <code>_gen</code>.
+Для каждого объявления <code>genSrc</code> - свой подкаталог.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">m.genSrc(wd('_gen/data1')) {t-&gt;
+    ant.echo(message:'hello', file: t.dirPackage+'/file1.txt')
+}
+m.genSrc(wd('_gen/data2')) {t-&gt;
+    ant.echo(message:'hello', file: t.dirPackage+'/file2.txt')
+}
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

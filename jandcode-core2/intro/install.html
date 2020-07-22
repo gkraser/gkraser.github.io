@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Установка</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="open "><a href="intro.html">Введение</a><ul><li class="cur "><a href="install.html">Установка</a></li>
+<li class=""><a href="getstart.html">Быстрый старт</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="intro.html">Введение</a></li>
+<li class="active">Установка</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Установка</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="install.html#head1">Настройка среды</a></li>
+<li class=""><a href="install.html#head2">Установка</a></li>
+<li class=""><a href="install.html#head3">Обновление</a></li>
+<li class=""><a href="install.html#head4">Ветки default и dev</a></li>
+<li class=""><a href="install.html#head5">Поддержка запуска jc версии 1.5</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+<symbol id="adm-warning">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="m3.1 18.5 8.1-14c.4-.7 1.4-.7 1.8 0l8.1 14c.4.7-.1 1.6-.9 1.6h-16.1c-.9 0-1.4-.9-1-1.6zm10.6-4.3c0-.1 0-.2 0-.2v-4.6c0-.4 0-.6 0-.6-.1-.1-.3-.2-.7-.3s-.7-.1-1-.1c-.1 0-.2 0-.3 0-.3.1-.5.2-.5.4v4.2s-.1.1-.2.4-.1.4 0 .5c.3.2.7.4 1.2.6s.9.3 1.2.3h.2c.2 0 .3-.2.3-.5-.2 0-.2-.1-.2-.1zm-.8 1.4c-.5-.2-.9-.2-1.2-.2s-.4.1-.5.4v.9c0 .2 0 .3-.1.4-.1.2-.2.3-.1.4s.5.3 1.2.5c.6.2 1 .2 1.1.2.2 0 .4-.1.4-.3s.1-.4.1-.7c0-.1 0-.3.1-.7 0-.3 0-.5 0-.5-.2-.1-.5-.2-1-.4z" fill="currentColor"/>
+</svg>
+</symbol>
+</svg>
+<h2 id="head1">Настройка среды</h2>
+<p>Перед установкой <strong>Jandcode Core</strong> необходимо настроить среду.
+Должно быть установлено следующее:</p>
+<ul>
+<li>Java JDK, версия &gt;=13</li>
+<li><a href="https://gradle.org/">Gradle</a>, версия 5 или старше</li>
+<li><a href="https://nodejs.org">Node.js</a>, версия 10.16.x или старше</li>
+<li><a href="https://www.mercurial-scm.org/">Mercurial</a>, версия 4 или старше</li>
+</ul>
+<p>Среда должна быть настроена так, что бы, что бы с командной строки
+запускались приложения <code>java</code>, <code>javac</code>, <code>gradle</code>, <code>node</code>, <code>npm</code>, <code>hg</code>.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Поддержка IDE</span>
+</div>
+<div class="adm-body">
+<p>Из коробки поддерживается только IDE
+<a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>, версия 2018 или старше.</p>
+</div>
+</div>
+<h2 id="head2">Установка</h2>
+<p>Проект <strong>Jandcode Core</strong> поставляется в исходниках и компилируется на машине
+пользователя.</p>
+<p>Исходники доступны в репозитории mercurial:
+<a href="https://bitbucket.org/gkraser/jandcode-core2">https://bitbucket.org/gkraser/jandcode-core2</a>.</p>
+<p>Создаем произвольный рабочий каталог для проектов (например
+<code>D:\jc-projects</code> для Windows или <code>~/jc-projects</code> для Linux)
+и переходим в него:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">cd /D D:\jc-projects
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">cd ~/jc-projects
+</code></pre>
+</div></div>
+<p>Клонируем репозиторий:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">hg clone https://bitbucket.org/gkraser/jandcode-core2
+</code></pre>
+</div></div>
+<p>Переходим в каталог <code>D:\jc-projects\jandcode-core2</code>
+(для Linux <code>~/jc-projects/jandcode-core2</code>) и запускаем сборку проекта:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">build-bin.bat
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">sh ./build-bin.sh
+</code></pre>
+</div></div>
+<p>После окончания сборки имеем каталог <code>bin</code>, в котором собрана последняя
+стабильная версия проекта.</p>
+<p>Необходимо обеспечить доступ к <code>jc.bat</code> (<code>jc.sh</code> для Linux) с командной строки.
+Для этого:</p>
+<ul>
+<li><strong>Windows</strong>: укажите каталог <code>D:\jc-projects\jandcode-core2\bin</code>
+в переменной среды <code>PATH</code>, либо скопируйте файл
+<code>D:\jc-projects\jandcode-core2\bin\jc.bat</code> в каталог, который
+указан в переменной <code>PATH</code>.</li>
+<li><strong>Linux</strong>: создайте алиас для запуска <code>jc.sh</code>:
+<div class="codeblock" data-language="shell"><div class="codeblock--content"><pre><code class="language-shell">alias jc='sh ~/jc-projects/jandcode-core2/bin/jc.sh $*'
+</code></pre>
+</div></div></li>
+</ul>
+<p>Переходим в каталог <code>D:\jc-projects\jandcode-core2\bin</code>
+(для Linux <code>~/jc-projects/jandcode-core2/bin</code>) и запускаем настройку
+рабочего каталога для проектов:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">jc create -t:jc-env -o:D:\jc-projects
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">jc create -t:jc-env -o:$HOME/jc-projects
+</code></pre>
+</div></div><div class="adm-block adm-warning">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
+</div>
+<div class="adm-body">
+<p>Обратите внимание на <code>$HOME</code> вместо <code>~</code>. Тильда в этом случае не сработает.</p>
+</div>
+</div>
+<p>В каталоге <code>D:\jc-projects</code> (для Linux <code>~/jc-projects</code>) будут созданы
+файлы <code>jc-env.bat</code> (для Linux <code>jc-env.sh</code>) и <code>jc-env.jc</code>.</p>
+<p>Далее переходим в каталог для проектов <code>D:\jc-projects</code>
+(для Linux <code>~/jc-projects</code>) и запускаем <code>jc</code>, что бы убедится, что все работает:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">cd /D D:\jc-projects
+jc
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">cd ~/jc-projects
+jc
+</code></pre>
+</div></div>
+<p>В выводе обращаем внимание, что <code>jc-home</code> указывает на каталог с собранным
+проектом:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text"> * jc-home: D:\jc-projects\jandcode-core2\bin
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text"> * jc-home: /home/USERNAME/jc-projects/jandcode-core2/bin
+</code></pre>
+</div></div>
+<p>Готово.</p>
+<h2 id="head3">Обновление</h2>
+<p>Что бы обновить версию до последней, выполните:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">cd /D D:\jc-projects\jandcode-core2
+build-bin.bat
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">cd ~/jc-projects/jandcode-core2
+sh ./build-bin.sh
+</code></pre>
+</div></div>
+<p>Если версия изменилась, продукт будет пересобран.</p>
+<h2 id="head4">Ветки default и dev</h2>
+<div class="adm-block adm-warning">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
+</div>
+<div class="adm-body">
+<p>В ветке <code>default</code> находится стабильный релиз. Работоспособность
+других веток и ревизий не гарантируется.</p>
+</div>
+</div>
+<p>В репозитории имеются 2 основных ветки: <code>default</code> и <code>dev</code>.</p>
+<p>Ветка <code>default</code> содержит последний стабильный релиз.</p>
+<p>Ветка <code>dev</code> содержит текущую версию для разработки.</p>
+<p>Вы можете собирать бинарный вариант продукта из любой ветки, даже из любой ревиизии.
+Просто обновите рабочий каталог с исходниками <strong>Jandcode Core</strong> до нужной Вам
+ветки или ревизии. Например для <code>dev</code>:</p>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">cd /D D:\jc-projects\jandcode-core2
+hg pull -u
+hg update dev
+build-bin.bat
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">cd ~/jc-projects/jandcode-core2
+hg pull -u
+hg update dev
+sh ./build-bin.sh
+</code></pre>
+</div></div>
+<h2 id="head5">Поддержка запуска jc версии 1.5</h2>
+<p>Если вы используете Jandcode Core версии 1.5.x, то ее инструменты командной строки
+так же запускаются через команду <code>jc</code>, которая конфликтует с новой версией.</p>
+<p>Для поддержки работоспособности старой версии
+через новый вариант <code>jc.bat</code> необходимо в рабочем каталоге с проектам
+на старой версии (в том, который содержит файл <code>jc-run.bat</code>) создать
+файл <code>jc-env.bat</code> с содержимым:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">set JC_RUN=%~dp0jc-run.bat
+</code></pre>
+</div></div>
+<p>Если Ваш старый <code>jc-run.bat</code> лежит в каком-то особом и загадочном месте,
+то создайте файл <code>jc-env.bat</code> в каталоге выше Вашего проекта на старой версии
+и в нем для переменной <code>JC_RUN</code> установите полный путь до <code>jc-run.bat</code>
+старой версии.</p>
+<p>Теперь запуск <code>jc</code> в рабочем каталоге с новой версией запустит новую,
+а в рабочем каталоге со старой - старую.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

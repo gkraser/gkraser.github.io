@@ -1,0 +1,298 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Action</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class="cur "><a href="action.html">Action</a></li>
+<li class=""><a href="gsp.html">GSP</a></li>
+<li class=""><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class=""><a href="servlet.html">Сервлет</a></li>
+</ul></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">Action</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Action</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="action.html#head1">Реализация action</a></li>
+<li class=""><a href="action.html#head2">Интерпретация pathInfo для action</a></li>
+<li class=""><a href="action.html#head3">Методы в классе action</a></li>
+<li class=""><a href="action.html#head4">ActionMethodExecutor</a></li>
+<li class=""><a href="action.html#head5">index.gsp / index.html</a></li>
+<li class="folder "><a href="action.html#head6">Конфигурация module.cfx</a><ul><li class=""><a href="action.html#head7">web/action</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Action - это объекты, реализующие интерфейс <code>jandcode.core.web.action.IAction</code>, которые
+обратывают http-запросы пользователя в контексте web-приложения и возвращают
+ответ клиенту.</p>
+<p>На практике для создания <code>action</code> необходимо создать наследника от класса
+<code>jandcode.core.web.action.BaseAction</code> и реализовать ему метод <code>onExec()</code>, в котором
+и будет логика обработки запроса.</p>
+<p>Каждая <code>action</code> регистрируется в приложении под определенным именем, которое может
+включать в себя <code>/</code>:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;action1&quot;
+                class=&quot;mymodule.mypackage.Action1&quot;/&gt;
+        &lt;action name=&quot;blog/news&quot;
+                class=&quot;mymodule.mypackage.News&quot;/&gt;
+        &lt;action name=&quot;blog&quot;
+                class=&quot;mymodule.mypackage.Blog&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Упрощенная схема преобразования url в <code>action</code> такова:
+среди всех зарегистрированных <code>action</code> ищется такая, имя которой совпадает с
+началом <code>pathInfo</code> http-запроса. Остаток <code>pathInfo</code>, из которого удалено имя <code>action</code>
+будет передано в обработчик запроса в качестве одного из атрибутов.</p>
+<p><strong>Что такое pathInfo?</strong> Допустим, что приложение работает
+по адресу <code>http://localhost/myapp/</code>. Тогда все, что будет в url
+после <code>http://localhost/myapp/</code> и до начала параметров (символа <code>?</code>)
+является <code>pathInfo</code>. Например в запросе
+<code>http://localhost/myapp/a1/a2/a3?param1=1&amp;param2=2</code> имеем <code>pathInfo</code> равным <code>a1/a2/a3</code>.
+<code>pathInfo</code> доступно через метод <code>jandcode.core.web.Request#getPathInfo</code>.</p>
+<p>Для вышеприведенного примера регистрации <code>action</code> будут верны следующие преобразования
+<code>pathInfo</code> в <code>action</code>:</p>
+<table>
+<thead>
+<tr><th>pathInfo</th><th>action</th><th>Остаток pathInfo</th><th>Коментарий</th></tr>
+</thead>
+<tbody>
+<tr><td><code>action1</code></td><td><code>action1</code></td><td> </td><td> </td></tr>
+<tr><td><code>action1/m1</code></td><td><code>action1</code></td><td><code>m1</code></td><td> </td></tr>
+<tr><td><code>blog/m1/m2</code></td><td><code>blog</code></td><td><code>m1/m2</code></td><td> </td></tr>
+<tr><td><code>blog/news/m1</code></td><td><code>blog/news</code></td><td><code>m1</code></td><td><code>blog/news</code> длиннее по фасетам, чем <code>blog</code></td></tr>
+</tbody>
+</table>
+<h2 id="head1">Реализация action</h2>
+<p>Простейшая реализация <code>action</code> выглядит так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">package web._inc.action
+
+import jandcode.commons.variant.*
+import jandcode.core.web.action.*
+
+class SimpleAction extends BaseAction {
+    protected void onExec() throws Exception {
+        // это запрос, тут есть все, что известно о запросе + утилиты
+        ActionRequestUtils req = getReq()
+        // это параметры запроса
+        IVariantMap params = getReq().getParams()
+        // возвращаем результат клиенту как строку
+        getReq().render(&quot;Hello! Params: &quot; + getReq().getParams())
+    }
+}
+</code></pre></div></div>
+<h2 id="head2">Интерпретация pathInfo для action</h2>
+<p>Доупустим, что имеется <code>action</code>, зарегистрированая так:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;my/simple/action&quot;
+                class=&quot;web._inc.action.SimpleAction&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>и ее экземпляр создан для обработки запроса с таким <code>pathInfo</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">my/simple/action/p1/p2/p3
+</code></pre>
+</div></div>
+<p>Тогда в атрибуты <code>getRequest().getAttrs()</code> будут дополнительно добавлены следующие
+атрибуты:</p>
+<table>
+<thead>
+<tr><th>Имя атрибута</th><th>Константа имени</th><th>Значение</th><th>Коментарий</th></tr>
+</thead>
+<tbody>
+<tr><td><code>actionPathInfo</code></td><td><code>WebConsts.a_actionPathInfo</code></td><td><code>p1/p2/p3</code></td><td><code>pathInfo</code>, из которого убрано имя action</td></tr>
+<tr><td><code>actionMethod</code></td><td><code>WebConsts.a_actionMethod</code></td><td><code>p1</code></td><td>Первый фасет из <code>actionPathInfo</code>, имя &quot;метода&quot; для action</td></tr>
+<tr><td><code>actionMethodPathInfo</code></td><td><code>WebConsts.a_actionMethodPathInfo</code></td><td><code>p2/p3</code></td><td><code>actionPathInfo</code>, из которого убран первый фасет</td></tr>
+</tbody>
+</table>
+<p>Если соответсвующей информации нет в <code>pathInfo</code>, то атрибуты принимают пустые значения.</p>
+<h2 id="head3">Методы в классе action</h2>
+<p>Реализация метода <code>onExec()</code> по умолчанию вызывает публичный метод
+с именем, который указан в атрибуте <code>actionMethod</code>. Если в этом атрибуте нет
+значения, то значение по умолчанию для него - <code>index</code>. Если метода с таком именем
+нет, то генерируется ошибка.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.web.action.BaseAction
+
+class SimpleMethodsAction extends BaseAction {
+
+    public void index() throws Exception {
+        getReq().render(&quot;index&quot;)
+    }
+
+    public void p1() throws Exception {
+        getReq().render(&quot;p1&quot;)
+    }
+
+}</code></pre></div></div>
+<p>В таблице показаны варианты обработки различных <code>pathInfo</code>, предполагая, что
+<code>action</code> зарегистрирована с именем <code>my/act</code>:</p>
+<table>
+<thead>
+<tr><th>pathInfo</th><th>Действие</th></tr>
+</thead>
+<tbody>
+<tr><td><code>my/act</code></td><td>Вызов метода <code>index</code></td></tr>
+<tr><td><code>my/act/index</code></td><td>Вызов метода <code>index</code></td></tr>
+<tr><td><code>my/act/p1</code></td><td>Вызов метода <code>p1</code></td></tr>
+<tr><td><code>my/act/p1/p2/p3</code></td><td>Вызов метода <code>p1</code>, атрибут <code>actionMethodPathInfo=p2/p3</code></td></tr>
+<tr><td><code>my/act/ppp</code></td><td>Ошибка, метода <code>ppp</code> нет</td></tr>
+</tbody>
+</table>
+<p>Если метод возвращает значение, то это значение будет использовано в качестве
+данных для рендеринга:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.web.action.*
+
+class FuncMethodsAction extends BaseAction {
+
+    public void p1() throws Exception {
+        getReq().render(&quot;data1&quot;)
+    }
+
+    public String p2() throws Exception {
+        return &quot;data1&quot;
+    }
+
+}</code></pre></div></div>
+<p>В этом примере методы <code>p1</code> и <code>p2</code> эквивалентны.</p>
+<p>Когда метод <code>onExec()</code> явно перекрыт, то, естественно, эти правила не действуют и
+процесс обработки будет вестись по вашим правилам.</p>
+<h2 id="head4">ActionMethodExecutor</h2>
+<p>Если метод action имеет один параметр типа <code>jandcode.core.web.action.ActionMethodExecutor</code>,
+то выполнение метода action делегируется экземпляру этого класса.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.web.action.*
+
+import java.lang.reflect.*
+
+class ActionExecutor1 extends BaseAction {
+
+    static class Executor1 implements ActionMethodExecutor {
+
+        String data
+
+        void execActionMethod(BaseAction action, Method method) throws Exception {
+            // вызываем оригинальный метод и передаем себя в качестве параметра
+            method.invoke(inst, this)
+
+            // пользуемся результатами
+            Map m = new HashMap()
+            m.put(&quot;data&quot;, data)
+
+            // рендерим результат
+            action.getReq().render(m)
+        }
+
+        void setData(String data) {
+            this.data = data
+        }
+
+    }
+
+    //////
+
+    void m1(Executor1 ex) {
+        ex.setData(&quot;hello&quot;)
+    }
+
+}</code></pre></div></div>
+<h2 id="head5">index.gsp / index.html</h2>
+<p>Когда при обработке <code>pathInfo</code> не найдена <code>action</code>, которая соответствует
+этому <code>pathInfo</code>, делается попытка интерпретировать <code>pathInfo</code> как виртуальную
+папку, в которой ищутся файлы <code>index.gsp</code> или <code>index.html</code>.</p>
+<p>Если найден <code>index.gsp</code>, то клиенту возвращается результат рендеринга этого файла.
+url для клиента выглядит как папка.</p>
+<p>Если найден <code>index.html</code>, то делается redirect на на него, соответственно
+url для клиента выглядит как файл.</p>
+<p>При наличии обоих файлов приоритет имеет <code>index.gsp</code>.</p>
+<h2 id="head6">Конфигурация module.cfx</h2>
+<h3 id="head7">web/action</h3>
+<p>Регистрация <code>action</code>.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;NAME&quot;
+                class=&quot;jandcode.core.web.action.BaseAction&quot;
+        /&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<ul>
+<li><code>name</code> - уникальное имя <code>action</code>. Может включать <code>/</code>.</li>
+<li><code>class</code> - класс <code>action</code></li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

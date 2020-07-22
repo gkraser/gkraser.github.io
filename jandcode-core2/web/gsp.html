@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>GSP</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class=""><a href="action.html">Action</a></li>
+<li class="cur "><a href="gsp.html">GSP</a></li>
+<li class=""><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class=""><a href="servlet.html">Сервлет</a></li>
+</ul></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">GSP</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>GSP</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="gsp.html#head1">Синтаксис шаблонов gsp</a></li>
+<li class=""><a href="gsp.html#head2">Локальные переменные в шаблоне</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>GSP - это генератор текста по шаблонам <code>gsp</code>.</p>
+<p>Генератор по шаблонам <code>gsp</code> принципиально устроен так же, как и другие общеупотребительные
+генераторы: берется текст на некотором входном языке и на его основе генерируется текст.
+Входной язык поддерживает подстановку значений переменных, операторы ветвления, циклы и
+т.д.</p>
+<p>В качестве входного языка шаблонов используется формат GSP (Groovy Server Pages) из
+проекта <a href="http://grails.org">http://grails.org</a> для обеспечения нормального редактирования в IDE,
+которые поддерживают <code>gsp</code>.</p>
+<h2 id="head1">Синтаксис шаблонов gsp</h2>
+<p>Текст шаблона представляет собой тело метода <code>onRender()</code> класса <code>jandcode.core.web.gsp.BaseGsp</code>
+на языке <code>groovy</code>.</p>
+<p>Парзер <code>gsp</code> преобразует текст шаблона в текст на <code>groovy</code> по следующим правилам:</p>
+<ul>
+<li><code>ANYTEXT</code> преобразуется в <code>out('ANYTEXT')</code> <em>(вывести фрагмент текста)</em></li>
+<li><code>${ANYTEXT}</code> преобразуется в <code>out(ANYTEXT)</code> <em>(вывести значение выражения)</em></li>
+<li><code>&lt;%ANYTEXT%&gt;</code> преобразуется в <code>ANYTEXT</code> <em>(вставить фрагмент groovy-кода)</em></li>
+<li><code>&lt;%=ANYTEXT%&gt;</code> преобразуется в <code>out(ANYTEXT)</code> <em>(вывести значение выражения)</em></li>
+<li><code>&lt;%--ANYTEXT--%&gt;</code> преобразуется в <code>/*ANYTEXT*/</code> <em>(коментарий)</em></li>
+<li><code>%{--ANYTEXT--}%</code> преобразуется в <code>/*ANYTEXT*/</code> <em>(коментарий)</em></li>
+<li><code>&lt;xx:yy/&gt;</code> преобразуется в <code>outTag('xx/yy')</code> <em>(вызов функции outTag)</em></li>
+<li><code>&lt;xx:yy atr=&quot;value&quot; atr2=&quot;value2&quot;/&gt;</code> преобразуется в
+<code>outTag('xx/yy',atr:value,atr2:value)</code> <em>(вызов функции outTag)</em></li>
+<li><code>&lt;xx:yy atr=&quot;value&quot; atr2=&quot;value2&quot;&gt; body &lt;/xx:yy&gt;</code> преобразуется в
+<code>outTag('xx/yy',atr:value,atr2:value) { body }</code> <em>(вызов функции outTag с closure в качестве тела)</em></li>
+</ul>
+<p>Каждая строка шаблона преобразуется в строку метода, что позволяет однозначно
+идентифицировать место возникновения ошибки в шаблоне (в отличии от оригинального <code>gsp</code>,
+где нет соответствия между сгенерированным классом и оригинальным шаблоном).</p>
+<p>К примеру, из такого шаблона:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.commons.*; jandcode.commons.groovy.*&quot; %&gt;
+&lt;%
+  def d = UtDateTime.create(&quot;2011-11-23&quot;)
+  def func1 = { p1 -&gt;
+    out(&quot;P1=${p1}&quot;)
+  }
+%&gt;
+&lt;div&gt;
+  Hello! Date: ${d}
+&lt;/div&gt;
+
+&lt;% for (i in 1..5) { %&gt;
+item: ${i}
+&lt;% } %&gt;
+
+&lt;jc:tag1 arg1=&quot;1&quot; arg2=&quot;${d}&quot;&gt;
+  body1
+  &lt;% func1(&quot;one&quot;) %&gt;
+&lt;/jc:tag1&gt;
+
+End
+</code></pre></div></div>
+<p>генерируется вот такой класс:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.commons.*; import jandcode.commons.groovy.*;
+public class G__gsp_syntax1__app1___inc__b9291d1eb68e36f6be7eaed810470907 extends jandcode.core.web.gsp.BaseGsp {
+protected void onRender() {
+
+
+ def d = UtDateTime.create(&quot;2011-11-23&quot;)
+ def func1 = { p1 -&gt;
+   out(&quot;P1=${p1}&quot;)
+ }
+
+;;out(&quot;&lt;div&gt;\n&quot;);
+;;out(&quot;  Hello! Date: &quot;);;;out(d);;;out(&quot;\n&quot;);
+;;out(&quot;&lt;/div&gt;\n&quot;);
+;;out(&quot;\n&quot;);
+for (i in 1..5) {
+;;out(&quot;item: &quot;);;;out(i);;;out(&quot;\n&quot;);
+}
+;;out(&quot;\n&quot;);
+outTag('jc/tag1' ,arg1:&quot;1&quot; ,arg2:d) {
+;;out(&quot;  body1\n&quot;);
+func1(&quot;one&quot;)
+}
+;;out(&quot;\n&quot;);
+;;out(&quot;End\n&quot;);
+
+}
+}</code></pre></div></div>
+<p>обработка которого приведет к такому результату:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">&lt;div&gt;
+  Hello! Date: 2011-11-23
+&lt;/div&gt;
+
+item: 1
+item: 2
+item: 3
+item: 4
+item: 5
+
+tag1 out with: arg1=1, arg2=2011-11-23
+End
+</code></pre></div></div>
+<p>В этом примере <code>jc/tag1</code> - это <code>gsp</code> с текстом:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">tag1 out with: arg1=${args['arg1']}, arg2=${args['arg2']}</code></pre></div></div>
+<h2 id="head2">Локальные переменные в шаблоне</h2>
+<p>Т.к. текст шаблона преобразуется в текст метода <code>groovy</code>, то определение переменной внутри
+фрагментов кода, определяет локальную переменную метода:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%
+    // локальные переменные метода шаблона
+    String s = &quot;&quot;
+    def a = []
+%&gt;
+</code></pre>
+</div></div>
+<p>Для определения функций внутри шаблона изпользуются <code>groovy closure</code> (т.к. метод внутри
+метода объявить нельзя):</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%
+    def pw2 = {a-&gt;
+        return a*a
+    }
+%&gt;
+5^2 = ${pw2(5)}
+</code></pre>
+</div></div>
+<p>Для определения рекурсивной функции внутри шаблона, необходимо сначала определить
+переменную для функции, а потом присваивать ей <code>closure</code> (особенность <code>groovy</code>):</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%
+    def recursiveFunc
+    recursiveFunc = {a-&gt;
+       recursiveFunc(a+1)
+    }
+%&gt;
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

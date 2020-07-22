@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Компилятор groovy</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">commons - утилиты</a><ul><li class="folder "><a href="conf.html">Conf</a></li>
+<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
+<li class="cur "><a href="groovy_compiler.html">Компилятор groovy</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li class="active">Компилятор groovy</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Компилятор groovy</h1>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.UtGroovy</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.groovy.GroovyCompiler</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>В приложение можно встроить компилятор groovy.</p>
+<p>Для начала необходимо создать компилятор:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">GroovyCompiler compiler = UtGroovy.createCompiler();</code></pre></div></div>
+<p>Не нужно создавать большое количество компиляторов, кэшируйте их.</p>
+<p>Для получения класса из текста скрипта используется метод компилятора <code>getClazz</code>,
+например:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">FileObject fo1 = UtFile.getFileObject(&quot;myscript.groovy&quot;); // как-то получаем FileObject
+GroovyClazz c1 = compiler.getClazz(MyBaseClass.class, &quot;void run()&quot;,
+        fo1, false);
+MyBaseClass inst1 = (MyBaseClass) c1.createInst();
+inst1.run();</code></pre></div></div>
+<p>где <code>MyBaseClass</code>:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">public class MyBaseClass {
+    public void run() {
+    }
+}</code></pre></div></div>
+<p>Текст <code>myscript.groovy</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">println('hello!')
+</code></pre></div></div>
+<p>Принцип простой: создается текст определения класса, который является потомком базового
+класса, который передан первым параметром (в данном случае <code>MyBaseClass</code>). Затем для
+класса создается метод, сигнатура которого переданна во втором параметре (в данном случае
+<code>void run()</code>). Текст, загруженный из указанного третьм параметром файла, становится телом
+метода <code>run</code>. Последним параметром указывается, что текст скрипта не шаблон. Если
+указать <code>true</code>, текст скрипта будет рассматриваться как шаблон gsp.</p>
+<p>В качестве сигнатуры можно указать не сигнатуру метода, а следующие значения:</p>
+<ul>
+<li><code>&quot;body&quot;</code>. В этом случае текст скрипта рассматривается как тело класса</li>
+<li><code>&quot;class&quot;</code>. В этом случае текст скрипта рассматривается как полное описание класса</li>
+</ul>
+<p>Также можно загружать текст скрипта из строковой переменной:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">GroovyClazz c2 = compiler.getClazz(MyBaseClass.class, &quot;void run()&quot;,
+        &quot;print('hello!')&quot;, false);
+MyBaseClass inst2 = (MyBaseClass) c2.createInst();
+inst2.run();</code></pre></div></div>
+<p>Полученный экземпляр <code>GroovyClazz</code> содержит методы для получения скомпилированного
+java-класса (<code>getClazz</code>), получения исходников скрипта и др.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

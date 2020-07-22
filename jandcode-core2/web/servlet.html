@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Сервлет</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class=""><a href="action.html">Action</a></li>
+<li class=""><a href="gsp.html">GSP</a></li>
+<li class=""><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class="cur "><a href="servlet.html">Сервлет</a></li>
+</ul></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">Сервлет</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Сервлет</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="servlet.html#head1">Параметры сервлета</a></li>
+<li class=""><a href="servlet.html#head2">web.xml не обязателен</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Для работы приложения необходим сервлет <code>jandcode.core.web.AppServlet</code>, который должен
+работать в контейнере сервлетов, поддерживающим как минимум Servlet API 3.1.</p>
+<p>Пример файла <code>web.xml</code> для приложения:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;
+         version=&quot;3.1&quot;
+         metadata-complete=&quot;true&quot;&gt;
+
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;jandcode-core-web&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;jandcode.core.web.AppServlet&lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;app&lt;/param-name&gt;
+            &lt;param-value&gt;app.cfx&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;log&lt;/param-name&gt;
+            &lt;param-value&gt;_logback.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;servlet.ref&lt;/param-name&gt;
+            &lt;param-value&gt;main.servlet&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+        &lt;multipart-config/&gt;
+    &lt;/servlet&gt;
+
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;jandcode-core-web&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+
+    &lt;error-page&gt;
+        &lt;location&gt;/showerror&lt;/location&gt;
+    &lt;/error-page&gt;
+
+&lt;/web-app&gt;</code></pre></div></div>
+<h2 id="head1">Параметры сервлета</h2>
+<ul>
+<li>
+<p><code>app</code> - имя файла с конфигурацией приложения. Если параметр не указан, ищется файл
+<code>app.cfx</code> в каталоге <code>WEB-INF</code></p>
+</li>
+<li>
+<p><code>log</code> - имя файла с настройками логирования logback. Если значение параметра
+не содержит пути и файл не найден в каталоге <code>WEB-INF</code>, он последовательно
+ищется в каталогах выше каталога <code>WEB-INF</code>. Если он вообще не найден или параметр
+не указан, то логирование полностью отключается</p>
+</li>
+<li>
+<p><code>servlet.ref</code> - имя атрибута контекста сервлета, в который будет помещена ссылка
+на сервлет. Если параметр не указан, то он игнорируется. Ссылка на сервлет позволяет
+организовать доступ к приложению сервлета (объекту <code>jandcode.core.App</code>) из другого
+сервлета:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">AppServlet mainServlet = (AppServlet) getServletContext().getAttribute(&quot;main.servlet&quot;);
+App mainApp = mainServlet.getApp();</code></pre></div></div>
+</li>
+</ul>
+<h2 id="head2">web.xml не обязателен</h2>
+<p>При запуске web-приложения из командной строки или из ide,
+<code>web.xml</code> не используется. Его содержимое генерируется в момент запуска web-сервера.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

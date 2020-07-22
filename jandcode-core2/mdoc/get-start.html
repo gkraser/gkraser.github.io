@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Начало работы</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class="cur "><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="folder "><a href="cm.html">Макрокоманды</a></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li class="active">Начало работы</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Начало работы</h1>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+</svg>
+<p>mdoc является генератором, который по набору файлов в формате <a href="markdown.html">markdown</a>
+генерирует html-документацию.</p>
+<p>Исходные тексты документации должны находиться внутри модуля.</p>
+<p>Добавляем в <code>project.jc</code> модуля настройки для <code>mdoc</code> (<a href="api-jc-mdoc.html">MDocProject</a>):</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.jc.*
+import jandcode.mdoc.jc.*
+
+// (1) import для mdoc
+
+class Project1 extends ProjectScript {
+
+    static beforeLoad = {
+        // ...
+
+        // (2) mdoc помещаем в classpath для проекта
+        classpath(&quot;jandcode-mdoc-jc&quot;)
+    }
+
+    void onInclude() {
+        // ...
+
+        // (3) Настраиваем проект для mdoc
+        include(MDocProject).with {
+            // runtime-зависимости для запуска mdoc
+            depends.prod(
+            )
+            // каталоги с исходниками документации
+            addSrc('doc')
+
+            // свойства документации
+
+            // содержание
+            props['toc'] = 'toc.xml'
+            // заголовок документации
+            props['title'] = project.name
+        }
+    }
+
+}</code></pre></div></div>
+<p>Создаем папку <code>doc</code> в модуле.</p>
+<p>Создаем файл <code>doc/index.md</code> с главной страницей документации:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">Привет
+======
+
+Это главная страница документации.
+</code></pre></div></div>
+<p>Создаем файл <code>doc/toc.xml</code> с содержанием документации:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;toc-root topic=&quot;index.md&quot;&gt;
+        &lt;toc topic=&quot;**/*&quot; type=&quot;auto&quot;/&gt;
+    &lt;/toc-root&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Генерируем документацию:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc mdoc-build 
+</code></pre>
+</div></div>
+<p>Сгенерированные файлы в каталоге <code>temp/mdoc-doc</code>.</p>
+<p>Запускаем отладочный сервер:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc mdoc-serve 
+</code></pre>
+</div></div>
+<p>Открываем ссылку <code>http://localhost:4000/</code>.
+Видим сгенерированную документацию в debug-режиме с различными инструментами.</p>
+<p>Создаем дополнительные страницы с любым содержанием:</p>
+<ul>
+<li><code>doc/page1.md</code></li>
+<li><code>doc/folder1/index.md</code></li>
+<li><code>doc/folder1/page1.md</code></li>
+</ul>
+<p>Если поменять исходные файлы, то страница в браузере обновится.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Если страница автоматически не обновляется, что возможно при некоторых ситуациях,
+просто перезагрузите ее сами (F5). Если и это не помогло,
+нажмите конпку <code>Rebuild</code> на панели инструментов.</p>
+</div>
+</div>
+<p>Команды на отладочной панели:</p>
+<ul>
+<li><code>Toc</code> - показать виртуальное содержание в соответствии с расположением
+файлов в проекте</li>
+<li><code>AllFiles</code> - показать все файлы в проекте</li>
+<li><code>View as prod</code> - показать страницу в режиме production, без отладочных инструментов.
+Для перехода в отладочный режим уберите <code>?prod</code> из параметров в url или
+просто перейдите на любую другую страницу.</li>
+<li><code>Rebuild</code> - пересобрать документ и содержание. Активная страница может стать
+недоступной, если она удалена или перемещена. В этом случае просто перейдите в
+корень. Команда так же запускается при нажании клавиши <code>'r'</code>.</li>
+<li><code>Edit</code> - редактировать страницу в редакторе (например в idea).
+Кроме того редактирование запускатся по двойному щелчку на любом элементе
+статьи. Или одинарный щелчек для установки маркера и последующем нажатии
+клавиши <code>'e'</code> (см. <a href="editor.html">Редактирование</a>).</li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

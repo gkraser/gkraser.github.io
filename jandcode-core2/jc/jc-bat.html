@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>jc.bat</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class=""><a href="base.html">Основы jc</a></li>
+<li class="cur "><a href="jc-bat.html">jc.bat</a></li>
+<li class=""><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class=""><a href="gradle-tools.html">GradleTools</a></li>
+<li class=""><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class=""><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class=""><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">jc.bat</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>jc.bat</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="jc-bat.html#head1">jc-env.bat</a></li>
+<li class=""><a href="jc-bat.html#head2">Переменные среды</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Файл <code>jc.bat</code>используется для запуска приложения <code>jc</code> и команд OS в среде <code>jc</code>.</p>
+<p>Запуск команды <code>jc</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc command args
+</code></pre>
+</div></div>
+<p>Запуск команды OS:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc @ command args
+</code></pre>
+</div></div>
+<h2 id="head1">jc-env.bat</h2>
+<p>В файлах <code>jc-env.bat</code> производится настройка среды исполнения <code>jc</code>.
+В частности настройка различных переменных среды.</p>
+<p>Перед запуском <code>jc</code> находит все файлы <code>jc-env.bat</code> начиная с текущего каталога и вверх
+по иерархии каталогов до корня тома. Все найденные файлы исполняются в порядке от самого
+верхнего до самого нижнего.</p>
+<p>Ищутся следующие файлы в указанном порядке:</p>
+<ul>
+<li><code>_jc/jc-env.bat</code> - сгенерированная среда исполнения. Используется некоторыми видами
+проектов</li>
+<li><code>jc-env.bat</code> - основная среда. Такие файлы можно ложить в систему контроля версий</li>
+<li><code>_jc-env.bat</code> - личная среда разработчика. Такие файлы не следует хранить в
+системе контроля версий</li>
+</ul>
+<p>После настройки среды исполняется либо приложение <code>jc</code>, либо команда OS (если первый параметр
+командной строки <code>@</code>).</p>
+<h2 id="head2">Переменные среды</h2>
+<p>Среда исполнения <code>jc</code> поддерживает следующие переменные среды:</p>
+<ul>
+<li><code>JC_PATH</code> - список проектов <code>jc</code> в формате <code>PATH</code>, которые будут загружены
+перед тем, как будет загружен основной проект.</li>
+<li><code>JC_RUN</code> - полный путь до файла <code>jc-run.bat</code>, который собственно и запускает
+приложение <code>jc</code>.</li>
+<li><code>JC_JVM</code> - дополнительные опции для запуска java</li>
+<li><code>JC_CLI</code> - дополнительные опции для запуска <code>jc</code>. Эти параметры вставляются
+перед переданными параметрами в командной строке</li>
+<li><code>JC_ENV_FILE_LIST</code> - список файлов <code>jc-env.bat</code>, которые использовались в процессе
+инициализации среды. Только для чтения после инициализации.</li>
+</ul>
+<p>Посмотреть как настроились переменные в процессе инициализации можно, например,
+такой командой:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc @ set
+</code></pre>
+</div></div>
+<p>Так мы получаем все пременные среды, которые настроены для запуска <code>jc</code>.
+Или так:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc @ set jc
+</code></pre>
+</div></div>
+<p>Так мы получаем только переменные <code>JC_xxx</code>.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

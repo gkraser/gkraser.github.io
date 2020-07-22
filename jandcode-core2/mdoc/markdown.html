@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Формат markdown</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class="cur "><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="folder "><a href="cm.html">Макрокоманды</a></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li class="active">Формат markdown</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Формат markdown</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="markdown.html#head1">Таблицы</a></li>
+<li class=""><a href="markdown.html#head2">Definition List</a></li>
+<li class=""><a href="markdown.html#head3">Атрибуты</a></li>
+<li class=""><a href="markdown.html#head4">Макрокоманды</a></li>
+<li class=""><a href="markdown.html#head5">Свойства документа</a></li>
+<li class=""><a href="markdown.html#head6">Замечания</a></li>
+<li class=""><a href="markdown.html#head7">Фрагменты кода</a></li>
+<li class=""><a href="markdown.html#head8">Картинки</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+<symbol id="adm-warning">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="m3.1 18.5 8.1-14c.4-.7 1.4-.7 1.8 0l8.1 14c.4.7-.1 1.6-.9 1.6h-16.1c-.9 0-1.4-.9-1-1.6zm10.6-4.3c0-.1 0-.2 0-.2v-4.6c0-.4 0-.6 0-.6-.1-.1-.3-.2-.7-.3s-.7-.1-1-.1c-.1 0-.2 0-.3 0-.3.1-.5.2-.5.4v4.2s-.1.1-.2.4-.1.4 0 .5c.3.2.7.4 1.2.6s.9.3 1.2.3h.2c.2 0 .3-.2.3-.5-.2 0-.2-.1-.2-.1zm-.8 1.4c-.5-.2-.9-.2-1.2-.2s-.4.1-.5.4v.9c0 .2 0 .3-.1.4-.1.2-.2.3-.1.4s.5.3 1.2.5c.6.2 1 .2 1.1.2.2 0 .4-.1.4-.3s.1-.4.1-.7c0-.1 0-.3.1-.7 0-.3 0-.5 0-.5-.2-.1-.5-.2-1-.4z" fill="currentColor"/>
+</svg>
+</symbol>
+</svg>
+<p>В качестве основного формата написания документации к проекту выбран формат <strong>Markdown</strong>,
+точнее его спецификация <a href="http://commonmark.org">CommonMark</a> с некоторыми расширениями,
+описанными в этом разделе.</p>
+<h2 id="head1">Таблицы</h2>
+<p>Таблицы как на <a href="https://help.github.com/articles/organizing-information-with-tables">GitHub</a>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">| Head 1 | Head 2|
+| --- | --- |
+| cell 1 | cell 2 |
+| cell 3 | cell 4 |
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<table>
+<thead>
+<tr><th>Head 1</th><th>Head 2</th></tr>
+</thead>
+<tbody>
+<tr><td>cell 1</td><td>cell 2</td></tr>
+<tr><td>cell 3</td><td>cell 4</td></tr>
+</tbody>
+</table>
+<h2 id="head2">Definition List</h2>
+<p>Definition List (формат как <a href="https://michelf.ca/projects/php-markdown/extra/#def-list">тут</a>):</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">Определение 1
+: Описание 1
+
+Определение 2
+: Описание 2
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<dl>
+<dt>Определение 1</dt>
+<dd>Описание 1</dd>
+<dt>Определение 2</dt>
+<dd>Описание 2</dd>
+</dl>
+<h2 id="head3">Атрибуты</h2>
+<p>Атрибуты для сгенерированных html-элементов
+(формат как <a href="https://github.com/vsch/flexmark-java/wiki/Attributes-Extension">тут</a>).</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">Header 1 {#section1 .css-class-red attr1=value1}
+========
+
+Параграф {style=&quot;color:red&quot;}
+
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">&lt;h1 id=&quot;section1&quot; class=&quot;css-class-red&quot; attr1=&quot;value1&quot;&gt;Header 1&lt;/h1&gt;
+&lt;p style=&quot;color:red&quot;&gt;Параграф&lt;/p&gt;
+</code></pre>
+</div></div>
+<h2 id="head4">Макрокоманды</h2>
+<p>Макрокомандой является параграф, который начинается с <code>@@</code>. Текст параграфа является текстом
+макрокоманды. Преобразуется в тег <code>&lt;cm&gt;</code>. Например такая разметка:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">text1
+
+@@code file=f1
+
+text1
+
+@@ cm1
+</code></pre>
+</div></div>
+<p>будет преобразована в такой текст html:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">&lt;p&gt;text1&lt;/p&gt;
+&lt;cm&gt;code file=f1&lt;/cm&gt;
+&lt;p&gt;text2&lt;/p&gt;
+&lt;cm&gt;cm1&lt;/cm&gt;
+</code></pre>
+</div></div>
+<p>Первое слово до пробела определяется как имя макрокоманды, остальной текст - атрибуты
+макрокоманды. Атрибуты в формате <code>name=value</code>. Если value не имеет пробелов,
+то его можно не брать в кавычки, иначе нужно брать в одинарные или двойные кавычки.</p>
+<h2 id="head5">Свойства документа</h2>
+<p>Свойства документа.
+Блок должен быть указан в самом начале документа.</p>
+<pre><code>---
+key1: value1
+key2: value2
+---
+
+Начало документа тут.
+</code></pre>
+<h2 id="head6">Замечания</h2>
+<p>Блок с замечаниями (формат как <a href="https://github.com/vsch/flexmark-java/wiki/Admonition-Extension">тут</a>).</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">!!! note
+    Это замечание
+    
+!!! warning
+    Это предупреждение
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Это замечание</p>
+</div>
+</div>
+<div class="adm-block adm-warning">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
+</div>
+<div class="adm-body">
+<p>Это предупреждение</p>
+</div>
+</div>
+<h2 id="head7">Фрагменты кода</h2>
+<p>Для вставки фрагмента кода используется стандартный синтаксис markdown с указанием
+языка для подсветки. Язык можно не указывать, тогда будет отображен только текст
+без подсветки.</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">```groovy
+def s = &quot;hello&quot;
+```
+
+```
+def s = &quot;hello&quot;
+```
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">def s = &quot;hello&quot;
+</code></pre>
+</div></div>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">def s = &quot;hello&quot;
+</code></pre>
+</div></div>
+<p>После языка можно указывать атрибуты в формате <code>name=value</code>, они становятся атрибутами
+<code>div</code>, обрамляющего кодовый блок. Атрибут <code>title</code> - заголовок кодового блока:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">```groovy title=file1.groovy
+def s = &quot;hello&quot;
+```
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--title">file1.groovy</div><div class="codeblock--content"><pre><code class="language-groovy">def s = &quot;hello&quot;
+</code></pre>
+</div></div>
+<h2 id="head8">Картинки</h2>
+<p>Как в спецификации.</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">![](images/1.jpg)
+
+в тексте ![](images/2.png) тоже можно
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">&lt;p&gt;&lt;img src=&quot;images/1.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;в тексте &lt;img src=&quot;images/2.png&quot; alt=&quot;&quot; /&gt; тоже можно&lt;/p&gt;
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

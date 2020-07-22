@@ -1,0 +1,387 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Структура проекта</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class=""><a href="base.html">Основы jc</a></li>
+<li class=""><a href="jc-bat.html">jc.bat</a></li>
+<li class=""><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class=""><a href="gradle-tools.html">GradleTools</a></li>
+<li class=""><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class=""><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class="cur "><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">Структура проекта</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Структура проекта</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="project-struct.html#head1">Создание нового проекта</a></li>
+<li class=""><a href="project-struct.html#head2">Обзор проекта</a></li>
+<li class=""><a href="project-struct.html#head3">Работа с командной строки</a></li>
+<li class=""><a href="project-struct.html#head4">Библиотеки</a></li>
+<li class=""><a href="project-struct.html#head5">Зависимости</a></li>
+<li class=""><a href="project-struct.html#head6">Модули в проекте</a></li>
+<li class=""><a href="project-struct.html#head7">jc gen-idea</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>В качестве IDE будем использоваться Intellij IDEA версии 14 и выше,
+т.к. ее поддержка имеется в платформе изначально.</p>
+<h2 id="head1">Создание нового проекта</h2>
+<p>В каталоге для проектов создадим новый проект, воспользовавшись
+для этого приложением <a href="index.html">jc</a>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:web -o:sample-project1
+</code></pre>
+</div></div>
+<p>В результате выполнения команды будет создан каталог с проектом <code>sample-project1</code>.</p>
+<p>Перейдем в этот каталог и выполним генерацию файлов для IDE (Intellij IDEA):</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc gen-idea
+</code></pre>
+</div></div>
+<p>Сгенерированный файл <code>sample-project1-(project).ipr</code> нужно открыть в IDE.</p>
+<p>Проект готов к разработке.</p>
+<h2 id="head2">Обзор проекта</h2>
+<p>Наш созданный каталог <code>sample-project1</code> - это проект.
+Далее этот каталог будет называтся каталогом проекта, а его содержимое - <em>проектом</em>.</p>
+<p>В каталоге проекта имеется (среди прочих) файл <code>project.jc</code>, в котором наш проект описан.
+Этот файл является текстом класса <code>groovy</code> и описан подробнее в разделе <a href="base.html">Основы jc</a>.</p>
+<p>Внутри каталога проекта имеется каталог <code>sample-project1</code>. Да, он имеет такое же
+имя, как и каталог проекта. Он является модулем проекта.
+Далее этот каталог будет называтся каталогом модуля проекта,
+а его содержимое - <em>модулем проекта</em> или <em>модулем</em>.
+И в нем так же имеется файл <code>project.jc</code>, который описывает модуль.</p>
+<p>Модуль - это набор исходников на java (или groovy) и ресурсов, из которых при
+компиляции получается один jar-файл. Загляните в каталог модуля.
+В нем имеются каталог <code>src</code> - тут хранятся исходники модуля. В каталоге <code>test</code> -
+unit-тесты модуля.</p>
+<p>Файл <code>project.jc</code> в каталоге модуля описывает модуль.
+Загляните в него.
+Не вдаваясь пока в подробности, рассмотрим ключевые места этого файла.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">project.name = &quot;sample-project1&quot;
+</code></pre>
+</div></div>
+<p>В свойстве <code>project.name</code> указано имя модуля. Желательно, что бы имя модуля совпадало
+с именем каталога модуля. Это, конечно, не обязательно, но позволяет меньше путаться
+и запоминать новые незнакомые слова.</p>
+<p>Имя модуля должно быть в нижнем регистре, в качестве разделится слов должен быть
+использован знак <code>- (минус)</code>. Опять таки это правило исключительно для удобства
+и унификации.</p>
+<p>При компиляции модуля будет создан jar-файл с именем, соответствующем имени модуля.
+В данном случае <code>sample-project1.jar</code>. Это очень важная информация. Именно модуль
+содержит исходники и именно из модуля собирается jar-файл. В самом проекте исходного
+текста нет. Все исходники содержатся в модуле (или модулях).</p>
+<p>Рассматриваем <code>project.jc</code> далее:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(JavaProject).with {
+    packageRoot = &quot;sample.project1&quot;
+    //
+    depends.prod(
+            &quot;jandcode-core-web&quot;,
+    )
+    depends.dev(
+    )
+    //
+}
+</code></pre>
+</div></div>
+<p>Если этот текст не понятен, то вот он же в другом варианте на <code>groovy</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">jandcode.jc.std.JavaProject jm = include(jandcode.jc.std.JavaProject)
+jm.packageRoot = &quot;sample.project1&quot;
+jm.depends.prod(&quot;jandcode-core-web&quot;)
+</code></pre>
+</div></div>
+<p>Или вот, в варианте синтаксиса <code>java</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">jandcode.jc.std.JavaProject jm = include(jandcode.jc.std.JavaProject);
+jm.setPackageRoot(&quot;sample.project1&quot;);
+jm.getDepends().prod(&quot;jandcode-core-web&quot;);
+</code></pre>
+</div></div>
+<p>Надеюсь, теперь понятно, что метод <code>include</code> возвращает экземпляр класса
+<code>jandcode.jc.std.JavaProject</code>, который содержит свойства модуля. Далее
+свойствам этого экземпляра присваиваются значения, описывающие некоторые
+характеристики модуля.</p>
+<p>Кстати, метод <code>include</code> всегда возвращает один и тот же экземпляр, который
+создается при первом вызове <code>include</code>, так что, если сильно хочется,
+можно написать и так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(jandcode.jc.std.JavaProject).packageRoot = &quot;sample.project1&quot;
+include(jandcode.jc.std.JavaProject).depends.prod.add(&quot;jandcode-core-web&quot;)
+// ну а так как в тексте класса имеется оператор:
+// import jandcode.jc.std.*
+// то можно и сократить текст:
+include(JavaProject).depends.prod.add(&quot;jandcode-core-db-derby&quot;)
+</code></pre>
+</div></div>
+<p>Разобравшись с общим синтаксисом, начинаем разбиратся с конкретными свойствами.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">packageRoot = &quot;sample.project1&quot;
+</code></pre>
+</div></div>
+<p>Это свойство определяет корневой java-пакет модуля (<code>package</code>). Дело в том, что все
+исходники модуля должны быть расположены в рамках одного пакета и его дочерних пакетов.
+И это имя мы и указываем. Имя корневого пакета обычно совпадает с именем модуля,
+где вместо <code>'-'</code> имеем символ <code>'.'(точка)</code>. Конечно, можно и тут проявить фантазию,
+но это создает дополнительные сложности и потерю унификации. Я бы не советовал.</p>
+<h2 id="head3">Работа с командной строки</h2>
+<p>Перейдите в каталог проекта и введите команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc
+</code></pre>
+</div></div>
+<p>Вы увидите список команд <code>jc</code>, которые доступны в этом каталоге.</p>
+<p>А теперь перейдите в каталог модуля и снова выполните эту же команду. Как видите,
+список доступных команд отличается. Состав этих команд определяется
+содержимым файлов <code>project.jc</code>. Этот набор можно расширять своими командами,
+но это мы рассмотрим позже.</p>
+<p>В процессе разработки команды обычно выполняются в каталоге проекта, а не модуля.
+Хотя и там они прекрасно работают.</p>
+<p>Например, скомпилируем проект, выполнив в каталоге проекта команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc compile
+</code></pre>
+</div></div>
+<p>Проект скомпилирован.</p>
+<h2 id="head4">Библиотеки</h2>
+<p>Для начала скомпилируем модуль. Для этого в каталоге модуля выполним команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc compile
+</code></pre>
+</div></div>
+<p>После выполнения обратите внимание на каталог <code>temp</code>. В этом каталоге находится весь
+мусор и промежуточные результаты процесса разработки. И, в том числе, результат
+компиляции. Перейдем в каталог <code>temp</code>. Нам интересен подкаталог <code>lib</code>,
+в котором содержится результат компиляции модуля в виде jar-файла.
+Как видим, полученный jar-файл имеет имя, соответствующее имени модуля.</p>
+<p>Любой jar-файл, которые используется в проекте, в том числе и полученный в результате
+компиляции модуля, называется <em>библиотекой</em>. А <em>именем библиотеки</em> является
+имя jar-файла, в котором отброшено расширение (и версия, но об этом позже).</p>
+<p>Таким образом, имеем модуль с именем <code>sample-project1</code>, из которого мы получили библиотеку
+с таким же именем <code>sample-project1</code>. Что, собственно, и является целью модуля -
+получить из него библиотеку.</p>
+<p>Давайте посмотрим, какие библиотеки уже используются нашим проектом.
+Для этого в каталоге проекта выполним команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs
+</code></pre>
+</div></div>
+<p>Полученный результат достаточно большой, поэтому отфильтруем его немного,
+запросим только библиотеки с именами, содержащими подстроку <code>ant</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs -q:ant
+</code></pre>
+</div></div>
+<p>Результат включает в себя имя библиотеки, ее версию, а так же местонахождение jar-файла
+библиотеки.</p>
+<p>А теперь посмотрим, как выглядет библиотека, которая соответсвует нашему модулю:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs -q:sample-project1
+</code></pre>
+</div></div>
+<p>Результат несколько отличается. Так как нам доступны исходники модуля, то мы имеем
+путь до файла <code>project.jc</code> этого модуля.</p>
+<p>Когда в проекте так или иначе используется библиотека, доступная только в виде
+jar-файла, он используется напрямую.</p>
+<p>Когда в проекте так или иначе используется библиотека, доступная в виде исходников
+модуля, модуль сначала компилируется, а затем результат компиляции используется как
+библиотека. Причем модуль не компилируется, если в нем не было изменений с момента
+последней компиляции.</p>
+<p>Как добавить библиотеку в проект? Очень просто. Нужно создать каталог <code>lib</code> в каталоге
+проекта и скопировать туда нужный файл. Имя файла без расширения и будет именем
+библиотеки, доступной проекту. Причем, если имя jar-файла содержит версию, то версия
+тоже будет отброшена из имени библиотеки.</p>
+<p>К примеру, скачайте этот файл
+<a href="http://central.maven.org/maven2/org/apache/commons/commons-email/1.4/commons-email-1.4.jar">http://central.maven.org/maven2/org/apache/commons/commons-email/1.4/commons-email-1.4.jar</a>
+и скопируйте его в каталог <code>lib</code> проекта. После этого выполните команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs -l
+</code></pre>
+</div></div>
+<p>Как видите, библиотека нам доступна по имени jar-файла, в котором отброшено расширение и
+версия.</p>
+<p>Можно заметить, что для библиотеки <code>commons-email</code> есть только jar-файл, но нет
+исходников. А они иногда очень важны для процесса разработки. Добавить
+исходники тоже просто. Скопируейте файл c исходниками
+<a href="http://central.maven.org/maven2/org/apache/commons/commons-email/1.4/commons-email-1.4-sources.jar">http://central.maven.org/maven2/org/apache/commons/commons-email/1.4/commons-email-1.4-sources.jar</a>
+в каталог <code>lib</code> и переименуйте в <code>commons-email-1.4-src.zip</code>. Файл с исходниками
+должен иметь такое же имя, как и jar-файл, с суффиксом <code>-src</code> и расширением <code>zip</code>.
+После этого снова выполните команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs -l
+</code></pre>
+</div></div>
+<p>Как видите, теперь доступны и исходники.</p>
+<h2 id="head5">Зависимости</h2>
+<p>Напомню для начала: модуль при компиляции превращается в библиотека с именем,
+соответствующем имени модуля. Т.е. модуль можно использовать как библиотеку.</p>
+<p>Зависимости определяются для модуля и представляют собой список библиотек, от которых
+зависит этот модуль.</p>
+<p>Для компиляции кода модуля должен быть доступен определенный classpath, который
+включает в себя все, что в этом модуле используется. Этот classpath как раз и
+формируется из списка зависимых библиотек.</p>
+<p>Кроме того, этот classpath должен быть доступен и для выполнения кода модуля в run-time.</p>
+<p>Перейдем в каталог модуля и посмотрим в файл <code>project.jc</code>. В нем определены
+зависимости модуля:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">depends.prod(
+        &quot;jandcode-core-web&quot;,
+        &quot;jandcode-core-db-derby&quot;,
+)
+depends.dev(
+)
+</code></pre>
+</div></div>
+<p>Свойство <code>depends.prod</code> является списком имен библиотек, от которых зависит модуль
+при компиляции и в run-time.</p>
+<p>Свойство <code>depends.dev</code> является списком имен библиотек, от которых зависит модуль
+при компиляции и при выполнении тестов. Они не используются в prоduction-режиме.</p>
+<p>Если библиотека, от которой зависит модуль, так же имеет зависимости, то его
+зависимости так же становятся звисимостями модуля и их явно указывать не обязательно.
+Поясню на примере. Допустим имеем такие модули и их зависимости:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">M1 -&gt; M2,M3
+M3 -&gt; M4,M2
+M5 -&gt; M1
+</code></pre>
+</div></div>
+<p>Для модуля <code>M5</code> указан в качестве зависимости <code>M1</code>, но он в свою очередь зависит от <code>M2,M3</code>.
+Тогда полный список зависимостей модуля <code>M5</code> будет <code>M1,M2,M3,M4</code>.</p>
+<p>Если для модуля указана зависимость, то она должна быть где-то доступна. Если это
+библиотека, то она должна быть либо в поставке платформы, либо в каталоге <code>lib</code>.
+Если это модуль, то он должен быть частью проекта. Что бы посмотреть, какие библиотеки
+вообще доступны, введите команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs -a
+</code></pre>
+</div></div>
+<p>Если нужен просто список библиотек, то:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc showlibs -a -n
+</code></pre>
+</div></div>
+<h2 id="head6">Модули в проекте</h2>
+<p>В нашем проекте сейчас только один модуль, но это не предел. Мы можем их сделать столько,
+сколько нужно.</p>
+<p>Давайте передем в каталог проекта и посмотрим в файл <code>project.jc</code>. Нас интересует
+следующий код:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(RootProject).with {
+    modules(
+            &quot;sample-project1&quot;,
+    )
+}
+</code></pre>
+</div></div>
+<p>Экземпляр класса <code>jandcode.jc.std.RootProject</code> имеет свойство <code>modules</code>,
+в котором перечислены модули, которые входят в этот корневой проект.
+Причем перечислены не имена модулей, а каталоги модулей относительно корня проекта.
+Например можно написать так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(RootProject).with {
+    modules(
+            &quot;./sample-project1&quot;,
+    )
+}
+</code></pre>
+</div></div>
+<p>Давайте добавим еще один модуль в проект. Для этого в каталоге проекта выполняем команду:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:module -o:sample-project1-module2
+</code></pre>
+</div></div>
+<p>Создан каталог с новым модулем. Что бы проект знал про него, включаем его в список
+модулей проекта:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(RootProject).with {
+    modules(
+            &quot;sample-project1&quot;,
+            &quot;sample-project1-module2&quot;,
+    )
+}
+</code></pre>
+</div></div>
+<p>Теперь модуль в проекте. Однако он нигде не используется. Он будет просто компилироваться.
+Это почти эквивалентно копированию новой библиотеки в каталог <code>lib</code>. Она доступна,
+но неиспользуется.</p>
+<p>Перейдем в каталог модуля <code>sample-project1</code> и внесем в его завасимости наш новый
+модуль:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">depends.prod(
+        &quot;jandcode-core-web&quot;,
+        &quot;jandcode-core-db-derby&quot;,
+        &quot;sample-project1-module2&quot;,
+)
+</code></pre>
+</div></div>
+<p>Теперь модуль <code>sample-project1</code> зависит от модуля <code>sample-project1-module2</code>. Что кроме
+всего прочего означает, что модуль <code>sample-project1-module2</code> будет компилироватся
+до модуля <code>sample-project1</code>, а компиляция модуля <code>sample-project1</code> будет пользоватся
+результатом компиляции модуля <code>sample-project1-module2</code>.</p>
+<h2 id="head7">jc gen-idea</h2>
+<p>Изменение структуры проекта в файлах <code>project.jc</code> сразу же доступны в командной строке,
+но IDE про эти изменения не знает.</p>
+<p>Что бы синхронизировать структуру проекта с IDE, необходимо выполнить команду
+в каталоге проекта:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc gen-idea
+</code></pre>
+</div></div>
+<p>После этого перезагрузить проект в IDE.</p>
+<p>Это важно запомнить: любые модификации в файлах <code>project.jc</code>, так или иначе
+затрагивающих структур проекта, необходимо заканчивать этой командой.</p>
+<p>Выполнение команды безопасно, так что ее можно использовать в любое время.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

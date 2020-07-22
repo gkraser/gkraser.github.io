@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>GradleTools</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class=""><a href="base.html">Основы jc</a></li>
+<li class=""><a href="jc-bat.html">jc.bat</a></li>
+<li class=""><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class="cur "><a href="gradle-tools.html">GradleTools</a></li>
+<li class=""><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class=""><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class=""><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">GradleTools</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>GradleTools</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="gradle-tools.html#head1">Получение библиотек из репозиториев maven</a></li>
+<li class=""><a href="gradle-tools.html#head2">Свойства GradleTools</a></li>
+<li class="folder "><a href="gradle-tools.html#head3">Заметки</a><ul><li class=""><a href="gradle-tools.html#head4">Где брать библиотеки</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.jc.std.GradleTools</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+    <li>
+      <span class="cm-code-info--text"><a href="https://gradle.org/">Gradle</a> должен быть установлен и доступен в PATH</span>
+    </li>
+
+  </ul>
+</fieldset>
+<h2 id="head1">Получение библиотек из репозиториев maven</h2>
+<p>Библиотеки располагаются в каталоге <code>lib</code> проекта в виде <code>jar</code>-файлов и <code>zip</code>-файлов
+с исходниками библиотеки.</p>
+<p>Для библиотек, которые доступны в maven-репозиторях, имеется возможность описывать их
+декларативно, не скачивая их ручками.</p>
+<p>Для включения этой возможности, в каталоге <code>lib</code> нужно создать <code>project.jc</code>.
+Выполните команду в корне проекта для создания файла <code>lib/project.jc</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:lib-project-jc
+</code></pre>
+</div></div>
+<p>Будет создан примерно такой файл <code>lib/project.jc</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.jc.*
+import jandcode.jc.std.*
+import jandcode.commons.*
+
+class P extends ProjectScript {
+
+    void onInclude() {
+        project.name = &quot;lib-builder&quot;
+        include(GradleTools).with {
+            publishDir = &quot;../_jc/${project.name}&quot;
+            tempDir = &quot;../temp/${project.name}&quot;
+        }
+    }
+
+}
+</code></pre>
+</div></div>
+<p>и такой файл <code>lib/lib.gradle</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">repositories {
+    jcenter()
+}
+
+dependencies {
+    // compile &quot;commons-io:commons-io:2.6&quot;
+}
+</code></pre>
+</div></div>
+<p>В файле <code>lib.gradle</code> описываются зависисимости, так, как этого желает <code>gradle</code>.</p>
+<p>Описав нужные библиотеки, перейдите в каталог корневого проекта и выполните любую
+команду, например просто <code>jc</code>.</p>
+<p>Описанные библиотеки будут автоматически скачены и помещены в каталог <code>_jc</code>.
+Теперь они доступны наравне с обычными, помещенными в <code>lib</code> ручками, но не будут
+хранится в системе контроля версий.</p>
+<p>Кроме того, если вы в процессе разработки добавите/удалите/измените состав
+библиотек, то они автоматически будут загружены вновь при любом выполнении <code>jc</code>.</p>
+<p>Библиотека определенной версии фактически загружается на вашу рабочую
+станцию только один раз и помещается в кеш <code>gradle</code>, и в следующий раз будет браться оттуда.</p>
+<h2 id="head2">Свойства GradleTools</h2>
+<ul>
+<li><code>publishDir</code> - указывает каталог, в который будут скачаны <code>jar</code> и <code>zip</code> файлы.
+Нужно указать каталог, который находится вне каталога <code>lib</code> и игнорируется системой контроля
+версий</li>
+<li><code>tempDir</code> - указывает временный каталог, в котором будет происходить сборка.
+Нужно указать каталог, который находится вне каталога <code>lib</code> и игнорируется системой контроля
+версий</li>
+</ul>
+<h2 id="head3">Заметки</h2>
+<h3 id="head4">Где брать библиотеки</h3>
+<p>Советую отличный сайт <a href="http://mvnrepository.com/">mvnrepository.com</a>.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

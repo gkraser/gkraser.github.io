@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>module.cfx</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="open "><a href="index.html">core - ядро платформы</a><ul><li class=""><a href="module.html">Модуль приложения</a></li>
+<li class="cur "><a href="module-cfx.html">module.cfx</a></li>
+<li class=""><a href="module-api.html">Module API</a></li>
+<li class=""><a href="env.html">.env</a></li>
+<li class=""><a href="test-app.html">app тесты</a></li>
+<li class=""><a href="module-conf.html">Конфигурация</a></li>
+</ul></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">core - ядро платформы</a></li>
+<li class="active">module.cfx</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>module.cfx</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class="folder "><a href="module-cfx.html#head1">Структура файла</a><ul><li class=""><a href="module-cfx.html#head2">root</a></li>
+<li class=""><a href="module-cfx.html#head3">depends</a></li>
+<li class=""><a href="module-cfx.html#head4">Подстановки #\{VAR}</a></li>
+<li class=""><a href="module-cfx.html#head5">Остальные свойства</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p><code>module.cfx</code> - это файл с описанием конфигурации модуля. Формат файла - <a href="../commons/conf-cfx.html">cfx</a>.</p>
+<p>Файлы с таким же форматом:</p>
+<ul>
+<li><code>app.cfx</code> - описание конфигурации приложения</li>
+<li><code>test.cfx</code> - описание конфигурации приложения для тестов</li>
+</ul>
+<h2 id="head1">Структура файла</h2>
+<p>Пример файла <code>module.cfx</code>:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;x-depends module=&quot;MODULE-NAME&quot;/&gt;
+
+    &lt;!-- любые другие теги - конфигурация модуля --&gt;
+
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h3 id="head2">root</h3>
+<p>По соглашению корневой тег cfx-файлов имеет имя <code>root</code>, хотя это требование
+не принципиально, имя корневого тега может быть любым, оно просто игнорируется.</p>
+<h3 id="head3">depends</h3>
+<p>Функция <code>depends</code> (тег <code>x-depends</code>) определяет модули, от которых зависит описываемый модуль.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;x-depends module=&quot;jandcode.core.db&quot;/&gt;
+    &lt;x-depends module=&quot;jandcode.core.db.mysql&quot;/&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h3 id="head4">Подстановки #{VAR}</h3>
+<p>При загрузке файла модуля <code>module.cfx</code> (и всех файлов, которые он включает в
+себя через <code>x-include</code>), в дополнение к стандартным, доступны следующие
+подстановки <code>#{VAR}</code>, где <code>VAR</code>:</p>
+<ul>
+<li><code>appdir</code> - Каталог приложения. В этом каталоге лежитфайл app.cfx.</li>
+<li><code>env.test</code> - при значении <code>true</code> - выполняются unit-тесты</li>
+<li><code>env.dev</code> - при значении <code>true</code> - режим разработки</li>
+<li><code>env.source</code> - при значении <code>true</code> - проект запущен из исходников</li>
+<li><code>module</code> - имя модуля</li>
+<li><code>module.name</code> - синоним для <code>module</code></li>
+<li><code>module.path</code> - полный путь VFS до каталога модуля (до каталога с <code>module.cfx</code>)</li>
+<li><code>module.package</code> - корневой java-пакет модуля</li>
+<li><code>module.package.cur</code> - текущий java-пакет, в котором находится файл cfx</li>
+<li><code>module.package.rel</code> - java-пакет, относительно корня модуля, в котором находится файл cfx</li>
+<li><code>module.packagepath</code> - путь модуля (имя пакета модуля, где точки заменены на <code>'/'</code>)</li>
+<li><code>module.packagepath.cur</code> - путь модуля для текущего каталога с файлом cfx
+(имя пакета модуля, где точки заменены на <code>'/'</code>)</li>
+<li><code>module.packagepath.rel</code> - путь модуля, относительно корня модуля, для текущего
+каталога с файлом cfx (имя пакета модуля, где точки заменены на <code>'/'</code>)</li>
+<li><code>module.projectpath</code> - путь до проекта модуля в исходниках, в этом каталоге лежит <code>project.jc</code>.
+Используется только в тестах! Если исходники не доступны, будет сгенерирована ошибка.</li>
+</ul>
+<p>Пример для лучшего понимания. Допустим имеется модуль с именем <code>proj1.mod1</code>, который
+лежит в jar по пути <code>d:/lib/proj1-mod1.jar</code>, а файл, в котором используется переменная,
+находится в пакете модуля <code>proj1.mod1.a.b.c</code> Тогда:</p>
+<table>
+<thead>
+<tr><th>Переменная</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>module.name</td><td>proj1.mod1</td></tr>
+<tr><td>module.path</td><td>file:jar:d:/lib/proj1-mod1.jar!/proj1/mod1</td></tr>
+<tr><td>module.package</td><td>proj1.mod1</td></tr>
+<tr><td>module.package.cur</td><td>proj1.mod1.a.b.c</td></tr>
+<tr><td>module.package.rel</td><td>a.b.c</td></tr>
+<tr><td>module.packagepath</td><td>proj1/mod1</td></tr>
+<tr><td>module.packagepath.cur</td><td>proj1/mod1/a/b/c</td></tr>
+<tr><td>module.packagepath.rel</td><td>a/b/c</td></tr>
+</tbody>
+</table>
+<p>Пример использования:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;mount name=&quot;#{module}-root1&quot;
+               realPath=&quot;#{module.path}&quot;
+               virtualPath=&quot;#{module.packagepath}&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<p>Указанные переменные предназначены для использования с текущим загружаемым модулем.
+Можно воспользоватся форматом <code>module.xxx:MODULENAME</code> для получения аналогичных
+переменных из любого доступного модуля.</p>
+<p>Например:</p>
+<table>
+<thead>
+<tr><th>Переменная</th><th>Значение</th></tr>
+</thead>
+<tbody>
+<tr><td>module.name:proj1.mod1</td><td>proj1.mod1</td></tr>
+<tr><td>module.path:proj1.mod1</td><td>file:jar:d:/lib/proj1-mod1.jar!/proj1/mod1</td></tr>
+</tbody>
+</table>
+<p>Эта возможность предназначена в основном для тестов.</p>
+<h3 id="head5">Остальные свойства</h3>
+<p>Все остальные свойства определяются потребностями модуля, требованиям модулей, от которых
+зависит описываемый и фантазией разработчика. Никаких ограничений.</p>
+<p>Однако следует помнить, что многие модули вводят правила, по которым рассматривают
+часть свойств в описании модуля особым способом.
+Следует придерживатся этих правил.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

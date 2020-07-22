@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>DataDirService</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="open "><a href="index.html">How to (учебник)</a><ul><li class="cur "><a href="datadir.html">DataDirService</a></li>
+</ul></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">How to (учебник)</a></li>
+<li class="active">DataDirService</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>DataDirService</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="datadir.html#head1">Пример 1</a></li>
+<li class=""><a href="datadir.html#head2">Пример 2</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.std.DataDirService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>DataDirService предназначен для задания коротких постоянных имён (алиасов) для каталогов.
+Придуманные постоянные имена можно использовать для обращения каталогам (метод <code>getPath</code>),
+реальное расположение которых можно менять и задавать через конфиг.</p>
+<h2 id="head1">Пример 1</h2>
+<p>Задаем расположение каталогов:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;datadir&gt;
+        &lt;path name=&quot;my-root&quot; path=&quot;C:/Program Files (x86)/Windows Defender/&quot;/&gt;
+        &lt;path name=&quot;temp&quot; path=&quot;D:/Temp/.jandcode-cache&quot;/&gt;
+    &lt;/datadir&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Использование в приложении:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">//
+String s_myRoot = app.bean(DataDirService.class).getPath(&quot;my-root&quot;);
+System.out.println(&quot;my-root = &quot; + s_myRoot);
+//
+String s_temp = app.bean(DataDirService.class).getPath(&quot;temp&quot;);
+System.out.println(&quot;temp = &quot; + s_temp);</code></pre></div></div>
+<p>Выведет на печть:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">my-root = C:\Program Files (x86)\Windows Defender
+temp = D:\Temp\.jandcode-cache 
+</code></pre>
+</div></div>
+<h2 id="head2">Пример 2</h2>
+<p>Модификация метода <code>getPath</code> с дополнительным параметром <code>localPath</code> вернет каталог <code>localPath</code> относительно каталога <code>name</code></p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">String s_myTempFile = app.bean(DataDirService.class).getPath(&quot;temp&quot;, &quot;internal-dir/file1.txt&quot;);
+System.out.println(&quot;my-temp-file = &quot; + s_myTempFile);</code></pre></div></div>
+<p>Выведет на печть:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">my-temp-file = D:\Temp\.jandcode-cache\internal-dir\file1.txt
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

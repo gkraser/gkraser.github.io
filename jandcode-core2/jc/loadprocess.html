@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Процесс загрузки project.jc</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class=""><a href="base.html">Основы jc</a></li>
+<li class=""><a href="jc-bat.html">jc.bat</a></li>
+<li class="cur "><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class=""><a href="gradle-tools.html">GradleTools</a></li>
+<li class=""><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class=""><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class=""><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">Процесс загрузки project.jc</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Процесс загрузки project.jc</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="loadprocess.html#head1">Этап 1</a></li>
+<li class=""><a href="loadprocess.html#head2">Этап 2</a></li>
+<li class=""><a href="loadprocess.html#head3">Этап 3</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+</svg>
+<p>Загрузка проекта из <code>project.jc</code> производится в 3 этапа.</p>
+<h2 id="head1">Этап 1</h2>
+<p>Сначала ищется файл <code>.jc-root</code> начиная с каталога проекта и вверх по иерархии
+каталогов. Если файл <code>.jc-root</code> найден и в этом каталоге имеется файл <code>project.jc</code>,
+то сначала загружается <code>project.jc</code> из каталога с <code>.jc-root</code>.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Если файл проекта имеет имя, отличное от <code>project.jc</code>, то считается, что это особенный
+утилитный проект и этап пропускается.</p>
+</div>
+</div>
+<h2 id="head2">Этап 2</h2>
+<p>Затем текст <code>project.jc</code> анализируется на предмет наличия closure <code>beforeLoad</code>.
+Она должна быть описана так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">class P extends ProjectScript {
+    static beforeLoad = {
+    }
+}
+</code></pre>
+</div></div>
+<p>Если такая closure имеется, то ее содержимое выполняется в контексте проекта.
+Сам проект еще не загружен и его текст не скомпилирован.
+В процессе выполнения доступны все свойства и методы
+класса <code>jandcode.jc.ProjectScript</code>.</p>
+<p>Обычное применение <code>beforeLoad</code>, это загрузка связанных проектов и
+настройка <code>classpath</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">class P extends ProjectScript {
+    static beforeLoad = {
+        load('..')
+        load('../../common-libs')
+        classpath('my-lib1')
+        classpath(['my-lib2', 'my-lib3'])
+    }
+}
+</code></pre>
+</div></div>
+<h2 id="head3">Этап 3</h2>
+<p>После выполнения <code>beforeLoad</code> компилируется и выполняется <code>project.jc</code>.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Тестирование</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">commons - утилиты</a><ul><li class="folder "><a href="conf.html">Conf</a></li>
+<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
+<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
+<li class="cur "><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li class="active">Тестирование</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Тестирование</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="test.html#logSetUp">Логгирование в setUp методе</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>В этом разделе описаны вопросы тестирования кода.</p>
+<h2 id="logSetUp">Логгирование в setUp методе</h2>
+<p>Для включения логгирования в <code>setUp</code> методе используйте:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">import jandcode.commons.test.*;
+
+public class LogSetUp1 extends Utils_Test {
+
+    {
+        // включить логгирование
+        utils.logSetUp = true;
+
+        // установить конфигурацию логгирования из каталога с тестом
+        // можно не устанавливать, тогда будет использоватся конфигурация по умолчанию
+        utils.logSetUpCfg = utils.getTestFile(&quot;_logback.xml&quot;);
+    }
+
+}</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

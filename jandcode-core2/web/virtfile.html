@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Виртуальная файловая система web</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class=""><a href="action.html">Action</a></li>
+<li class=""><a href="gsp.html">GSP</a></li>
+<li class="cur "><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class=""><a href="servlet.html">Сервлет</a></li>
+</ul></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">Виртуальная файловая система web</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Виртуальная файловая система web</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class="folder "><a href="virtfile.html#head1">Конфигурация module.cfx</a><ul><li class=""><a href="virtfile.html#head2">web/mount</a></li>
+<li class=""><a href="virtfile.html#head3">web/mount-module</a></li>
+</ul></li>
+<li class=""><a href="virtfile.html#head4">META-INF/jc-data/webroot</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Для web-приложения существует виртуальная файловая система. Она доступна через
+сервис <code>jandcode.core.web.WebService</code>, в частности через набор методов из
+<code>jandcode.core.web.virtfile.IVirtFileService</code>.</p>
+<p>Виртуальный файл представлен интерфейсом <code>jandcode.core.web.virtfile.VirtFile</code>.</p>
+<p>Виртуальная система состоит из точек монтирования, каждая из которых представляет
+собой виртуальный путь папки и реальный путь, который соответствует виртуальному
+пути папки.</p>
+<p>На одну и ту же виртуальную папку можно примонтировать несколько реальных.</p>
+<p>Одна и та же реальная папка может быть примонтирована к разным виртуальным путям.</p>
+<p>Если во виртуальному пути есть несколько реальных файлов с одинаковым именем,
+то приложению будет доступен файл из точки монтирования, которая подключена позже.</p>
+<p>Пустой виртуальный путь интерпретируется как корень виртуальной файловой системы.</p>
+<p>Пример описания точек монтирования в модуле:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;web&gt;
+
+        &lt;mount name=&quot;my-mount-point-1&quot;
+               virtualPath=&quot;&quot;
+               realPath=&quot;d:/temp&quot;/&gt;
+
+        &lt;mount name=&quot;my-mount-point-2&quot;
+               virtualPath=&quot;&quot;
+               realPath=&quot;d:/data&quot;/&gt;
+
+        &lt;mount name=&quot;my-mount-point-2&quot;
+               virtualPath=&quot;data/temp&quot;
+               realPath=&quot;#{path}/data-temp&quot;/&gt;
+
+    &lt;/web&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head1">Конфигурация module.cfx</h2>
+<h3 id="head2">web/mount</h3>
+<p>Описание точки монтирования.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;mount name=&quot;NAME&quot;
+               virtualPath=&quot;VIRTUAL-PATH&quot;
+               realPath=&quot;REAL-PATH&quot;
+               class=&quot;jandcode.core.web.virtfile.IMountProvider&quot;
+        /&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<ul>
+<li><code>name</code> - уникальное имя точки монтирования на уровне приложения</li>
+<li><code>virtualPath</code> - виртуальный путь для точки монтирования</li>
+<li><code>realPath</code> - реальный путь, для монтирования в виртуальный путь</li>
+<li><code>class</code> - провайдер точек монтирования. В реальном приложении обычно не используется.
+Этот класс должен создать набор точек монтирования. Если указан, то все
+атрибуты узла <code>mount</code> интерпретируются этим классом.</li>
+</ul>
+<h3 id="head3">web/mount-module</h3>
+<p>Монтирование каталога модуля способом по умолчанию.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;mount-module default=&quot;BOOL&quot;&gt;
+            &lt;!-- особое монтирование в рамках модуля:
+
+                &lt;mount name=&quot;NAME&quot;
+                       virtualPath=&quot;VIRTUAL-PATH&quot;
+                       realPath=&quot;REAL-PATH&quot;
+                /&gt;
+
+            --&gt;
+        &lt;/mount-module&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<ul>
+<li><code>default</code> - монтировать ли модуль по умолчанию, описано ниже. Если не установлено,
+считается <code>true</code></li>
+</ul>
+<p>В большинстве случаев настройка выглядет так:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;mount-module/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Рекомендуется монтировать модули именно этой настройкой.
+Если в модуле явно определены точки монтирования <code>web/mount</code>,
+то следует иметь ввиду: они будут созданы после обработки <code>mount-module</code> для всех модулей.
+Если необходимо особое монтирование папок модуля, необходимо для этого использовать
+узлы <code>web/mount-module/mount</code>, формат которых совпадает с <code>web/mount</code>.</p>
+<p>Модуль, примонтированный таком способом, в дальнейшем имеет статус web-модуля. Этот
+статус используется в некоторых местах для настроек по соглашению.</p>
+<p>Корневая папка модуля монтируется в виртуальный каталог, соответствующий виртуальному
+пути модуля (имя пакета модуля, где точки заменены на <code>'/'</code>). Соответствует настройке:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;mount name=&quot;#{module}--mount-module&quot;
+       realPath=&quot;#{module.path}&quot;
+       virtualPath=&quot;#{module.packagepath}&quot;/&gt;
+</code></pre>
+</div></div>
+<p>Если в корне модуля имеются специальные папки (их список и описание ниже),
+то каждая такая папка монтируется особым способом.</p>
+<p>Список специальных папок:</p>
+<ul>
+<li><code>webroot</code> - монтируется в <code>/</code>. По соглашению используется для формирования корневой
+файловой системы или для перекрытия виртуальных файлов своей версией.</li>
+</ul>
+<p>Допустим, что в модуле имеется папка <code>webroot</code>. Тогда будет использована
+такая настройка точек монтирования:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;mount name=&quot;#{module}--mount-module--webroot&quot;
+       realPath=&quot;#{module.path}/webroot&quot;
+       virtualPath=&quot;&quot;/&gt;
+</code></pre>
+</div></div>
+<p>Если модуль доступен в исходниках и в проекте модуля <code>project.jc</code> имеется
+команда генерации исходников <code>gen-src</code> и сгенерированные исходники
+содержат такой же путь, как и обычные, то он монтируется аналогично нормальным исходникам.</p>
+<h2 id="head4">META-INF/jc-data/webroot</h2>
+<p>Каталоги <code>META-INF/jc-data/webroot</code>, которые были обнаружены в classpath при инициализации
+приложения, автоматически монтируются в корневой каталог виртуальной файловой системы.
+Такие каталоги, к примеру, используются для поставки сторонних библиотек javascript.
+Они монтируются до применения настроек монтирования модулей, что позволяет, при
+необходимости, перекрыть файлы из библиотек своими версиями.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

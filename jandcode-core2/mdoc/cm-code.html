@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>code - вставка фрагментов кода</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="open "><a href="cm.html">Макрокоманды</a><ul><li class=""><a href="cm-custom.html">Собственные макрокоманды</a></li>
+<li class="cur "><a href="cm-code.html">code - вставка фрагментов кода</a></li>
+<li class=""><a href="cm-code-info.html">code-info</a></li>
+<li class=""><a href="cm-prop.html">prop</a></li>
+<li class=""><a href="cm-tree-fs.html">tree-fs</a></li>
+</ul></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li><a href="cm.html">Макрокоманды</a></li>
+<li class="active">code - вставка фрагментов кода</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>code - вставка фрагментов кода</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="cm-code.html#head1">Описание</a></li>
+<li class="folder "><a href="cm-code.html#head2">Поименнованные фрагменты файла</a><ul><li class=""><a href="cm-code.html#head3">java/groovy/js</a></li>
+<li class=""><a href="cm-code.html#head4">xml/html</a></li>
+</ul></li>
+<li class=""><a href="cm-code.html#gen">Генерация файлов для вставки</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Описание</h2>
+<p>Вставка фрагментов кода из файлов проекта.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code file=FILENAME part=PARTNAME lang=LANG title=ЗАГОЛОВОК
+</code></pre>
+</div></div>
+<p>где:</p>
+<ul>
+<li><code>file</code> - имя файла из проекта, откуда вставлять текст.
+Может быть абсолютным и относительным (см: <a href="ref.html">Ссылки</a>).
+Если содержит <code>'#'</code>, то считается что указывает на файл с groovy-классом
+(или java-классом) для генерации текста файла (см: <a href="cm-code.html#gen">Генерация файлов для вставки</a>).
+Кроме того, может быть именем класса.</li>
+<li><code>part</code> - имя поименнованного фрагмента из файла (см. ниже). Если не указан, вставляется
+весь текст файла</li>
+<li><code>lang</code> - имя языка для подсветки синтаксиса. Если не указано, определяется по расширению
+файла</li>
+<li><code>title</code> - заголовок. Обычно тут указывается имя файла.</li>
+<li><code>mode</code> - режим вывода при генерации (см: <a href="cm-code.html#gen">Генерация файлов для вставки</a>).</li>
+</ul>
+<p>Особые соглашения по имени файла:</p>
+<ul>
+<li>если файл не абсолютный (не имеет <code>/</code> в начале), то он последовательно ищется
+в каталогах:
+<ul>
+<li><code>_inc/ИМЯ-ФАЙЛА-СТАТЬИ</code></li>
+<li><code>_inc/ИМЯ_ФАЙЛА_СТАТЬИ</code></li>
+<li><code>_inc</code></li>
+<li>относительно текущего каталога</li>
+</ul>
+</li>
+<li>если файл - это имя класса, то ищется файл <code>.java</code> или <code>.groovy</code>, соответствующий классу</li>
+</ul>
+<p>Например, мы имеем статью <code>folder1/my-doc1.md</code> и в ней описана вставка кода:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code file=file1.java 
+</code></pre>
+</div></div>
+<p>Тогда будут искаться следующие файлы:</p>
+<ul>
+<li><code>folder1/_inc/my-doc1/file.java</code></li>
+<li><code>folder1/_inc/my_doc1/file.java</code></li>
+<li><code>folder1/_inc/file.java</code></li>
+<li><code>folder1/file.java</code></li>
+</ul>
+<p>Первый найденный будет использован.</p>
+<p>В случае, если в качестве файла указано имя класса:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code file=pak1.pak2.Class1 
+</code></pre>
+</div></div>
+<p>Будут искаться следующие файлы:</p>
+<ul>
+<li><code>/pak1/pak2/Class1.java</code></li>
+<li><code>/pak1/pak2/Class1.groovy</code></li>
+</ul>
+<h2 id="head2">Поименнованные фрагменты файла</h2>
+<p>В некоторых типах файлов можно определять поименнованные фрагменты, которые позволяют
+вставлять не весь текст файла, а только его часть.</p>
+<h3 id="head3">java/groovy/js</h3>
+<p>Начало фрагмента определяется коментарием <code>//= PART-NAME</code>, конец фрагмента - <code>//=</code>.
+Начало фрагмента является концом предыдущего, поэтому если фрагменты идут один
+за другим, конец фрагмента можно не указывать.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">def s = &quot;hello&quot;
+//= part1
+def n1 = 1
+//= part2
+def n2 = 2
+//=
+def n0 = 0
+//= part3
+def n3 = 3
+//=
+</code></pre>
+</div></div>
+<p>В этом примере определены 3 фрагмента со следующим содержимым:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">Фрагмент part1:
+  def n1 = 1
+
+Фрагмент part2:
+  def n2 = 2
+
+Фрагмент part3:
+  def n3 = 3
+</code></pre>
+</div></div>
+<p>В качестве имени фрагмента можно указать имя метода. В этом случае в качестве фрагмента
+будет использоватся тело метода. Если тело метода содержит фрагмент <code>body</code>, то этот
+фрагмент будет использоватся в качестве тела метода. Фрагмент с именем <code>имяМетода-all</code>
+содержит полное тело метода, без учета фрагмента <code>body</code>.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">class A1 {
+    void m1() {
+        def n1 = 1        
+    }
+    void m2() {
+        def n2 = 2
+        //= body        
+        def n3 = 3
+        //=         
+        def n4 = 4
+    }
+}
+</code></pre>
+</div></div>
+<p>В этом примере определены фрагменты:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">Фрагмент m1:
+  def n1 = 1
+
+Фрагмент m2:
+  def n3 = 3
+
+Фрагмент m2-all:
+  def n2 = 2
+  def n3 = 3
+  def n4 = 4
+</code></pre>
+</div></div>
+<h3 id="head4">xml/html</h3>
+<p>Начало фрагмента определяется коментарием <code>&lt;!-- = PART-NAME --&gt;</code>,
+конец фрагмента - <code>&lt;!-- = --&gt;</code>.
+Начало фрагмента является концом предыдущего, поэтому если фрагменты идут один
+за другим, конец фрагмента можно не указывать.</p>
+<h2 id="gen">Генерация файлов для вставки</h2>
+<p>Для генерации файлов для вставки, создайте файл groovy (или java) в проекте с классом,
+наследником от <code>jandcode.mdoc.cm.BaseCodeGen</code>.</p>
+<p>Любой публичный метод без параметров в таком классе - код генерации текста.</p>
+<p>Для использования генератора укажите в атрибуте <code>file</code> имя файла с генератором
+и после знака <code>'#'</code> имя его метода.</p>
+<p>Если расширение файла не указано, подразумевается расширение <code>.groovy</code> или <code>.java</code>.</p>
+<p>Дополнительно доступен атрибут <code>mode</code> со значениями:</p>
+<ul>
+<li><code>out</code> - (по умолчанию) показывается то, что выводит <code>outText</code>.</li>
+<li><code>body</code> - тело метода</li>
+<li><code>bodyout</code> - тело метода в перемешку с выводом</li>
+</ul>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--title">_inc/CodeGen1.groovy</div><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.commons.variant.*
+import jandcode.mdoc.builder.*
+import jandcode.mdoc.cm.*
+
+/**
+ * Пример генератора файлов для команды @@code
+ */
+class CodeGen1 extends BaseCodeGen {
+
+    /**
+     * Метод генерации.
+     * Должен вернуть строку с содержимым виртуального файла.
+     */
+    void gen1() {
+        // Доступно:
+
+        // Атрибуты, переданные в команде @@code (IVariantMap с расширениями).
+        // Из списка атрибутов исключены file, part, lang, title (они обрабатываются
+        // командой @@code).
+        Attrs attrs = getAttrs()    // class: jandcode.mdoc.cm.BaseCodeGen.Attrs
+
+        // Установить расширение генерируемого файла.
+        // По умолчанию - txt
+        setExt(&quot;txt&quot;)
+
+        // В контексте какого OutBuilder выполняется.
+        OutBuilder builder = getOutBuilder()
+        // class: jandcode.mdoc.builder.OutBuilder
+
+        // В контексте какого OutFile выполняется.
+        OutFile outFile = getOutFile() // class: jandcode.mdoc.builder.OutFile
+
+        // Общий кеш, который существует все время работы outBuilder.
+        IVariantMap cache = getCache()
+
+        // Кеш для текущего класса, который существует все время работы outBuilder.
+        IVariantMap cacheThis = getCacheThis()
+
+        // возвращаем текст для вставки в @@code
+        outText(&quot;generated text for attrs: ${attrs}&quot;)
+    }
+
+    /**
+     * Еще один метод генерации.
+     */
+    void gen2() {
+        outText(&quot;generated 2 text for attrs: ${attrs}&quot;)
+    }
+
+}</code></pre></div></div>
+<p>Использование:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code file=CodeGen1#gen1 attr1=1 attr2=2
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">generated text for attrs: [attr1:1, attr2:2, $list:[file=CodeGen1#gen1, attr1=1, attr2=2]]</code></pre></div></div>
+<p>Использование <code>mode=body</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code file=CodeGen1#gen1 attr1=1 attr2=2 mode=body
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// Доступно:
+
+// Атрибуты, переданные в команде @@code (IVariantMap с расширениями).
+// Из списка атрибутов исключены file, part, lang, title (они обрабатываются
+// командой @@code).
+Attrs attrs = getAttrs()    // class: jandcode.mdoc.cm.BaseCodeGen.Attrs
+
+// Установить расширение генерируемого файла.
+// По умолчанию - txt
+setExt(&quot;txt&quot;)
+
+// В контексте какого OutBuilder выполняется.
+OutBuilder builder = getOutBuilder()
+// class: jandcode.mdoc.builder.OutBuilder
+
+// В контексте какого OutFile выполняется.
+OutFile outFile = getOutFile() // class: jandcode.mdoc.builder.OutFile
+
+// Общий кеш, который существует все время работы outBuilder.
+IVariantMap cache = getCache()
+
+// Кеш для текущего класса, который существует все время работы outBuilder.
+IVariantMap cacheThis = getCacheThis()
+
+// возвращаем текст для вставки в @@code
+outText(&quot;generated text for attrs: ${attrs}&quot;)</code></pre></div></div>
+<p>Использование <code>mode=bodyout</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code file=CodeGen1#gen1 attr1=1 attr2=2 mode=bodyout
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// Доступно:
+
+// Атрибуты, переданные в команде @@code (IVariantMap с расширениями).
+// Из списка атрибутов исключены file, part, lang, title (они обрабатываются
+// командой @@code).
+Attrs attrs = getAttrs()    // class: jandcode.mdoc.cm.BaseCodeGen.Attrs
+
+// Установить расширение генерируемого файла.
+// По умолчанию - txt
+setExt(&quot;txt&quot;)
+
+// В контексте какого OutBuilder выполняется.
+OutBuilder builder = getOutBuilder()
+// class: jandcode.mdoc.builder.OutBuilder
+
+// В контексте какого OutFile выполняется.
+OutFile outFile = getOutFile() // class: jandcode.mdoc.builder.OutFile
+
+// Общий кеш, который существует все время работы outBuilder.
+IVariantMap cache = getCache()
+
+// Кеш для текущего класса, который существует все время работы outBuilder.
+IVariantMap cacheThis = getCacheThis()
+
+// возвращаем текст для вставки в @@code
+// generated text for attrs: [attr1:1, attr2:2, mode:bodyout, $list:[file=CodeGen1#gen1, attr1=1, attr2=2, mode=bodyout]]</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

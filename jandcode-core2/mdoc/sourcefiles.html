@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Исходные файлы</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class="cur "><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="folder "><a href="cm.html">Макрокоманды</a></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li class="active">Исходные файлы</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Исходные файлы</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="sourcefiles.html#head1">Виртуальный каталог</a></li>
+<li class=""><a href="sourcefiles.html#head2">_theme</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Виртуальный каталог</h2>
+<p>При настройке проекта указывается один или несколько каталогов, которые содержат
+исходные тексты для генератора документации.
+Все файлы из указанных каталогов рассматриваются как виртуальная файловая
+система, которая содержит все файлы внутри указанных каталогов.</p>
+<p>Например, мы имеем такую структуру проекта:</p>
+<div class="cm-tree-fs">
+<ul><li class='folder'><span class='item folder'>src</span><ul><li class='folder'><span class='item folder'>dir1</span><ul><li class='folder'><span class='item folder'>dir2</span><ul><li class='file'><span class='item file'>file2.md</span></li></ul></li><li class='file'><span class='item file'>file1.md</span></li></ul></li><li class='file'><span class='item file'>file3.md</span><span class='mark'>(from src)</span></li><li class='file'><span class='item file'>file4.md</span></li></ul></li><li class='folder'><span class='item folder'>src2</span><ul><li class='folder'><span class='item folder'>dir1</span><ul><li class='folder'><span class='item folder'>dir3</span><ul><li class='file'><span class='item file'>file6.md</span></li></ul></li><li class='file'><span class='item file'>file5.md</span></li></ul></li><li class='file'><span class='item file'>file3.md</span><span class='mark'>(from src2)</span></li><li class='file'><span class='item file'>file7.md</span></li></ul></li></ul></div>
+<p>и настроили проект так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(MDocProject).with {
+    addSrc('src')
+    addSrc('src2')
+}</code></pre></div></div>
+<p>Тогда исходные файлы для <code>mdoc</code> будут выглядеть так:</p>
+<div class="cm-tree-fs">
+<ul><li class='folder'><span class='item folder'>dir1</span><ul><li class='folder'><span class='item folder'>dir2</span><ul><li class='file'><span class='item file'>file2.md</span></li></ul></li><li class='folder'><span class='item folder'>dir3</span><ul><li class='file'><span class='item file'>file6.md</span></li></ul></li><li class='file'><span class='item file'>file1.md</span></li><li class='file'><span class='item file'>file5.md</span></li></ul></li><li class='file'><span class='item file'>file3.md</span><span class='mark'>(from src2)</span></li><li class='file'><span class='item file'>file4.md</span></li><li class='file'><span class='item file'>file7.md</span></li></ul></div>
+<p>Обратите внимание, файл <code>file3.md</code> будет использоваться из <code>src2</code>.
+Т.е. если в исходных каталогах есть одинаковые файлы, то будет использоваться
+файл из последнего добавленного каталога.</p>
+<p>При добавлении папки можно указывать папку, в которую она будет примонтирована:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(MDocProject).with {
+    addSrc('src')
+    addSrc('src2', prefix: 'dir1/mount1')
+}</code></pre></div></div>
+<p>Тогда исходные файлы для <code>mdoc</code> будут выглядеть так:</p>
+<div class="cm-tree-fs">
+<ul><li class='folder'><span class='item folder'>dir1</span><ul><li class='folder'><span class='item folder'>dir2</span><ul><li class='file'><span class='item file'>file2.md</span></li></ul></li><li class='folder'><span class='item folder'>mount1</span><ul><li class='folder'><span class='item folder'>dir1</span><ul><li class='folder'><span class='item folder'>dir3</span><ul><li class='file'><span class='item file'>file6.md</span></li></ul></li><li class='file'><span class='item file'>file5.md</span></li></ul></li><li class='file'><span class='item file'>file3.md</span><span class='mark'>(from src2)</span></li><li class='file'><span class='item file'>file7.md</span></li></ul></li><li class='file'><span class='item file'>file1.md</span></li></ul></li><li class='file'><span class='item file'>file3.md</span><span class='mark'>(from src)</span></li><li class='file'><span class='item file'>file4.md</span></li></ul></div>
+<h2 id="head2">_theme</h2>
+<p>Специальный каталог <code>_theme</code> содержит файлы темы (стили, javascript, картинки)
+и расширений.</p>
+<p>По умолчанию имеется базовая тема, которая автоматически монтируется в каталог <code>_theme</code>.
+Если есть необходимость изменить файлы темы, то создайте каталог в проекте с
+именем <code>_theme</code> и пеместите туда нужные файлы. Они перекроют оригинальные файлы
+темы. Так же можно примонтировать каталог с нужной темой в проект:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(MDocProject).with {
+    addSrc('src')
+    addSrc('theme', prefix: '_theme')
+}</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

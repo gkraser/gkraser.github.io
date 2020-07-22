@@ -1,0 +1,390 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Формат файла cfx</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">commons - утилиты</a><ul><li class="open "><a href="conf.html">Conf</a><ul><li class="cur "><a href="conf-cfx.html">Формат файла cfx</a></li>
+<li class=""><a href="conf-json.html">Формат файла json</a></li>
+<li class=""><a href="conf-xml.html">Формат файла xml</a></li>
+</ul></li>
+<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
+<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li><a href="conf.html">Conf</a></li>
+<li class="active">Формат файла cfx</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Формат файла cfx</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="conf-cfx.html#head1">Тег без атрибутов</a></li>
+<li class=""><a href="conf-cfx.html#head2">Тег c атрибутами</a></li>
+<li class=""><a href="conf-cfx.html#head3">Пустой тег</a></li>
+<li class=""><a href="conf-cfx.html#head4">Дочерние теги</a></li>
+<li class=""><a href="conf-cfx.html#head5">Атрибут name</a></li>
+<li class=""><a href="conf-cfx.html#head6">Безымянное свойство</a></li>
+<li class=""><a href="conf-cfx.html#head7">Специальные символы в имени</a></li>
+<li class=""><a href="conf-cfx.html#head8">Специальный коментарий</a></li>
+<li class="folder "><a href="conf-cfx.html#func">Функции</a><ul><li class=""><a href="conf-cfx.html#head9">Функция: include</a></li>
+<li class=""><a href="conf-cfx.html#head10">Функция: set</a></li>
+<li class=""><a href="conf-cfx.html#head11">Функция: if</a></li>
+<li class=""><a href="conf-cfx.html#head12">Функция: if-not</a></li>
+</ul></li>
+<li class=""><a href="conf-cfx.html#subst">Подстановки</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Файл предназначен для загрузки объектов <code>jandcode.commons.conf.Conf</code>.</p>
+<p>Расширение файла <code>.cfx</code>.</p>
+<p>Содержимое файла в формате <code>xml</code>.</p>
+<p>Корневой элемент xml описывает свойства загружаемого объекта.</p>
+<h2 id="head1">Тег без атрибутов</h2>
+<p>Тег без атрибутов и без дочерних тегов, но с текстом - простое свойство объекта:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;prop1&gt;value1&lt;/prop1&gt;
+    &lt;prop2&gt;value2&lt;/prop2&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    prop1: value1
+    prop2: value2
+}</code></pre></div></div>
+<h2 id="head2">Тег c атрибутами</h2>
+<p>Если тег с атрибутами, то имя тега рассматривается как имя свойства типа Conf,
+а все атрибуты - его свойства:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;obj attr1=&quot;1&quot; attr2=&quot;2&quot;/&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    obj: {
+        attr1: 1
+        attr2: 2
+    }
+}</code></pre></div></div>
+<h2 id="head3">Пустой тег</h2>
+<p>Если тег пустой (нет атрибутов, нет дочерних, нет текста),
+то имя тега рассматривается как имя свойства типа Conf без атрибутов:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;obj1/&gt;
+    &lt;obj2/&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    obj1: {
+    }
+    obj2: {
+    }
+}</code></pre></div></div>
+<h2 id="head4">Дочерние теги</h2>
+<p>Дочерние теги рассматриваются как свойства объекта, чьими дочерними они являются:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;obj1&gt;
+        &lt;prop1&gt;value1&lt;/prop1&gt;
+        &lt;emptyobj/&gt;
+        &lt;withattr attr1=&quot;1&quot; attr2=&quot;2&quot;&gt;
+            &lt;attr3&gt;3&lt;/attr3&gt;
+            &lt;emptyobj2/&gt;
+        &lt;/withattr&gt;
+    &lt;/obj1&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    obj1: {
+        prop1: value1
+        emptyobj: {
+        }
+        withattr: {
+            attr1: 1
+            attr2: 2
+            attr3: 3
+            emptyobj2: {
+            }
+        }
+    }
+}</code></pre></div></div>
+<h2 id="head5">Атрибут name</h2>
+<p>Если у тега имеется атрибут <code>name</code>, то тег описывается свойство со значением
+атрибута <code>name</code> у объекта с именем тега, где атрибут встретился:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;domain name=&quot;Domain1&quot; domain-attr1=&quot;1&quot;&gt;
+        &lt;field name=&quot;id&quot; field-attr1=&quot;1&quot;/&gt;
+        &lt;field name=&quot;name1&quot; field-attr1=&quot;2&quot;/&gt;
+    &lt;/domain&gt;
+    &lt;domain name=&quot;Domain2&quot; domain-attr1=&quot;2&quot;&gt;
+        &lt;field name=&quot;id&quot; field-attr1=&quot;1&quot;/&gt;
+        &lt;field name=&quot;name2&quot; field-attr1=&quot;2&quot;/&gt;
+    &lt;/domain&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    domain: {
+        Domain1: {
+            domain-attr1: 1
+            field: {
+                id: {
+                    field-attr1: 1
+                }
+                name1: {
+                    field-attr1: 2
+                }
+            }
+        }
+        Domain2: {
+            domain-attr1: 2
+            field: {
+                id: {
+                    field-attr1: 1
+                }
+                name2: {
+                    field-attr1: 2
+                }
+            }
+        }
+    }
+}</code></pre></div></div>
+<h2 id="head6">Безымянное свойство</h2>
+<p>Если свойство имеет имя <code>i</code>, то оно - безымянное и для него генерируется уникальное имя.
+Предназначено для описания списков:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;list1&gt;
+        &lt;i attr1=&quot;1&quot;/&gt;
+        &lt;i attr1=&quot;2&quot;/&gt;
+        &lt;i attr1=&quot;3&quot;/&gt;
+    &lt;/list1&gt;
+    &lt;list1 name=&quot;i&quot; attr1=&quot;4&quot;/&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    list1: {
+        #0: {
+            attr1: 1
+        }
+        #1: {
+            attr1: 2
+        }
+        #2: {
+            attr1: 3
+        }
+        #3: {
+            attr1: 4
+        }
+    }
+}</code></pre></div></div>
+<h2 id="head7">Специальные символы в имени</h2>
+<p>В имени свойства комбинация символов <code>'--'</code> и символы <code>'/'</code>, <code>':'</code>
+заменяются на символ <code>'!'</code>. Используется для описания имен свойств с путями:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;action name=&quot;my/action1&quot; attr1=&quot;1&quot;/&gt;
+    &lt;action&gt;
+        &lt;my--action2 attr1=&quot;1&quot;/&gt;
+    &lt;/action&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    action: {
+        my!action1: {
+            attr1: 1
+        }
+        my!action2: {
+            attr1: 1
+        }
+    }
+}</code></pre></div></div>
+<h2 id="head8">Специальный коментарий</h2>
+<p>Если коментарий начинается с символа <code>'@'</code>, то его текст рассматривается как
+значение атрибута <code>comment</code> объекта, внутри которого встретился коментарий:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;obj1&gt;
+        &lt;!--@
+            comment1
+        --&gt;
+    &lt;/obj1&gt;
+    &lt;field name=&quot;f1&quot;&gt;
+        &lt;!--@
+            comment2
+        --&gt;
+    &lt;/field&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    obj1: {
+        comment: comment1
+    }
+    field: {
+        f1: {
+            comment: comment2
+        }
+    }
+}</code></pre></div></div>
+<h2 id="func">Функции</h2>
+<p>Если тег начинается с символов <code>'x-'</code>, то он описывает функцию с именем тега,
+без символов <code>'x-'</code>. Такие функции обрабатываются особым способом с помощью плагинов
+загрузки <code>jandcode.commons.conf.ConfLoaderPlugin</code>.</p>
+<p>Стандартные функции, доступные всегда, описаны ниже.</p>
+<h3 id="head9">Функция: include</h3>
+<p>Загружает файлы в объект, внутри которого описана функция. Файл
+грузится в один объект только один раз. При повторной загрузке - игнорируется.</p>
+<p>Параметры:</p>
+<ul>
+<li><code>path</code> - путь до включаемого файла относительно текущего загружаемого. Может
+включать маски, как в ant (<code>'*'</code>, <code>'**'</code>) для загрузки группы файлов</li>
+<li><code>required</code> - по умолчанию <code>true</code>. При значении true - если файл не найден,
+генерируется ошибка. Иначе ошибка игнорируется.</li>
+</ul>
+<p>Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+     &lt;x-include path=&quot;data/**/*.cfx&quot;/&gt;
+     &lt;model name=&quot;DefaultModel&quot;&gt;
+         &lt;x-include path=&quot;default-model.cfx&quot; required=&quot;false&quot;/&gt;
+         &lt;!-- игнорируется, повторная загрузка: --&gt;
+         &lt;x-include path=&quot;default-model.cfx&quot; required=&quot;false&quot;/&gt; 
+     &lt;/model&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h3 id="head10">Функция: set</h3>
+<p>Установить произвольные переменные, которые в дальнейшем можно использовать в
+подстановках и условиях <code>if</code>/<code>if-not</code></p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+
+    &lt;x-set var1=&quot;value1&quot;/&gt;
+    &lt;x-set var2=&quot;value2&quot;/&gt;
+
+    &lt;node1 attr1=&quot;#{var1} % #{var2}&quot;/&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    node1: {
+        attr1: value1 % value2
+    }
+}</code></pre></div></div>
+<h3 id="head11">Функция: if</h3>
+<p>Загружает тело тега в объект, если соблюдается условие.
+Условием является набор атрибутов. Каждый атрибут рассматривается как условие,
+где имя атрибута - имя переменной, значение атрибута - значение, которое должно
+быть у переменной.</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+
+    &lt;x-set var1=&quot;value1&quot;/&gt;
+
+    &lt;node1&gt;
+        &lt;x-if var1=&quot;value1&quot;&gt;
+            &lt;node-for-value1/&gt;
+        &lt;/x-if&gt;
+    &lt;/node1&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    node1: {
+        node-for-value1: {
+        }
+    }
+}</code></pre></div></div>
+<h3 id="head12">Функция: if-not</h3>
+<p>То же, что и <code>if</code>, только проверяется несоблюдение условия.</p>
+<h2 id="subst">Подстановки</h2>
+<p>В значениях атрибутов раскрываются подстановки <code>#{VAR}</code>.
+Значения для переменных предоставляются плагинами
+загрузки <code>jandcode.commons.conf.ConfLoaderPlugin</code>.</p>
+<p>Стандартные переменные, доступные всегда:</p>
+<ul>
+<li><code>path</code> - абсолютный путь до текущего файла. Если текущий путь в VFS (например внутри jar),
+то и результат будет в формате VFS. Соответственно для реальной файловой системы
+путь будет в формате реальной файловой системы</li>
+<li><code>другое</code> - значение соответствующей системной переменной из <code>System.getProperties()</code></li>
+</ul>
+<p>В описаниях подстановок используются термины:</p>
+<ul>
+<li><strong>текущий файл</strong> - файл, в котором встретилась подстановка</li>
+<li><strong>текущий каталог</strong> - каталог, в котором лежит файл в котором встретилась
+подстановка</li>
+</ul>
+<p>Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;!-- attr1 равен пути, в котором лежит текущий файл --&gt;
+    &lt;n1 attr1=&quot;#{path}&quot;/&gt;
+
+    &lt;!-- attr1 равен пути в временном каталоге d:\temp\myproject\myfile.txt --&gt;
+    &lt;n3 attr1=&quot;#{java.io.tmpdir}/myproject/myfile.txt&quot;/&gt;
+
+&lt;/root&gt;
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

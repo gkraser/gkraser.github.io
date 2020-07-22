@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Формат файла xml</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">commons - утилиты</a><ul><li class="open "><a href="conf.html">Conf</a><ul><li class=""><a href="conf-cfx.html">Формат файла cfx</a></li>
+<li class=""><a href="conf-json.html">Формат файла json</a></li>
+<li class="cur "><a href="conf-xml.html">Формат файла xml</a></li>
+</ul></li>
+<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
+<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li><a href="conf.html">Conf</a></li>
+<li class="active">Формат файла xml</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Формат файла xml</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="conf-xml.html#head1">Пример</a></li>
+<li class=""><a href="conf-xml.html#head2">Текст тега</a></li>
+<li class=""><a href="conf-xml.html#head3">Специальный коментарий</a></li>
+<li class=""><a href="conf-xml.html#head4">Функции</a></li>
+<li class=""><a href="conf-xml.html#head5">Подстановки</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Для обычных файлов xml используется особый процесс загрузки.</p>
+<p>Для каждого тега xml создается безымянный объект <code>Conf</code> в атрибуте
+<code>$name</code> которого сохраняется имя тега.</p>
+<h2 id="head1">Пример</h2>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root root-attr=&quot;1&quot;&gt;
+
+    &lt;tag1 attr1=&quot;1&quot;&gt;
+        &lt;child-tag1 a1=&quot;1&quot;/&gt;
+        &lt;child-tag1 name=&quot;n1&quot; a1=&quot;2&quot;/&gt;
+    &lt;/tag1&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    root-attr: 1
+    #1: {
+        $name: tag1
+        attr1: 1
+        #2: {
+            $name: child-tag1
+            a1: 1
+        }
+        #3: {
+            $name: child-tag1
+            name: n1
+            a1: 2
+        }
+    }
+}</code></pre></div></div>
+<h2 id="head2">Текст тега</h2>
+<p>Текст тега помещается в атрибут <code>text</code></p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;obj1&gt;
+        text1
+    &lt;/obj1&gt;
+    &lt;field name=&quot;f1&quot;&gt;
+        text2
+    &lt;/field&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    #0: {
+        $name: obj1
+        text: text1
+    }
+    #1: {
+        $name: field
+        name: f1
+        text: text2
+    }
+}</code></pre></div></div>
+<h2 id="head3">Специальный коментарий</h2>
+<p>Если коментарий начинается с символа <code>'@'</code>, то его текст рассматривается как
+значение атрибута <code>comment</code> объекта, внутри которого встретился коментарий:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;obj1&gt;
+        &lt;!--@
+            comment1
+        --&gt;
+    &lt;/obj1&gt;
+    &lt;field name=&quot;f1&quot;&gt;
+        &lt;!--@
+            comment2
+        --&gt;
+    &lt;/field&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    #0: {
+        $name: obj1
+        comment: comment1
+    }
+    #1: {
+        $name: field
+        name: f1
+        comment: comment2
+    }
+}</code></pre></div></div>
+<h2 id="head4">Функции</h2>
+<p>См. <a href="conf-cfx.html#func">Функции</a>.</p>
+<h2 id="head5">Подстановки</h2>
+<p>См. <a href="conf-cfx.html#subst">Подстановки</a>.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

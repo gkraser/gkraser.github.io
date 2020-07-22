@@ -1,0 +1,411 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Основы jc</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class="cur "><a href="base.html">Основы jc</a></li>
+<li class=""><a href="jc-bat.html">jc.bat</a></li>
+<li class=""><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class=""><a href="gradle-tools.html">GradleTools</a></li>
+<li class=""><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class=""><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class=""><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">Основы jc</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Основы jc</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="base.html#head1">Подготовка</a></li>
+<li class="folder "><a href="base.html#head2">Описание</a><ul><li class=""><a href="base.html#head3">Процесс загрузки jc</a></li>
+<li class=""><a href="base.html#head4">Проект и скрипт</a></li>
+<li class=""><a href="base.html#head5">include</a></li>
+<li class=""><a href="base.html#head6">with</a></li>
+<li class=""><a href="base.html#head7">Методы в скриптах</a></li>
+<li class=""><a href="base.html#head8">Команды</a></li>
+<li class=""><a href="base.html#head9">ant</a></li>
+<li class=""><a href="base.html#head10">Стандартные скрипты</a></li>
+</ul></li>
+<li class=""><a href="base.html#head11">Заключение</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>В этой главе описаны основные принципы работы и скрипты <code>jc</code>.</p>
+<h2 id="head1">Подготовка</h2>
+<p>Для начала создадим пустой каталог и в нем файл <code>project.jc</code> со следующим содержимым:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.jc.*
+import jandcode.jc.std.*
+
+class P1 extends ProjectScript {
+
+    void onInclude() {
+        project.name = &quot;tutorial-1&quot;
+
+        include(Utils)
+
+        include(Utils).with {
+            param1 = &quot;NewValue1&quot;
+        }
+        include(Utils).param2 = &quot;Val2&quot;
+
+        Utils u = getIncluded(Utils)
+        if (u != null) {
+            u.param3 = &quot;Q3&quot;
+        }
+
+        include(Showlibs)
+
+        cm.add(&quot;one&quot;, &quot;Первая команда&quot;) {
+            log(&quot;Команда 1 выполнена&quot;)
+        }
+
+        cm.add(&quot;two&quot;, &quot;Вторая команда&quot;, this.&amp;cmTwo,
+                cm.opt(&quot;a&quot;, &quot;Опция a&quot;),
+                cm.opt(&quot;b&quot;, &quot;&quot;, &quot;Опция b с параметром&quot;),
+        )
+
+    }
+
+    void cmTwo(CmArgs args) {
+        ant.echo(message: &quot;Arguments: ${args}&quot;)
+        println(&quot;Печатаем текст&quot;)
+        log(&quot;Команда 2 выполнена&quot;)
+    }
+
+    //////
+
+    public static class Utils extends ProjectScript {
+        String param1 = &quot;value1&quot;
+        String param2 = &quot;value2&quot;
+        String param3 = &quot;value3&quot;
+
+        void onInclude() {
+            cm.add(&quot;util-one&quot;, &quot;Первая команда из утилит&quot;) {
+                showParam()
+                log(&quot;Команда util-one выполнена&quot;)
+            }
+        }
+
+        void showParam() {
+            log &quot;Param1=${param1}&quot;
+            log &quot;Param2=${param2}&quot;
+            log &quot;Param3=${param3}&quot;
+        }
+    }
+
+}</code></pre></div></div>
+<p>Запустим приложение <code>jc</code> в этом каталоге и увидим список команд.</p>
+<p>Выполним команду <code>two</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc two -b:1 -a
+</code></pre>
+</div></div>
+<p>Далее будут описаны все понятия, которые в этом скрипте использованы.</p>
+<h2 id="head2">Описание</h2>
+<p><code>project.jc</code> (как и любой другой <code>.jc</code> файл) - это <code>groovy</code> файл.
+В нем должен быть определен класс с любым именем, который является
+наследником от <code>jandcode.jc.ProjectScript</code>. В этом классе
+должен быть определен метод <code>onInclude()</code>, который и будет выполнен
+при загрузке такого файла.</p>
+<p>Пример минимального <code>project.jс</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.jc.*
+
+class EmptyProject extends ProjectScript {
+    void onInclude() {
+    }
+}</code></pre></div></div>
+<p>Так как это обычный <code>groovy</code>-класс, то он прекрасно редактируется в IDE с поддержкой
+<code>groovy</code>, только необходимо настроить IDE так, что бы она воспринимала файлы
+с расширением <code>.jc</code> как <code>groovy</code>-файлы. Соответственно доступны все удобства IDE,
+такие как автодополнение, переход на объявление и т.д.</p>
+<p>В <code>.jc</code>-файлах полностью отсутствует какая-либо синтаксическая или поведенческая магия,
+это просто класс. Это нужно помнить при разработке скриптов.</p>
+<h3 id="head3">Процесс загрузки jc</h3>
+<p>Для начала <code>jc</code> создает экземпляр проекта для текущего каталога. Текущий каталог
+становится свойством проекта. Сам проект является экземпляром
+класса <code>jandcode.jc.Project</code>. Далее под <strong>проектом</strong> будет пониматься именно
+этот экземпляр.</p>
+<p>Затем файл <code>project.jc</code> загружается и создается экземпляр класса
+<code>jandcode.jc.ProjectScript</code>, который в этом файле описан. Далее экземпляры
+такого класса будут называтся <strong>скриптами</strong>.</p>
+<p>Затем скрипту передается ссылка на проект и у скрипта вызывается метод
+<code>onInclude</code>.</p>
+<h3 id="head4">Проект и скрипт</h3>
+<p>Для одного экземпляра проекта можно выполнить несколько скриптов, но каждый
+экземпляр скрипта принадлежит только одному проекту.</p>
+<p>У скрипта имеется ссылка на проект, для которого он предназначен. Кроме того,
+скрипт реализует интерфейс проекта <code>jandcode.jc.Project</code>, делегируя все методы
+проекта проекту.</p>
+<p>Иллюстрация:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.jc.*
+
+class ProjectInScript extends ProjectScript {
+
+    void onInclude() {
+        // текущий проект
+        Project p1 = getProject()
+
+        // это groovy, можно писать и так:
+        Project p2 = project
+
+        // получение имени проекта
+        String s1 = project.getName()
+        String s2 = project.name
+
+        // скрипт делегирует методы интерфейса
+        // jandcode.jc.Project проекту,
+        // поэтому можно писать и так:
+        String s3 = getName()
+        String s4 = name
+
+        // а это получение пути относительно
+        // рабочего  каталог проекта (workdir, wd):
+        String wd1 = project.wd(&quot;temp&quot;)
+        String wd2 = wd(&quot;temp&quot;)
+    }
+
+}</code></pre></div></div>
+<h3 id="head5">include</h3>
+<p>У проекта имеется метод <code>include(script)</code>.
+Это механизм выполнения скриптов в контексте проекта. В качестве скрипта можно указать
+класс скрипта, полное имя класса скрипта или имя файла со скриптом:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// класс скрипта
+project.include(jandcode.jc.std.Showlibs)
+// класс скрипта, пакет должен быть импортирован
+project.include(Showlibs)
+// полное имя класса скрипта
+project.include(&quot;jandcode.jc.std.Showlibs&quot;)
+// имя файла со скриптом
+project.include(&quot;./my-script.jc&quot;)
+</code></pre>
+</div></div>
+<p>Помните, что скрипт делегирует все методы проекта проекту? Поэтому можно писать и так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// класс скрипта
+include(jandcode.jc.std.Showlibs)
+// класс скрипта, пакет должен быть импортирован
+include(Showlibs)
+// полное имя класса скрипта
+include(&quot;jandcode.jc.std.Showlibs&quot;)
+// имя файла со скриптом
+include(&quot;./my-script.jc&quot;)
+</code></pre>
+</div></div>
+<p>Метод <code>include</code> работает так:</p>
+<ul>
+<li>для начала проверяется, не был ли выполнен <code>include</code> в проекте ранее для этого скрипта.
+Если уже выполнялся, то возвращается экземпляр ранее выполненного скрипта.</li>
+<li>создается экземпляр скрипта (<code>jandcode.jc.IProjectScript</code>)</li>
+<li>экземпляру скрипта передается ссылка на проект</li>
+<li>у экземпляра скрипта вызывается метод <code>onInclude()</code></li>
+<li>метод кеширует экземпляр скрипта и возвращет его в качестве результата
+работы функции <code>include</code></li>
+</ul>
+<p>Таком образом:</p>
+<ul>
+<li>один и тот же скрипт можно включить в проект только один раз</li>
+<li>можно получить экземпляр скрипта, ранее включенного в проект</li>
+</ul>
+<p>Иллюстрация:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// включаем скрипт первый раз, создается экземпляр JavaProject
+JavaProject jm = include(jandcode.jc.std.JavaProject)
+
+// включаем скрипт второй раз, не создается JavaProject,
+// просто возвращается предыдущий
+JavaProject jm2 = include(jandcode.jc.std.JavaProject)
+</code></pre>
+</div></div>
+<p>Имеется возможность проверить, был ли включен скрипт в проект (метод <code>getIncluded()</code>):</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// еще не включали
+JavaProject jm = getIncluded(JavaProject)
+assert jm == null
+
+// включаем
+include(JavaProject)
+jm = getIncluded(JavaProject)
+assert jm != null
+</code></pre>
+</div></div>
+<h3 id="head6">with</h3>
+<p>В <code>groovy</code> есть метод <code>with</code>, который позволяет выполнить <code>closure</code> в контексте
+конкретного объекта. Это позволяет сократить код и сделать его более наглядным:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">class Data {
+    String f1
+    String f2
+}
+def d = new Data()
+d.with {
+    f1 = '1'
+    f1 = '2'
+}
+
+// эквивалентный код без with:
+d.f1 = '1'
+d.f2 = '2'
+</code></pre>
+</div></div>
+<p>В <code>jc</code> этот метод обычно используются для настройки конкретных скриптов в момент
+их включения в проект:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(SomeScript).with {
+    someProperty1 = 1
+    someMethod2(1)
+}
+
+// эквивалентный код без with:
+SomeScript sm = include(SomeScript)
+sm.someProperty1 = 1
+sm.someMethod2(1)
+
+// можно и так:
+include(SomeScript).someProperty1 = 1
+include(SomeScript).someMethod2(1)
+</code></pre>
+</div></div>
+<h3 id="head7">Методы в скриптах</h3>
+<p>Так как скрипт - это обычный класс, нет никаких ограничений на методы в этом классе.
+Можно объявлять любые нужные вам методы и конечно внутренние классы.</p>
+<h3 id="head8">Команды</h3>
+<p>Команда - это <code>closure</code>, которая имеет имя, описание и опции. Команда является
+экземпляром класса <code>jandcode.jc.Cm</code>.</p>
+<p>Объявление команды должно быть в методе <code>onInclude()</code>, так как только он непосредственно
+выполняется ядром <code>jc</code>.</p>
+<p>У проекта имеется метод <code>getCm()</code>, который возвращает хранилище команд проекта и средства
+их определения.</p>
+<p>Примеры объявления команд:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.jc.*
+
+class CmInScript extends ProjectScript {
+
+    void onInclude() {
+
+        /* объявление команды 'cm1', без описания.
+           код команды - closure
+         */
+        cm.add(&quot;cm1&quot;) {
+            log(&quot;Команда выполнена&quot;)
+        }
+
+        /* объявление команды 'cm2', с описанием.
+           код команды - closure
+         */
+        cm.add(&quot;cm2&quot;, &quot;Это команда 2\nОписание может быть\nмногострочным&quot;) {
+            log(&quot;Команда выполнена&quot;)
+        }
+
+        /* объявление команды 'cm3', с описанием.
+           код команды - метод cmMethod
+         */
+        cm.add(&quot;cm3&quot;, this.&amp;cmMethod, &quot;Это команда 3&quot;)
+
+        /* объявление команды 'cm4', с описанием и опциями.
+           код команды - метод cmMethod
+         */
+        cm.add(&quot;cm3&quot;, this.&amp;cmMethod, &quot;Это команда 3&quot;,
+                cm.opt(&quot;opt1&quot;, false, &quot;boolean опция&quot;),
+                cm.opt(&quot;opt2&quot;, &quot;Также boolean опция&quot;),
+                cm.opt(&quot;opt3&quot;, &quot;&quot;, &quot;Опция с параметром&quot;),
+        )
+
+    }
+
+    /**
+     * Для методов, котрые используются как команды,
+     * можно объявить аргумент типа CmArgs, который будет
+     * заполнен параметрами командной строки при вызове команды.
+     */
+    void cmMethod(CmArgs args) {
+        log(&quot;Команда выполнена&quot;)
+    }
+
+}</code></pre></div></div>
+<h3 id="head9">ant</h3>
+<p>В скриптах есть возможность выполнять команды <a href="http://ant.apache.org/">ant</a>.
+Для этого используется стандартный <code>groovy</code> класс
+<a href="http://docs.groovy-lang.org/latest/html/documentation/ant-builder.html">AntBuilder</a>.
+Экземпляр этого класса доступен через метод проекта <code>getAnt()</code>. В этом экземпляре
+в качестве базового каталога установлен каталог проекта.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">ant.echo(message: &quot;Arguments: ${args}&quot;)
+</code></pre>
+</div></div>
+<h3 id="head10">Стандартные скрипты</h3>
+<p>В комплекте Jandcode Core имеется  множество стандартных скриптов, которые можно
+использовать в проектах. Основные находятся в пакете <code>jandcode.jc.std</code>.
+Многие модули поставляют свои собственные скрипты. Они обычно располагаются
+в пакете <code>MODULENAME.jc</code>.</p>
+<h2 id="head11">Заключение</h2>
+<p>Надеюсь, теперь Вы сможете самостоятельно разобратся в примере,
+который был показан в начале статьи.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

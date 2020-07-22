@@ -1,0 +1,176 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MDocProject</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="folder "><a href="cm.html">Макрокоманды</a></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class="cur "><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li class="active">MDocProject</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>MDocProject</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="api-jc-mdoc.html#head1">Описание</a></li>
+<li class="folder "><a href="api-jc-mdoc.html#head2">Методы</a><ul><li class=""><a href="api-jc-mdoc.html#head3">addSrc</a></li>
+<li class=""><a href="api-jc-mdoc.html#head4">genSrc</a></li>
+</ul></li>
+<li class="folder "><a href="api-jc-mdoc.html#head5">Свойства</a><ul><li class=""><a href="api-jc-mdoc.html#head6">props</a></li>
+</ul></li>
+<li class="folder "><a href="api-jc-mdoc.html#head7">Команды</a><ul><li class=""><a href="api-jc-mdoc.html#head8">mdoc-build</a></li>
+<li class=""><a href="api-jc-mdoc.html#head9">mdoc-serve</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+    <li>
+      <span class="cm-code-info--code">jandcode-mdoc-jc</span> <span
+        class="cm-code-info--marker">(lib)</span>
+    </li>
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.mdoc.jc.MDocProject</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+    <li>
+      <span class="cm-code-info--text"><a href="../jc/index.html">jc - приложение</a></span>
+    </li>
+
+  </ul>
+</fieldset>
+<h2 id="head1">Описание</h2>
+<p>Поддержка работы <code>mdoc</code> в <code>jc</code>.</p>
+<h2 id="head2">Методы</h2>
+<h3 id="head3">addSrc</h3>
+<p><em>void addSrc(Map params, String dir)</em></p>
+<p><em>void addSrc(String dir)</em></p>
+<p>Добавить каталог с исходниками к проекту.</p>
+<p><strong>Параметры:</strong></p>
+<ul>
+<li><code>dir</code> - каталог с исходниками</li>
+<li><code>params</code> - дополнительные параметры
+<ul>
+<li><code>prefix</code> - префикс, куда будет монтироватся каталог</li>
+<li><code>resource</code> - true - это каталог с ресурсами, в нем нет исходников для статей.
+По умолчанию false.</li>
+<li><code>includes</code> - список масок в формате <code>ant</code>, которые нужно включить в проект.
+По умолчанию <code>**/*</code></li>
+<li><code>excludes</code> - список масок в формате <code>ant</code>, которые нужно исключить из проекта.
+По умолчанию пустой.</li>
+</ul>
+</li>
+</ul>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(MDocProject).with {
+    addSrc(&quot;doc&quot;)
+    addSrc(&quot;doc&quot;, prefix: 'pfx', resource: true, includes:['**/*'], excludes:['**/temp/*'])
+}
+</code></pre>
+</div></div>
+<h3 id="head4">genSrc</h3>
+<p>Зарегистрировать процедуру генерации исходных текстов для проекта.
+Если кому-нить понадобится, опишу... Но в нужности пока сомневаюсь...</p>
+<h2 id="head5">Свойства</h2>
+<h3 id="head6">props</h3>
+<p>Свойства проекта.</p>
+<p>Обычный <code>map</code> со свойствами проекта.
+Значимым является пока только <code>title</code>, остальный - на ваше усмотрение.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">props['title'] = 'Название проекта'
+</code></pre>
+</div></div>
+<h2 id="head7">Команды</h2>
+<h3 id="head8">mdoc-build</h3>
+<p>Сборка проекта. Генерация каталога с html-файлами.</p>
+<h3 id="head9">mdoc-serve</h3>
+<p>Запуск отладочного сервера с проектом.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

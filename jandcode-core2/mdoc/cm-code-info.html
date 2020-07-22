@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>code-info</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class=""><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="open "><a href="cm.html">Макрокоманды</a><ul><li class=""><a href="cm-custom.html">Собственные макрокоманды</a></li>
+<li class=""><a href="cm-code.html">code - вставка фрагментов кода</a></li>
+<li class="cur "><a href="cm-code-info.html">code-info</a></li>
+<li class=""><a href="cm-prop.html">prop</a></li>
+<li class=""><a href="cm-tree-fs.html">tree-fs</a></li>
+</ul></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li><a href="cm.html">Макрокоманды</a></li>
+<li class="active">code-info</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>code-info</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="cm-code-info.html#head1">Описание</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Описание</h2>
+<p>Информация о коде, который описывается в статье</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code-info attr=value
+</code></pre>
+</div></div>
+<p>Атрибуты:</p>
+<ul>
+<li><code>lib</code> - имя библиотеки</li>
+<li><code>module</code> - имя модуля jandcode</li>
+<li><code>pak</code> - имя пакета</li>
+<li><code>class</code> - имя класса</li>
+<li><code>text</code> - текст html</li>
+<li><code>ref</code> - ссылка. Формат <code>'ref|title|дополнительный текст'</code></li>
+</ul>
+<p>Атрибуты могут дублироватся.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">@@code-info
+    class=jandcode.jc.std.GradleTools
+    ref=&quot;https://gradle.org/|Gradle|должен быть установлен и доступен в PATH&quot;
+    lib=jandcode-jc
+    module=jandcode.mdoc
+    pak=jandcode.mdoc.ext
+    pak=jandcode.mdoc
+    text=&quot;Это просто текст&quot;
+    text=&quot;Это просто текст2&quot;
+</code></pre>
+</div></div>
+<p>Результат:</p>
+<fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+    <li>
+      <span class="cm-code-info--code">jandcode-jc</span> <span
+        class="cm-code-info--marker">(lib)</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--code">jandcode.mdoc</span> <span
+        class="cm-code-info--marker">(module)</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--code">jandcode.mdoc.ext</span> <span
+        class="cm-code-info--marker">(package)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.mdoc</span> <span
+        class="cm-code-info--marker">(package)</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--code">jandcode.jc.std.GradleTools</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--text">Это просто текст</span>
+    </li>
+    <li>
+      <span class="cm-code-info--text">Это просто текст2</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--text"><a href="https://gradle.org/">Gradle</a> должен быть установлен и доступен в PATH</span>
+    </li>
+
+  </ul>
+</fieldset>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,223 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Подсветка синтаксиса</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">mdoc - генератор документации</a><ul><li class=""><a href="get-start.html">Начало работы</a></li>
+<li class=""><a href="sourcefiles.html">Исходные файлы</a></li>
+<li class="folder "><a href="topic.html">Статья</a></li>
+<li class=""><a href="toc-xml.html">Содержание toc.xml</a></li>
+<li class=""><a href="markdown.html">Формат markdown</a></li>
+<li class="cur "><a href="syntax-highlight.html">Подсветка синтаксиса</a></li>
+<li class=""><a href="ref.html">Ссылки</a></li>
+<li class="folder "><a href="cm.html">Макрокоманды</a></li>
+<li class="folder "><a href="utils.html">Утилиты</a></li>
+<li class=""><a href="api-jc-mdoc.html">MDocProject</a></li>
+<li class=""><a href="editor.html">Редактирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">mdoc - генератор документации</a></li>
+<li class="active">Подсветка синтаксиса</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Подсветка синтаксиса</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="syntax-highlight.html#head1">java</a></li>
+<li class=""><a href="syntax-highlight.html#head2">groovy</a></li>
+<li class=""><a href="syntax-highlight.html#head3">javascript</a></li>
+<li class=""><a href="syntax-highlight.html#head4">xml</a></li>
+<li class=""><a href="syntax-highlight.html#head5">html</a></li>
+<li class=""><a href="syntax-highlight.html#head6">css</a></li>
+<li class=""><a href="syntax-highlight.html#head7">gsp</a></li>
+<li class=""><a href="syntax-highlight.html#head8">console</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>В сгенерированной документации поддерживается подсветка синтаксиса с помощью <a href="http://prismjs.com/">http://prismjs.com/</a>.
+Для этого необходимо указать язык для подсветки:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">```groovy
+def a = &quot;str&quot;
+```
+</code></pre>
+</div></div>
+<p>Далее представлены некоторые примеры поддерживаемых подсветок. Конечно этими языками
+поддержка не ограничивается. Полный список поддерживаемых языков можно посмотреть на сайте
+<a href="http://prismjs.com/">http://prismjs.com/</a>.</p>
+<h2 id="head1">java</h2>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">public class MyClass extends Object {
+    /**
+     * Comment
+     */
+    public void method1(String p) {
+        // comment
+        String s = &quot;Hello&quot;;
+        int a = 1;
+        for (int i = 0; i &lt; 10; i++) {
+            System.out.println(&quot;i&quot; + i);
+        }
+    }
+}
+</code></pre>
+</div></div>
+<h2 id="head2">groovy</h2>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">public class MyClass extends Object {
+    /**
+     * Comment
+     */
+    public void method1(String p) {
+        String s = 'Hello';
+        // comment
+        def s1 = &quot;&quot;&quot;Hello ${p}&quot;&quot;&quot;
+        def a = 1;
+        for (int i = 0; i &lt; 10; i++) {
+            System.out.println(&quot;i&quot; + i);
+        }
+    }
+}
+</code></pre>
+</div></div>
+<h2 id="head3">javascript</h2>
+<p>Можно использовать имена <code>js</code> или <code>javascript</code>.</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">// comment
+var a = &quot;hello&quot;;
+var b = 1;
+/*
+   comment
+*/
+function func1(p) {
+    for (let i = 0; i &lt; 10; i++) {
+        System.out.println(&quot;i&quot; + i);
+    }
+}
+</code></pre>
+</div></div>
+<h2 id="head4">xml</h2>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;root&gt;
+    &lt;!-- comment --&gt;
+    &lt;node attr1=&quot;Value&quot;&gt;
+        Text
+    &lt;/node&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h2 id="head5">html</h2>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">&lt;div class=&quot;class1&quot; id=&quot;id1&quot;&gt;
+    &lt;!-- comment --&gt;
+    &lt;span&gt;
+        Text
+    &lt;/span&gt;
+    &lt;script&gt;
+        var a = &quot;ss&quot;;
+    &lt;/script&gt;
+    &lt;style&gt;
+        body {
+           color: #fff;
+        }
+    &lt;/style&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h2 id="head6">css</h2>
+<div class="codeblock" data-language="css"><div class="codeblock--content"><pre><code class="language-css">/* comment */
+body {
+   color: #fff;
+}
+</code></pre>
+</div></div>
+<h2 id="head7">gsp</h2>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.utils.*; jandcode.mdoc.*&quot; %&gt;
+%{-- comment --}%
+&lt;!-- comment --&gt;
+&lt;div class=&quot;cls&quot;&gt;text&lt;/div&gt;
+&lt;%
+    def a = &quot;hello&quot;
+%&gt;
+&lt;jc:tag attr1=&quot;value&quot;&gt;text&lt;/jc:tag&gt;
+</code></pre>
+</div></div>
+<h2 id="head8">console</h2>
+<p>Консольный вывод</p>
+<div class="codeblock" data-language="console"><div class="codeblock--content"><pre><code class="language-console">Опции:
+  -csc      Очистить кеш скриптов
+  -f:ARG    Имя файла проекта. По умолчанию project.jc в текущем каталоге
+  -h        Помощь по команде
+  -log:ARG  Включение логирования. ARG - имя файла в формате logback.
+            Можно не указывать, тогда используются настройки по умолчанию
+  -no-ansi  Отключить разукрашенный вывод
+  -v        Включение режима с большим числом сообщений
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

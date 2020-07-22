@@ -1,0 +1,371 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Conf</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">commons - утилиты</a><ul><li class="open cur "><a href="conf.html">Conf</a><ul><li class=""><a href="conf-cfx.html">Формат файла cfx</a></li>
+<li class=""><a href="conf-json.html">Формат файла json</a></li>
+<li class=""><a href="conf-xml.html">Формат файла xml</a></li>
+</ul></li>
+<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
+<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li class="active">Conf</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Conf</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="conf.html#head1">Создание экземпляра</a></li>
+<li class=""><a href="conf.html#head2">Значения свойств</a></li>
+<li class=""><a href="conf.html#head3">Путь</a></li>
+<li class=""><a href="conf.html#head4">Conf как значение свойства</a></li>
+<li class=""><a href="conf.html#head5">Безымянное свойство</a></li>
+<li class=""><a href="conf.html#head6">Map и List как значение свойства</a></li>
+<li class=""><a href="conf.html#head7">Загрузка из файла</a></li>
+<li class=""><a href="conf.html#head8">join</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+    <li>
+      <span class="cm-code-info--code">jandcode-commons</span> <span
+        class="cm-code-info--marker">(lib)</span>
+    </li>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.conf</span> <span
+        class="cm-code-info--marker">(package)</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.conf.Conf</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.UtConf</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>Средства для работы с конфигурациями.</p>
+<p>Объект <code>jandcode.commons.conf.Conf</code> представляет собой структуру типа &quot;map-of-maps&quot;.</p>
+<p>Прежде всего, это обычный Map, точнее <code>jandcode.commons.variant.IVariantMap</code>.
+Имена ключей (в дальнейшем - свойства) - регистрозависимые.</p>
+<p>Значениями могут быть обычные простые объекты (строки, числа, даты) или
+объекты Conf. Значениями не могут быть объекты <code>List</code> и <code>Map</code>.</p>
+<h2 id="head1">Создание экземпляра</h2>
+<p>Пустой объект:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();</code></pre></div></div>
+<p>Из <code>Map</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Map m = new LinkedHashMap();
+m.put(&quot;a&quot;, 1);
+m.put(&quot;b&quot;, 2);
+Conf x = UtConf.create(m);
+/*
+{
+    a: 1
+    b: 2
+}
+*/</code></pre></div></div>
+<p>Из <code>List</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">List lst = new ArrayList();
+lst.add(1);
+lst.add(&quot;q1&quot;);
+lst.add(new HashMap&lt;&gt;());
+lst.add(Arrays.asList(1, 2));
+Conf x = UtConf.create(lst);
+/*
+{
+    #0: 1
+    #1: q1
+    #2: {
+    }
+    #3: {
+        #0: 1
+        #1: 2
+    }
+}
+*/</code></pre></div></div>
+<h2 id="head2">Значения свойств</h2>
+<p>Установить значение можно с помощью метода <code>setValue</code> или <code>put</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+x.setValue(&quot;a&quot;, 1);
+x.put(&quot;b&quot;, 2);
+/*
+{
+    a: 1
+    b: 2
+}
+*/</code></pre></div></div>
+<p>Прочитать значения свойств можно с помощью метода <code>get</code> или методов
+интерфейса <code>jandcode.commons.variant.IVariantNamed</code> (<code>getString</code>, <code>getInt</code> и т.д.):</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">/*
+x =
+{
+    str1: value1
+    int1: 2
+}
+*/
+String s = x.getString(&quot;str1&quot;);
+// value1
+int i = x.getInt(&quot;int1&quot;);
+// 2</code></pre></div></div>
+<h2 id="head3">Путь</h2>
+<p>Путь до свойства описывается как имена свойств, разделенных символом <code>'/'</code>.
+Можно читать и писать значения по пути:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+x.setValue(&quot;a/b/c&quot;, 1);
+x.setValue(&quot;a/b/d&quot;, 2);
+/*
+{
+    a: {
+        b: {
+            c: 1
+            d: 2
+        }
+    }
+}
+*/
+String s = x.getString(&quot;a/b/c&quot;);
+// 1</code></pre></div></div>
+<h2 id="head4">Conf как значение свойства</h2>
+<p>В качестве значения свойства может быть указан объект <code>Conf</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+x.setValue(&quot;a&quot;, UtConf.create());
+/*
+{
+    a: {
+    }
+}
+*/</code></pre></div></div>
+<p>Для получения значения как <code>Conf</code> имееются специальные методы <code>getConf</code> и <code>findConf</code>.
+Если значения по пути отсутсвует или оно не <code>Conf</code>, то <code>getConf</code> сгенерирует ошибку,
+а <code>findConf</code> вернет null:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+x.setValue(&quot;a&quot;, UtConf.create());
+Conf x1 = x.getConf(&quot;a&quot;);
+x1.setValue(&quot;b&quot;, 2);
+/*
+x =
+{
+    a: {
+        b: 2
+    }
+}
+
+x1 =
+{
+    b: 2
+}
+*/
+x1 = x.findConf(&quot;AAA&quot;);
+// null</code></pre></div></div>
+<p><code>findConf</code> может автоматически создавать объекты по указанному пути. Для этого
+нужно указать вторым параметром <code>true</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+Conf x1 = x.findConf(&quot;a/b/c&quot;, true);
+/*
+x =
+{
+    a: {
+        b: {
+            c: {
+            }
+        }
+    }
+}
+*/</code></pre></div></div>
+<h2 id="head5">Безымянное свойство</h2>
+<p>Для имитации списков предусмотрено специальное безымянное свойство <code>#</code>.
+При присвоении значения такому свойству генерируется уникальное имя свойства:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+x.setValue(&quot;#&quot;, 0);
+x.setValue(&quot;#&quot;, 1);
+/*
+x =
+{
+    #0: 0
+    #1: 1
+}
+*/</code></pre></div></div>
+<h2 id="head6">Map и List как значение свойства</h2>
+<p>Типы <code>Map</code> и <code>List</code> преобразуются в тип <code>Conf</code>.
+Для типа <code>List</code> создается объект <code>Conf</code> где для каждого элемента списка
+создается безымянное свойство:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+
+Map m = new LinkedHashMap();
+m.put(&quot;a&quot;, 1);
+m.put(&quot;b&quot;, 2);
+m.put(&quot;c&quot;, Arrays.asList(&quot;i1&quot;, &quot;i2&quot;));
+x.setValue(&quot;map1&quot;, m);
+
+x.setValue(&quot;list1&quot;, Arrays.asList(&quot;item1&quot;, &quot;item2&quot;));
+
+/*
+x =
+{
+    map1: {
+        a: 1
+        b: 2
+        c: {
+            #0: i1
+            #1: i2
+        }
+    }
+    list1: {
+        #0: item1
+        #1: item2
+    }
+}
+*/</code></pre></div></div>
+<h2 id="head7">Загрузка из файла</h2>
+<p>Загрузка возможна из файлов формата <a href="conf-cfx.html">cfx</a>, <a href="conf-xml.html">xml</a> или
+<a href="conf-json.html">json</a>.
+При загрузке существующие данные в объекте не стираются.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x1 = UtConf.create();
+UtConf.load(x1).fromString(&quot;{\&quot;a\&quot;:1}&quot;, &quot;a.json&quot;);
+/*
+x =
+{
+    a: 1.0
+}
+*/
+Conf x2 = UtConf.create();
+UtConf.load(x2).fromString(&quot;&lt;root&gt;&lt;b&gt;2&lt;/b&gt;&lt;/root&gt;&quot;, &quot;a.cfx&quot;);
+/*
+x =
+{
+    b: 2
+}
+*/
+Conf x3 = UtConf.create();
+UtConf.load(x3).fromString(&quot;&lt;root&gt;&lt;a z=\&quot;3\&quot;&gt;a&lt;/a&gt;&lt;b&gt;2&lt;/b&gt;&lt;/root&gt;&quot;, &quot;a.xml&quot;);
+/*
+x =
+{
+    #0: {
+        $name: a
+        z: 3
+        text: a
+    }
+    #1: {
+        $name: b
+        text: 2
+    }
+}
+*/</code></pre></div></div>
+<h2 id="head8">join</h2>
+<p>Объекты <code>Conf</code> можно объединять методом <code>join</code>. При этом в объект, в который
+объединяем, присваиваются свойства из объекта, который объединяем. Для свойств
+типа <code>Conf</code> делаются копии.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+x.setValue(&quot;a/b&quot;, 1);
+
+Conf x1 = UtConf.create();
+x1.setValue(&quot;a/c&quot;, 2);
+
+x.join(x1);
+// объект x1 независимый
+x1.setValue(&quot;z&quot;, 1);
+
+/*
+x =
+{
+    a: {
+        b: 1
+        c: 2
+    }
+}
+
+x1 =
+{
+    a: {
+        c: 2
+    }
+    z: 1
+}
+*/</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Генерация по шаблонам</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="index.html">jc - приложение</a><ul><li class=""><a href="base.html">Основы jc</a></li>
+<li class=""><a href="jc-bat.html">jc.bat</a></li>
+<li class=""><a href="loadprocess.html">Процесс загрузки project.jc</a></li>
+<li class=""><a href="gradle-tools.html">GradleTools</a></li>
+<li class=""><a href="jc-gen-src.html">Генерация исходников</a></li>
+<li class="cur "><a href="gen-gsp.html">Генерация по шаблонам</a></li>
+<li class=""><a href="jc-data.html">Каталог jc-data</a></li>
+<li class=""><a href="project-struct.html">Структура проекта</a></li>
+</ul></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jc - приложение</a></li>
+<li class="active">Генерация по шаблонам</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Генерация по шаблонам</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="gen-gsp.html#head1">Аргументы для генерации</a></li>
+<li class=""><a href="gen-gsp.html#head2">Вложенные шаблоны</a></li>
+<li class=""><a href="gen-gsp.html#head3">Генерация нескольких файлов</a></li>
+<li class=""><a href="gen-gsp.html#head4">Ресурсы для генерации</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.jc.GspScript</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>В <code>jc</code> имеется возможность генерировать произвольные наборы файлов по шаблонам <code>gsp</code>.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// сюда будем генерировать
+def outDir = wd(&quot;temp/gendir1&quot;)
+
+// ощищаем каталог, он будет пустым и существующим
+ut.cleandir(outDir)
+
+// создаем скрипт генератор по gsp-файлу
+GspScript gs = create(&quot;my-templates/template1.gsp&quot;)
+
+// запускаем генерацию, указывая куда генерировать и с какими аргументами
+gs.generate(&quot;${outDir}/result1.txt&quot;, [a1: 1, a2: 2])</code></pre></div></div>
+<p>Пример шаблона:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  // содержимое gsp - это тело метода jandcode.jc.GspScript#onGenerate
+  // поэтому можно получить типизированную ссылку
+  GspScript th = this
+
+  def s = &quot;Текст1&quot;
+%&gt;
+Текст
+Переменная ${s}
+Аргументы ${th.args['a1']}, ${th.args.a2}
+&lt;% out(&quot;Текст&quot;) %&gt;
+&lt;% out(s) %&gt;
+</code></pre></div></div>
+<h2 id="head1">Аргументы для генерации</h2>
+<p>Аргументы для генерации передаются в виде Map в методе <code>genеrate</code> и доступны
+в момент генерации через свойство: <code>args</code> типа <code>IVariantMap</code>.</p>
+<p>Эти аргументы существуют в процессе генерации в единственном экземпляре
+и разделяются между вложенными шаблонами.</p>
+<h2 id="head2">Вложенные шаблоны</h2>
+<p>Допустим, что у Вас имеется шаблон, который содержит некоторый обощенный вариант
+генерации. Такой шаблон можно использовать из основного так:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  GspScript th = this
+
+  // создаем экземпляры скриптов
+  // важно, что бы они были созданы внутри шаблона, откуда будут выводится
+  GspScript child1 = th.create('lib/child1.gsp')
+  GspScript child2 = th.create('lib/child2.gsp')
+%&gt;
+Первый шаблон:
+${child1}
+Второй шаблон:
+&lt;% out(child2) %&gt;
+</code></pre></div></div>
+<p>Это простейший способ использования вложенных шаблонов.</p>
+<p>Кроме этого существует возможность объявить во вложенном шаблоне функции,
+которые можно вызывать из родительского. Такие функции будут выводить
+текст в текущий файл.</p>
+<p>В таком случае шаблон с функциями используется как набор функций и не должен
+использоватся самостоятельно.</p>
+<p>Так определяются функции во вложенном шаблоне:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  GspScript th = this
+
+  // функции объявляем как Closure и записываем в vars
+
+  th.vars.func1 = { a -&gt;
+    out(&quot;A=${a}&quot;)
+  }
+
+%&gt;
+
+Весь вывод вне функций будет проигнорирован!
+
+&lt;% th.vars.func2 = { b -&gt; %&gt;
+B=${b}
+&lt;% } %&gt;
+</code></pre></div></div>
+<p>Так они используются:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  GspScript th = this
+
+  // создаем экземпляр скрипта, содержащего функции
+  GspScript lib = th.create('lib/lib1.gsp')
+
+  // выполняем функции
+  lib.vars.func1(1)
+  lib.vars.func2(2)
+%&gt;
+</code></pre></div></div>
+<h2 id="head3">Генерация нескольких файлов</h2>
+<p>При запуске генерации в методе <code>generate</code> мы указываем в какой файл генерировать.
+Каталог с указанным файлом будет рассматриватся как базовый каталог генерации.
+В процессе генерации можно изменять текущий файл, в который будет осуществляется
+дальнейшая генерация.</p>
+<p>Допустим мы запускаем генерацию так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// создаем скрипт генератор по gsp-файлу
+GspScript gs = create(&quot;my-templates/template1.gsp&quot;)
+
+// запускаем генерацию, указывая файл, куда генерировать
+// каталог с этим файлом будет базовым каталогом генерации
+gs.generate(&quot;temp/gendir/result1.txt&quot;, [a1: 1, a2: 2])</code></pre></div></div>
+<p>Тогда в шаблоне можно делать так:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  GspScript th = this
+
+  // текущий файл для вывода: temp/gendir/result1.txt
+  def curFile = th.currentFile
+
+  // базовый каталог для вывода: temp/gendir
+  def outDir = th.outDir
+
+  // вывод в файл temp/gendir/result1.txt
+  th.out('1')
+
+  // меняем файл на temp/gendir/f2.txt, указывая имя относительно outDir
+  th.changeFile(&quot;f2.txt&quot;)
+
+  // вывод в файл temp/gendir/f2.txt
+  th.out('2')
+
+  // меняем файл на ранее используемый temp/gendir/result1.txt
+  // и указывая параметр append=true, открываем его в режиме добавления
+  th.changeFile(&quot;result1.txt&quot;, true)
+
+  // добавляем данные в файл temp/gendir/result1.txt
+  th.out('3')
+
+  // меняем файл на temp/gendir/f3.txt, предыдущий temp/gendir/result1.txt
+  // остается открытым
+  th.pushFile(&quot;f3.txt&quot;)
+
+  // выводим в файл temp/gendir/f3.txt
+  th.out('4')
+
+  // возвращаемся к файлу temp/gendir/result1.txt
+  th.popFile()
+
+  // выводим в файл temp/gendir/result1.txt
+  th.out('5')
+
+%&gt;
+</code></pre></div></div>
+<p>При смене файла методами <code>changeFile</code> и <code>pushFile</code> файл физически не создается
+и не открывается, пока не было никакого вывода. Поэтому при запуске генерации
+можно указать какой либо фиктивный файл (он нужен для определения базового каталога
+генерации), а уже в теле шаблона указать смену файла на нужный.</p>
+<p>Допустим для вышеуказанного вызова в шаблоне можно написать так:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  GspScript th = this
+
+  // текущий файл для вывода temp/gendir/result1.txt, однако он еще не создан,
+  // так как вывода еще не было
+  def curFile = th.currentFile
+
+  // выводим в набор файлов
+  for (i in 1..3) {
+    th.changeFile(&quot;f-${i}.txt&quot;)
+    th.out(i)
+  }
+
+  // будут созданы файлы:
+  // temp/gendir/f-1.txt
+  // temp/gendir/f-2.txt
+  // temp/gendir/f-3.txt
+%&gt;
+</code></pre></div></div>
+<h2 id="head4">Ресурсы для генерации</h2>
+<p>Скрипт <code>jandcode.jc.GspScript</code> является наследником от
+<code>jandcode.jc.ProjectScript</code> и обладает всеми его свойствами.
+Например, свойство <code>scriptDir</code> указывает на каталог, из которого был загружен
+скрипт. Это позволяет хранить ресурсы рядом со скриптом и в процессе генерации
+копировать их в каталог вывода.</p>
+<p>Допустим, мы генерируем html-файл и ему нужны css, js, картинки.
+Можно сделать так:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.jc.*&quot; %&gt;
+&lt;%
+  GspScript th = this
+
+  // каталог в котором лежит скрипт
+  def scrdir = th.scriptDir
+
+  // копируем все ресурсы
+  th.ant.copy(todir: th.outDir) {
+    fileset(dir: srcdir) {
+      include(name: '**/*.js')
+      include(name: '**/*.css')
+      include(name: '**/*.jpg')
+    }
+  }
+
+  // генерируем html
+%&gt;
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+text
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

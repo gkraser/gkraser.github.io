@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Ansi цвета в консоле</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">commons - утилиты</a><ul><li class="folder "><a href="conf.html">Conf</a></li>
+<li class="cur "><a href="ansifer.html">Ansi цвета в консоле</a></li>
+<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li class="active">Ansi цвета в консоле</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Ansi цвета в консоле</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="ansifer.html#head1">Регистрация стилией</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+</svg>
+<fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+    <li>
+      <span class="cm-code-info--code">jandcode-commons-jansi</span> <span
+        class="cm-code-info--marker">(lib)</span>
+    </li>
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.UtAnsifer</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>Поддержка ansi-цветов в консоли.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Биюлиотека <code>jandcode-commons</code> содержит только api,
+для полной поддержки в проект необходимо подключить библиотеку
+<code>jandcode-commons-jansi</code>.</p>
+</div>
+</div>
+<p>Пример:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">// включаем ansi-консоль
+UtAnsifer.ansiOn();
+
+// выводим строку Hello желтым на синем
+System.out.println(UtAnsifer.color(&quot;yellow_h&quot;, &quot;blue&quot;, &quot;Hello&quot;));
+// или так
+System.out.println(UtAnsifer.color(AnsiferColor.yellow_h, AnsiferColor.blue, &quot;Hello&quot;));
+
+// регистрируем стиль my-warn
+UtAnsifer.registerStyle(&quot;my-warn&quot;, AnsiferColor.red_h, AnsiferColor.cyan);
+
+// выводим строку Hello зарегистрированным стилем
+System.out.println(UtAnsifer.color(&quot;my-warn&quot;, &quot;Hello&quot;));
+
+// вылючаем ansi-консоль
+UtAnsifer.ansiOff();</code></pre></div></div>
+<p>Доступные цвета определены в <code>jandcode.commons.ansifer.AnsiferColor</code>.</p>
+<h2 id="head1">Регистрация стилией</h2>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">// регистрируем стиль
+UtAnsifer.registerStyle(&quot;my-style1&quot;, AnsiferColor.red_h, AnsiferColor.cyan);
+
+// регистрируем стиль по умолчанию, если он еще не зарегистрирован
+UtAnsifer.registerStyle(&quot;my-style2&quot;, AnsiferColor.red_h, AnsiferColor.cyan, true);
+
+// null указываем в случае, если хотим использовать цвет в консоле по умолчанию.
+// например здесь будет цвет желтый на черном, если консоль по умолчанию черная
+UtAnsifer.registerStyle(&quot;my-style3&quot;, AnsiferColor.yellow, null);
+
+// регистрируем стиль, но не задаем цвета, будут использованы цвета
+// консоли по умолчанию
+UtAnsifer.registerStyle(&quot;my-style4&quot;, null, null);</code></pre></div></div>
+<p>По умолчанию зарегистрированы следующие стили:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">app-header     = yellow_h/null
+c-gray         = black_h/null
+c1             = yellow/null
+c2             = cyan/null
+cmd-name       = yellow/null
+error-delim    = red_h/null
+error-stack    = cyan/null
+error-text     = yellow/null
+log-debug      = black_h/null
+log-debug-pfx  = cyan/null
+log-info       = null/null
+log-info-pfx   = yellow/null
+log-warn       = black_h/null
+log-warn-pfx   = red_h/null
+opt-help       = null/null
+opt-name       = cyan/null
+</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

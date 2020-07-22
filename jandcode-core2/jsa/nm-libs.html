@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Библиотеки node_modules</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">jsa - клиентские приложения на js</a><ul><li class=""><a href="less.html">less</a></li>
+<li class=""><a href="sass.html">Sass</a></li>
+<li class="cur "><a href="nm-libs.html">Библиотеки node_modules</a></li>
+<li class=""><a href="format-nodejs-xml.html">Формат файла xml с описанием nodejs библиотек</a></li>
+</ul></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">jsa - клиентские приложения на js</a></li>
+<li class="active">Библиотеки node_modules</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Библиотеки node_modules</h1>
+</div>
+<div class="topic-body">
+  <p>В проекте можно использовать библиотеки, которые управляются <code>npm</code>
+и лежат в каталоге <code>node_modules</code>.</p>
+<p>Для этого их нужно описать в файле <code>lib/NAME.nodejs.xml</code>
+(<a href="format-nodejs-xml.html">формат файла</a>), где <code>NAME</code> - произвольное имя.</p>
+<p>Библиотеки, описанные таким образом, можно использовать как зависимости:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(JsaJavaProject).with {
+    // зависимости, попадающие в package.json,
+    // включая инструменты для разработки и библиотеки
+    // для клиенского приложения
+    nodeJsDepends(
+            // инструменты
+            &quot;@babel/cli&quot;,
+            &quot;cross-env&quot;,
+            // для клиентского приложения
+            &quot;axios&quot;,
+    )
+}</code></pre></div></div>
+<p>Библиотеки <code>node_modules</code> собираются из всех модулей с подключенным
+<code>JsaProject</code>, которые используются в корневом проекте, путем объединения <code>nodeJsDepends</code>.
+Из этих зависимостей генерируется файл <code>package.json</code>, который и используется
+<code>npm</code> для загрузки библиотек.</p>
+<p>Посмотреть общий список используемых библиотек можно в <code>package.json</code>
+в корне проекта. Этот файл <strong><em>генерируется</em></strong> командой <code>jc prepare</code>, обычно в составе
+других команд (например <code>jc gen-idea</code> или <code>jc build</code>).</p>
+<p>Обновления версий библиотек можно проверить командой <code>npm outdated</code>.</p>
+<p>Если необходимо изменить версию библиотеки, которую объявил какой-то модуль где-то
+там, то нужно объявить новое определение библиотеки в файле <code>lib/NAME.nodejs.xml</code>.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

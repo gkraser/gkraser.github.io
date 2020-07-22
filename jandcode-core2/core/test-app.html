@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>app тесты</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="open "><a href="index.html">core - ядро платформы</a><ul><li class=""><a href="module.html">Модуль приложения</a></li>
+<li class=""><a href="module-cfx.html">module.cfx</a></li>
+<li class=""><a href="module-api.html">Module API</a></li>
+<li class=""><a href="env.html">.env</a></li>
+<li class="cur "><a href="test-app.html">app тесты</a></li>
+<li class=""><a href="module-conf.html">Конфигурация</a></li>
+</ul></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">core - ядро платформы</a></li>
+<li class="active">app тесты</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>app тесты</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="test-app.html#head1">Описание</a></li>
+<li class="folder "><a href="test-app.html#head2">AppTestSvc</a><ul><li class=""><a href="test-app.html#head3">Сохранение конфигурации</a></li>
+<li class=""><a href="test-app.html#head4">Проблемы при загрузке конфигурации</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.test.App_Test</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.test.AppTestSvc</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Описание</h2>
+<p>Для тестирования приложения и его объектов в unit-тестах имеется специальный
+механизм загрузки приложения.</p>
+<p>Приложение при запуске загружается из файла <code>app.cfx</code>, который обычно лежит в корне
+каталога с приложением. Однако для тестов этот механизм не подходит,
+т.к. зачастую для различных тестов необходима особая среда запуска.
+Кроме того, при тестировании обособленного модуля, ему не нужен полный <code>app.cfx</code>,
+т.к.в нем присутсвуют зависимости, о которых модуль не знает.</p>
+<p>Для тестирования объектов в контексте приложения, необходимо создать
+наследника от класса <code>jandcode.core.test.App_Test</code>.
+В поле экземпляра <code>app</code> (тип <code>jandcode.core.test.AppTestSvc</code>) хранится ссылка
+на экземпляр приложения, доступного из этого класса:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">import jandcode.core.std.*;
+import jandcode.core.test.*;
+import org.junit.jupiter.api.*;
+
+public class MyApp1_Test extends App_Test {
+
+    @Test
+    public void test1() throws Exception {
+        // app - ссылка на приложение: jandcode.core.App
+        DataDirService svc = app.bean(DataDirService.class);
+        String p = svc.getPath(&quot;mypath&quot;);
+        //...
+    }
+
+}</code></pre></div></div>
+<p>При запуске таких тестов загрузка приложения осуществляется из файла <code>test.cfx</code>, который
+ищется в пакете класса с тестом или выше по иерархии пакетов. Первый найденный
+файл <code>test.cfx</code> будет загружен так, как будто это файл <code>app.cfx</code>.</p>
+<p>Таким образом в разных пакетах тестах можно тестировать различные конфигурации приложения.</p>
+<p>Если необходимо загрузить основной <code>app.cfx</code> из <code>test.cfx</code>, то это можно сделать так:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;x-include path=&quot;#{appdir}/app.cfx&quot;/&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<p>Если необходимо тестировать обособленный модуль, то в <code>test.cfx</code> нужно подключить
+необходимый модуль и не загружать <code>app.cfx</code>:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;x-depends module=&quot;my-module1&quot;/&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<p>Все нужные параметры можно настроить непосредственно в <code>test.cfx</code> или вынести их
+во внешний файл, при необходимости. Например так:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;!-- подключаем модуль --&gt;
+    &lt;x-depends module=&quot;my-module1&quot;/&gt;
+
+    &lt;!-- настраиваем что-то по умолчанию --&gt;
+    &lt;my-params a1=&quot;1&quot;/&gt;
+
+    &lt;!-- подключаем внешний _tests.cfx из каталога с приложением для перекрытия параметров--&gt;
+    &lt;x-include path=&quot;#{appdir}/_tests.cfx&quot; require=&quot;false&quot;/&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h2 id="head2">AppTestSvc</h2>
+<p>Сервис для тестирования в контексте приложения.</p>
+<h3 id="head3">Сохранение конфигурации</h3>
+<p>Конфигурацию загруженного приложения можно сохранить в файл для последующего анализа:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">// записать в файл 'temp/ИМЯ_КЛАССА-ИМЯ_ПАКЕТА.cfx'
+app.saveAppConf();</code></pre></div></div>
+<h3 id="head4">Проблемы при загрузке конфигурации</h3>
+<p>Загрузка конфгурации приложения делается в методе <code>setUp</code>.
+Если возникают проблемы, то можно включить логгирование <code>setUp</code> метода для анализа
+(см. <a href="../commons/test.html#logSetUp">Логгирование в setUp методе</a>).</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

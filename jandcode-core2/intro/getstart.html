@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Быстрый старт</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="open "><a href="intro.html">Введение</a><ul><li class=""><a href="install.html">Установка</a></li>
+<li class="cur "><a href="getstart.html">Быстрый старт</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="intro.html">Введение</a></li>
+<li class="active">Быстрый старт</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Быстрый старт</h1>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+<symbol id="adm-warning">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="m3.1 18.5 8.1-14c.4-.7 1.4-.7 1.8 0l8.1 14c.4.7-.1 1.6-.9 1.6h-16.1c-.9 0-1.4-.9-1-1.6zm10.6-4.3c0-.1 0-.2 0-.2v-4.6c0-.4 0-.6 0-.6-.1-.1-.3-.2-.7-.3s-.7-.1-1-.1c-.1 0-.2 0-.3 0-.3.1-.5.2-.5.4v4.2s-.1.1-.2.4-.1.4 0 .5c.3.2.7.4 1.2.6s.9.3 1.2.3h.2c.2 0 .3-.2.3-.5-.2 0-.2-.1-.2-.1zm-.8 1.4c-.5-.2-.9-.2-1.2-.2s-.4.1-.5.4v.9c0 .2 0 .3-.1.4-.1.2-.2.3-.1.4s.5.3 1.2.5c.6.2 1 .2 1.1.2.2 0 .4-.1.4-.3s.1-.4.1-.7c0-.1 0-.3.1-.7 0-.3 0-.5 0-.5-.2-.1-.5-.2-1-.4z" fill="currentColor"/>
+</svg>
+</symbol>
+</svg>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Здесь и далее в документации предполагается, что установка была произведена по
+<a href="install.html">инструкции</a> и у Вас есть собственный рабочий каталог для проектов
+(например <code>D:\jc-projects</code> (или для Linux <code>~/jc-projects</code>)).</p>
+</div>
+</div>
+<p>Создадим наш первый проект.</p>
+<p>Переходим в рабочий каталог и запускаем создание проекта:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:apex-app -o:jcsample-project1
+</code></pre>
+</div></div>
+<p>Будет создан каталог <code>jcsample-project1</code> с проектом.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Имя проекта (в данном случае <code>jcsample-project1</code>) по умолчанию
+рассматривается как имя java-пакета Вашего приложения,
+где <code>'-'</code> заменяется на <code>'.'</code>. Т.е. в данном случае
+пакет будет <code>jcsample.project1</code>.</p>
+</div>
+</div>
+<p>Переходим в папку с проектом <code>jcsample-project1</code> и запускаем генерацию
+файлов проекта для IDE:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc gen-idea
+</code></pre>
+</div></div>
+<p>В процессе генерации будет произведена настройка проекта, в том числе будут
+загружены необходимые npm-модули, так что в первый раз процесс
+может быть не очень быстрым.</p>
+<p>Теперь можно открыть файл проекта <code>jcsample-project1-(project).ipr</code> в IDEA.</p>
+<p>В проекте мы видим модуль <code>jcsample-project1-main</code>,
+в котором имеется каталог <code>src</code> с исходниками.</p>
+<p>Теперь в каталоге проекта запускаем процесс компиляции клиентских файлов (javascript, css...)
+и отслеживание изменений в них:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc jsa-watch
+</code></pre>
+</div></div><div class="adm-block adm-warning">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
+</div>
+<div class="adm-body">
+<p>Команда <code>jc jsa-watch</code> запускает процесс, который должен работать все время,
+пока ведется разработка клиенского кода. Если он по каким-то причинам завершится,
+его нужно запустить заново, иначе изменения, внесенные в клиенский код
+не будут компилироватся.</p>
+</div>
+</div>
+<p>Теперь можно запустить приложение в IDE.
+Выбираем в конфигурацию запуска с именем <code>app-run</code> и запускаем ее в режиме отладки.
+В консоле отобразится url, по которому приложение доступно: <a href="http://localhost:8080/jc">http://localhost:8080/jc</a>.
+Этот url открываем в браузере.
+Можно заглянуть в консоль разработчика в браузере, там то же что-то выводится.</p>
+<p>В первом приближении приложение работает.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Создайте алиас для команды app-run</span>
+</div>
+<div class="adm-body">
+<p>Приложение запускается командной <code>sh ./app-run.sh</code>, создайте алиас для нее:</p>
+<div class="codeblock" data-language="shell"><div class="codeblock--content"><pre><code class="language-shell">alias app-run='sh ./app-run.sh $*'
+</code></pre>
+</div></div></div>
+</div>
+<p>Останавливаем приложение в IDE и переходим в каталог проекта.
+Ранее запущенный <code>jc jsa-watch</code> не останавливаем.
+Запускаем приложение с командной строки:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc build
+app-run
+</code></pre>
+</div></div>
+<p>Приложение так же запускается и можно открывать его в браузере.</p>
+<div class="adm-block adm-warning">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
+</div>
+<div class="adm-body">
+<p>Если Вы получили ошибку вида:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">====[ ERROR ]===============================================================
+Address already in use: bind
+============================================================================    
+</code></pre>
+</div></div>
+<p>значит приложение в IDE не остановлено. Остановите его.</p>
+</div>
+</div>
+<p>Теперь соберем продукт.</p>
+<p>Останавливаем приложение, запущенное в командной строке и ранее запущенный
+<code>jc jsa-watch</code> так же останавливаем.</p>
+<p>Запускаем:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc product
+</code></pre>
+</div></div>
+<p>Проект соберется в каталоге <code>_jc/product</code>.
+Этот каталог и есть дистрибутив Вашего приложение.
+В нем есть файл <code>app-run.bat</code> (для Linux <code>app-run.sh</code>), который запускает приложение.</p>
+<p>Все.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
