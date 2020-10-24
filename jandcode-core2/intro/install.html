@@ -65,7 +65,7 @@
     <ul><li class=""><a href="install.html#head1">Настройка среды</a></li>
 <li class=""><a href="install.html#head2">Установка</a></li>
 <li class=""><a href="install.html#head3">Обновление</a></li>
-<li class=""><a href="install.html#head4">Ветки default и dev</a></li>
+<li class=""><a href="install.html#head4">Ветки master и dev</a></li>
 <li class=""><a href="install.html#head5">Поддержка запуска jc версии 1.5</a></li>
 </ul>
   </div>
@@ -93,10 +93,10 @@
 <li>Java JDK, версия &gt;=13</li>
 <li><a href="https://gradle.org/">Gradle</a>, версия 5 или старше</li>
 <li><a href="https://nodejs.org">Node.js</a>, версия 10.16.x или старше</li>
-<li><a href="https://www.mercurial-scm.org/">Mercurial</a>, версия 4 или старше</li>
+<li><a href="https://git-scm.com/">Git</a>, версия 2 или старше</li>
 </ul>
 <p>Среда должна быть настроена так, что бы, что бы с командной строки
-запускались приложения <code>java</code>, <code>javac</code>, <code>gradle</code>, <code>node</code>, <code>npm</code>, <code>hg</code>.</p>
+запускались приложения <code>java</code>, <code>javac</code>, <code>gradle</code>, <code>node</code>, <code>npm</code>, <code>git</code>.</p>
 <div class="adm-block adm-note">
 <div class="adm-heading">
 <svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Поддержка IDE</span>
@@ -107,10 +107,20 @@
 </div>
 </div>
 <h2 id="head2">Установка</h2>
+<div class="adm-block adm-warning">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
+</div>
+<div class="adm-body">
+<p>Каталоги и имена файлов с пробелами не поддерживаются нигде.
+Все каталоги и файлы в используемых инструментах и проектах должны быть
+без пробелов.</p>
+</div>
+</div>
 <p>Проект <strong>Jandcode Core</strong> поставляется в исходниках и компилируется на машине
 пользователя.</p>
-<p>Исходники доступны в репозитории mercurial:
-<a href="https://bitbucket.org/gkraser/jandcode-core2">https://bitbucket.org/gkraser/jandcode-core2</a>.</p>
+<p>Исходники доступны в репозитории git:
+<a href="https://github.com/gkraser/jandcode-core2">https://github.com/gkraser/jandcode-core2</a>.</p>
 <p>Создаем произвольный рабочий каталог для проектов (например
 <code>D:\jc-projects</code> для Windows или <code>~/jc-projects</code> для Linux)
 и переходим в него:</p>
@@ -121,7 +131,7 @@
 </code></pre>
 </div></div>
 <p>Клонируем репозиторий:</p>
-<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">hg clone https://bitbucket.org/gkraser/jandcode-core2
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">git clone https://github.com/gkraser/jandcode-core2
 </code></pre>
 </div></div>
 <p>Переходим в каталог <code>D:\jc-projects\jandcode-core2</code>
@@ -164,6 +174,15 @@
 </div>
 <p>В каталоге <code>D:\jc-projects</code> (для Linux <code>~/jc-projects</code>) будут созданы
 файлы <code>jc-env.bat</code> (для Linux <code>jc-env.sh</code>) и <code>jc-env.jc</code>.</p>
+<p>В файле <code>jc-env.bat</code> (для Linux <code>jc-env.sh</code>) можно дополнительно
+настроить конкретную версию java, которая будет использоваться при запуске <code>jc</code>.
+Пример:</p>
+<div class="codeblock" data-language="bat"><div class="codeblock--title">jc-env.bat</div><div class="codeblock--content"><pre><code class="language-bat">set JAVA_HOME=d:\jdks\jdk14
+set PATH=%JAVA_HOME%\bin;%PATH% 
+java -version
+echo --------------------------------------------------------------------------
+</code></pre>
+</div></div>
 <p>Далее переходим в каталог для проектов <code>D:\jc-projects</code>
 (для Linux <code>~/jc-projects</code>) и запускаем <code>jc</code>, что бы убедится, что все работает:</p>
 <div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">cd /D D:\jc-projects
@@ -194,31 +213,31 @@ sh ./build-bin.sh
 </code></pre>
 </div></div>
 <p>Если версия изменилась, продукт будет пересобран.</p>
-<h2 id="head4">Ветки default и dev</h2>
+<h2 id="head4">Ветки master и dev</h2>
 <div class="adm-block adm-warning">
 <div class="adm-heading">
 <svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
 </div>
 <div class="adm-body">
-<p>В ветке <code>default</code> находится стабильный релиз. Работоспособность
+<p>В ветке <code>master</code> находится стабильный релиз. Работоспособность
 других веток и ревизий не гарантируется.</p>
 </div>
 </div>
-<p>В репозитории имеются 2 основных ветки: <code>default</code> и <code>dev</code>.</p>
-<p>Ветка <code>default</code> содержит последний стабильный релиз.</p>
+<p>В репозитории имеются 2 основных ветки: <code>master</code> и <code>dev</code>.</p>
+<p>Ветка <code>master</code> содержит последний стабильный релиз.</p>
 <p>Ветка <code>dev</code> содержит текущую версию для разработки.</p>
 <p>Вы можете собирать бинарный вариант продукта из любой ветки, даже из любой ревиизии.
 Просто обновите рабочий каталог с исходниками <strong>Jandcode Core</strong> до нужной Вам
 ветки или ревизии. Например для <code>dev</code>:</p>
 <div class="codeblock" data-language="text"><div class="codeblock--title">Windows</div><div class="codeblock--content"><pre><code class="language-text">cd /D D:\jc-projects\jandcode-core2
-hg pull -u
-hg update dev
+git pull
+git checkout dev
 build-bin.bat
 </code></pre>
 </div></div>
 <div class="codeblock" data-language="text"><div class="codeblock--title">Linux</div><div class="codeblock--content"><pre><code class="language-text">cd ~/jc-projects/jandcode-core2
-hg pull -u
-hg update dev
+git pull 
+git checkout dev
 sh ./build-bin.sh
 </code></pre>
 </div></div>
