@@ -39,7 +39,7 @@
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
 <li class="folder "><a href="../x/x1.html">Модули</a></li>
-<li class="open "><a href="index.html">Jandcode Core Apex</a><ul><li class="cur "><a href="tst.html">tst</a></li>
+<li class="open "><a href="index.html">Jandcode Core Apx</a><ul><li class="cur "><a href="tst.html">tst</a></li>
 </ul></li>
 </ul>
           </div>
@@ -51,7 +51,7 @@
 <div class="topic-breadcrumb">
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode Core</a></li>
-<li><a href="index.html">Jandcode Core Apex</a></li>
+<li><a href="index.html">Jandcode Core Apx</a></li>
 <li class="active">tst</li>
 </ul>
 
@@ -83,7 +83,7 @@
 
 
     <li>
-      <span class="cm-code-info--code">jandcode.core.apex.tst</span> <span
+      <span class="cm-code-info--code">jandcode.core.apx.tst</span> <span
         class="cm-code-info--marker">(module)</span>
     </li>
 
@@ -95,8 +95,8 @@
 </fieldset>
 <p>Поддержка тестирования в контексте клиентского web-приложения.</p>
 <h2 id="head1">Введение</h2>
-<p>При генерации проекта <code>apex-app</code> к нему по умолчанию подключается
-модуль <code>jandcode.core.apex.tst</code>. Он будет загружатся только в
+<p>При генерации проекта <code>apx-app</code> к нему по умолчанию подключается
+модуль <code>jandcode.core.apx.tst</code>. Он будет загружатся только в
 dev-режиме.</p>
 <p>При подключенном модуле становится доступен url
 <code>http://localhost:8080/jc/_tst</code>.</p>
@@ -144,14 +144,17 @@ describe(__filename, function() {
 Любой обычный vue-компонент, но можно использовать и расширенный вариант его,
 например:</p>
 <div class="codeblock" data-language="html"><div class="codeblock--title">Vue1.test.vue</div><div class="codeblock--content"><pre><code class="language-html">&lt;template&gt;
-    &lt;tst-apex-panel&gt;
+    &lt;tst-apx-panel&gt;
+        &lt;template #tools&gt;
+        &lt;/template&gt;
+
         &lt;jc-btn label=&quot;hello&quot;/&gt;
-    &lt;/tst-apex-panel&gt;
+    &lt;/tst-apx-panel&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
 export default {
-    extends: Vue.component('tst-apex-page'),
+    extends: Vue.component('tst-apx-page'),
     components: {},
     created() {
         this.cfgStore.applyDefault({})
@@ -173,9 +176,9 @@ export default {
 <p>Кроме того, vue-компонент можно рендерить в контексте вашего приложения,
 что бы он мог пользоватся данными и функционалом приложения:</p>
 <div class="codeblock" data-language="html"><div class="codeblock--title">InAppVue1.test.vue</div><div class="codeblock--content"><pre><code class="language-html">&lt;template&gt;
-    &lt;tst-apex-panel&gt;
+    &lt;tst-apx-panel&gt;
         &lt;tst-icon-list/&gt;
-    &lt;/tst-apex-panel&gt;
+    &lt;/tst-apx-panel&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
@@ -188,7 +191,7 @@ import {main} from '../vendor'
 main.run()
 
 export default {
-    extends: Vue.component('tst-apex-page'),
+    extends: Vue.component('tst-apx-page'),
     components: {},
     created() {
         this.cfgStore.applyDefault({})
@@ -219,7 +222,7 @@ hello!
 <p>Некоторые файлы в корне <code>_tst</code> имеют важное значение для поддержки тестовой среды.</p>
 <h3 id="head8">vendor.js</h3>
 <div class="codeblock" data-language="js"><div class="codeblock--title">vendor.js</div><div class="codeblock--content"><pre><code class="language-js">export * from '../js/vendor'
-import * as test from 'jandcode.core.apex.webapp/test'
+import * as test from 'jandcode.core.apx.webapp/test'
 import * as main from '../js/main'
 
 export {
@@ -230,7 +233,7 @@ export {
 тестирования по умоланию. В своем коде вы можете импортировать из этого файла
 то, что вам нужно. И менять его, дополняя необходимымы модулями.</p>
 <h3 id="head9">run-js.gsp</h3>
-<div class="codeblock" data-language="gsp"><div class="codeblock--title">run-js.gsp</div><div class="codeblock--content"><pre><code class="language-gsp">&lt;jc:page template=&quot;page/tst-apex&quot;&gt;
+<div class="codeblock" data-language="gsp"><div class="codeblock--title">run-js.gsp</div><div class="codeblock--content"><pre><code class="language-gsp">&lt;jc:page template=&quot;page/tst-apx&quot;&gt;
 &lt;/jc:page&gt;</code></pre></div></div>
 <p>Этот файл содержит gsp, которая рендерит страницу для запуска файлов js и vue.
 При необходимости - его можно заменить на свой вариант.</p>
