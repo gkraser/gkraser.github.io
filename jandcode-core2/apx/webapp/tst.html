@@ -4,23 +4,23 @@
   <meta charset="UTF-8">
   <title>tst</title>
 
-  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
-  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
-  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
-  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
-  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
-  <script src="../_data/theme/lib/prism/prism.js"></script>
-  <script src="../_data/theme/js/prism-ext.js"></script>
+  <link rel="stylesheet" href="../../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../../_data/theme/lib/prism/prism.js"></script>
+  <script src="../../_data/theme/js/prism-ext.js"></script>
   <script>
       window.mdoc = window.mdoc || {};
-      mdoc.indexRef = '../index.html';
+      mdoc.indexRef = '../../index.html';
   </script>
 </head>
 <body>
 <div class="page-wrap">
   <div class="page-header">
     <div class="page-header-item document-title">
-      <a href="../index.html">Jandcode Core</a>
+      <a href="../../index.html">Jandcode Core</a>
     </div>
     <div class="page-header-item split">
     </div>
@@ -37,9 +37,20 @@
         </div>
         <div class="tools-block-body">
           <div class="doc-toc">
-            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="folder "><a href="../x/x1.html">Модули</a></li>
-<li class="open "><a href="index.html">Jandcode Core Apx</a><ul><li class="cur "><a href="tst.html">tst</a></li>
+            <ul><li class="folder "><a href="../../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../../x/x1.html">Модули</a><ul><li class="open "><a href="../index.html">apx - платформа приложения</a><ul><li class=""><a href="../intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Приложение на клиенте</a><ul><li class=""><a href="frames.html">Фреймы</a></li>
+<li class="cur "><a href="tst.html">tst</a></li>
+</ul></li>
+</ul></li>
+<li class="folder "><a href="../../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../../tutorial/index.html">How to (учебник)</a></li>
 </ul></li>
 </ul>
           </div>
@@ -50,8 +61,10 @@
     <div class="page-content">
 <div class="topic-breadcrumb">
   <ul class="breadcrumb">
-<li><a href="../index.html">Jandcode Core</a></li>
-<li><a href="index.html">Jandcode Core Apx</a></li>
+<li><a href="../../index.html">Jandcode Core</a></li>
+<li><a href="../../x/x1.html">Модули</a></li>
+<li><a href="../index.html">apx - платформа приложения</a></li>
+<li><a href="index.html">Приложение на клиенте</a></li>
 <li class="active">tst</li>
 </ul>
 
@@ -143,11 +156,11 @@ describe(__filename, function() {
 <p>Файл содержит vue-компонент, который рендерится.
 Любой обычный vue-компонент, но можно использовать и расширенный вариант его,
 например:</p>
-<div class="codeblock" data-language="html"><div class="codeblock--title">Vue1.test.vue</div><div class="codeblock--content"><pre><code class="language-html">&lt;template&gt;
+<div class="codeblock" data-language="vue"><div class="codeblock--title">Vue1.test.vue</div><div class="codeblock--content"><pre><code class="language-vue">&lt;template&gt;
     &lt;tst-apx-panel&gt;
         &lt;template #tools&gt;
         &lt;/template&gt;
-
+    
         &lt;jc-btn label=&quot;hello&quot;/&gt;
     &lt;/tst-apx-panel&gt;
 &lt;/template&gt;
@@ -170,19 +183,18 @@ export default {
 }
 &lt;/script&gt;
 
-&lt;style lang=&quot;less&quot;&gt;
-&lt;/style&gt;
-</code></pre></div></div>
+&lt;style&gt;
+
+&lt;/style&gt;</code></pre></div></div>
 <p>Кроме того, vue-компонент можно рендерить в контексте вашего приложения,
 что бы он мог пользоватся данными и функционалом приложения:</p>
-<div class="codeblock" data-language="html"><div class="codeblock--title">InAppVue1.test.vue</div><div class="codeblock--content"><pre><code class="language-html">&lt;template&gt;
+<div class="codeblock" data-language="vue"><div class="codeblock--title">InAppVue1.test.vue</div><div class="codeblock--content"><pre><code class="language-vue">&lt;template&gt;
     &lt;tst-apx-panel&gt;
         &lt;tst-icon-list/&gt;
     &lt;/tst-apx-panel&gt;
 &lt;/template&gt;
 
 &lt;script&gt;
-
 import {main} from '../vendor'
 
 // куда монтировать (по умолчанию в .jc-app--main)
@@ -207,9 +219,9 @@ export default {
 }
 &lt;/script&gt;
 
-&lt;style lang=&quot;less&quot;&gt;
-&lt;/style&gt;
-</code></pre></div></div>
+&lt;style&gt;
+
+&lt;/style&gt;</code></pre></div></div>
 <h3 id="head6">**/*.html.gsp</h3>
 <p>Обычная gsp, рендерится без окружения:</p>
 <div class="codeblock" data-language="gsp"><div class="codeblock--title">gsp1.html.gsp</div><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.commons.*; jandcode.core.*; jandcode.core.web.*; jandcode.core.web.gsp.*;&quot; %&gt;

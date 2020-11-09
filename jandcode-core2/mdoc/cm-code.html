@@ -38,7 +38,8 @@
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
 <li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
 <li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
 <li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
@@ -63,7 +64,6 @@
 <li class=""><a href="../db/index.html">db - базы данных</a></li>
 <li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
 </ul></li>
-<li class="folder "><a href="../apx/index.html">Jandcode Core Apx</a></li>
 </ul>
           </div>
         </div>
@@ -90,6 +90,7 @@
     <ul><li class=""><a href="cm-code.html#head1">Описание</a></li>
 <li class="folder "><a href="cm-code.html#head2">Поименнованные фрагменты файла</a><ul><li class=""><a href="cm-code.html#head3">java/groovy/js</a></li>
 <li class=""><a href="cm-code.html#head4">xml/html</a></li>
+<li class=""><a href="cm-code.html#head5">vue</a></li>
 </ul></li>
 <li class=""><a href="cm-code.html#gen">Генерация файлов для вставки</a></li>
 </ul>
@@ -218,6 +219,11 @@ def n3 = 3
 конец фрагмента - <code>&lt;!-- = --&gt;</code>.
 Начало фрагмента является концом предыдущего, поэтому если фрагменты идут один
 за другим, конец фрагмента можно не указывать.</p>
+<h3 id="head5">vue</h3>
+<p>Для vue-файла опредляются фрагменты: <code>template</code>, <code>script</code>, <code>style</code>.
+Текст фрагмента - тело соответсвующего раздела vue-файла.
+Внутри скриптов и шаблона можно определять свои фрагменты.
+В скрипте - по правилам фрагментов 'js', в шаблоне - по правилам фрагментов 'xml'.</p>
 <h2 id="gen">Генерация файлов для вставки</h2>
 <p>Для генерации файлов для вставки, создайте файл groovy (или java) в проекте с классом,
 наследником от <code>jandcode.mdoc.cm.BaseCodeGen</code>.</p>

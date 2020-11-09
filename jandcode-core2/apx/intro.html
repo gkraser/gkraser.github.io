@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Формат файла json</title>
+  <title>Введение</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -38,15 +38,10 @@
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
-<li class="open "><a href="index.html">commons - утилиты</a><ul><li class="open "><a href="conf.html">Conf</a><ul><li class=""><a href="conf-cfx.html">Формат файла cfx</a></li>
-<li class="cur "><a href="conf-json.html">Формат файла json</a></li>
-<li class=""><a href="conf-xml.html">Формат файла xml</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">apx - платформа приложения</a><ul><li class="cur "><a href="intro.html">Введение</a></li>
+<li class="folder "><a href="webapp/index.html">Приложение на клиенте</a></li>
 </ul></li>
-<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
-<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
-<li class=""><a href="test.html">Тестирование</a></li>
-</ul></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
 <li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
 <li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
 <li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
@@ -66,59 +61,29 @@
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode Core</a></li>
 <li><a href="../x/x1.html">Модули</a></li>
-<li><a href="index.html">commons - утилиты</a></li>
-<li><a href="conf.html">Conf</a></li>
-<li class="active">Формат файла json</li>
+<li><a href="index.html">apx - платформа приложения</a></li>
+<li class="active">Введение</li>
 </ul>
 
 </div>
 <div class="topic-header">
-  <h1>Формат файла json</h1>
-</div>
-<div class="topic-toc">
-  <div class="topic-toc-title">Содержание</div>
-  <div class="topic-toc-content">
-    <ul><li class=""><a href="conf-json.html#head1">Пример</a></li>
-</ul>
-  </div>
+  <h1>Введение</h1>
 </div>
 <div class="topic-body">
-  <p>Особенности:</p>
+  <p><strong>Jandcode Core</strong> поставляется как набор модулей, которые решают определенные
+задачи.</p>
+<p>Одним из наборов является набор <code>jandcode-core-apx</code>, в который входит несколько
+модулей, которые вводят высокоуровневую основу для типовых приложений
+определенного вида.</p>
+<p>Основные характеристики типового приложение на основе <code>apx</code>:</p>
 <ul>
-<li>порядок ключей не гарантирован</li>
+<li>Самодостаточное приложение, которое можно поставить пользователю,
+который не имеет установленной java.</li>
+<li>Запускается в режиме web-сервера и взаимодействует с потребителями по http-протоколу.</li>
+<li>Пользователь взаимодействет с приложением через web-браузер.</li>
+<li>Интерфейс в браузере основан на SPA (Single Page Application).</li>
+<li>... TODO</li>
 </ul>
-<h2 id="head1">Пример</h2>
-<div class="codeblock" data-language="json"><div class="codeblock--content"><pre><code class="language-json">{
-  &quot;a1&quot;: 1,
-  &quot;b1&quot;: {
-    &quot;c1&quot;: &quot;2&quot;,
-    &quot;d1&quot;: [
-      1,
-      2
-    ],
-    &quot;e1&quot;: [
-      {
-        &quot;z&quot;: 1
-      }
-    ]
-  }
-}</code></pre></div></div>
-<p>получаем:</p>
-<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
-    a1: 1.0
-    b1: {
-        c1: 2
-        d1: {
-            #0: 1.0
-            #1: 2.0
-        }
-        e1: {
-            #0: {
-                z: 1.0
-            }
-        }
-    }
-}</code></pre></div></div>
 
 </div>
     </div>
