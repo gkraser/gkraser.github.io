@@ -74,18 +74,21 @@
 <div class="topic-toc">
   <div class="topic-toc-title">Содержание</div>
   <div class="topic-toc-content">
-    <ul><li class=""><a href="action.html#head1">Реализация action</a></li>
-<li class=""><a href="action.html#head2">Интерпретация pathInfo для action</a></li>
-<li class=""><a href="action.html#head3">Методы в классе action</a></li>
-<li class=""><a href="action.html#head4">ActionMethodExecutor</a></li>
-<li class=""><a href="action.html#head5">index.gsp / index.html</a></li>
-<li class="folder "><a href="action.html#head6">Конфигурация module.cfx</a><ul><li class=""><a href="action.html#head7">web/action</a></li>
+    <ul><li class=""><a href="action.html#head1">Что такое action</a></li>
+<li class=""><a href="action.html#head2">Реализация action</a></li>
+<li class=""><a href="action.html#head3">Интерпретация pathInfo для action</a></li>
+<li class=""><a href="action.html#head4">Методы в классе action</a></li>
+<li class=""><a href="action.html#head5">ActionMethodExecutor</a></li>
+<li class=""><a href="action.html#head6">index.gsp / index.html</a></li>
+<li class=""><a href="action.html#root">Action 'root'</a></li>
+<li class="folder "><a href="action.html#head7">Конфигурация module.cfx</a><ul><li class=""><a href="action.html#head8">web/action</a></li>
 </ul></li>
 </ul>
   </div>
 </div>
 <div class="topic-body">
-  <p>Action - это объекты, реализующие интерфейс <code>jandcode.core.web.action.IAction</code>, которые
+  <h2 id="head1">Что такое action</h2>
+<p>Action - это объекты, реализующие интерфейс <code>jandcode.core.web.action.IAction</code>, которые
 обратывают http-запросы пользователя в контексте web-приложения и возвращают
 ответ клиенту.</p>
 <p>На практике для создания <code>action</code> необходимо создать наследника от класса
@@ -126,7 +129,7 @@
 <tr><td><code>blog/news/m1</code></td><td><code>blog/news</code></td><td><code>m1</code></td><td><code>blog/news</code> длиннее по фасетам, чем <code>blog</code></td></tr>
 </tbody>
 </table>
-<h2 id="head1">Реализация action</h2>
+<h2 id="head2">Реализация action</h2>
 <p>Простейшая реализация <code>action</code> выглядит так:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">package web._inc.action
 
@@ -144,7 +147,7 @@ class SimpleAction extends BaseAction {
     }
 }
 </code></pre></div></div>
-<h2 id="head2">Интерпретация pathInfo для action</h2>
+<h2 id="head3">Интерпретация pathInfo для action</h2>
 <p>Доупустим, что имеется <code>action</code>, зарегистрированая так:</p>
 <div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
     &lt;web&gt;
@@ -169,7 +172,7 @@ class SimpleAction extends BaseAction {
 </tbody>
 </table>
 <p>Если соответсвующей информации нет в <code>pathInfo</code>, то атрибуты принимают пустые значения.</p>
-<h2 id="head3">Методы в классе action</h2>
+<h2 id="head4">Методы в классе action</h2>
 <p>Реализация метода <code>onExec()</code> по умолчанию вызывает публичный метод
 с именем, который указан в атрибуте <code>actionMethod</code>. Если в этом атрибуте нет
 значения, то значение по умолчанию для него - <code>index</code>. Если метода с таком именем
@@ -220,7 +223,7 @@ class FuncMethodsAction extends BaseAction {
 <p>В этом примере методы <code>p1</code> и <code>p2</code> эквивалентны.</p>
 <p>Когда метод <code>onExec()</code> явно перекрыт, то, естественно, эти правила не действуют и
 процесс обработки будет вестись по вашим правилам.</p>
-<h2 id="head4">ActionMethodExecutor</h2>
+<h2 id="head5">ActionMethodExecutor</h2>
 <p>Если метод action имеет один параметр типа <code>jandcode.core.web.action.ActionMethodExecutor</code>,
 то выполнение метода action делегируется экземпляру этого класса.</p>
 <p>Пример:</p>
@@ -259,7 +262,7 @@ class ActionExecutor1 extends BaseAction {
     }
 
 }</code></pre></div></div>
-<h2 id="head5">index.gsp / index.html</h2>
+<h2 id="head6">index.gsp / index.html</h2>
 <p>Когда при обработке <code>pathInfo</code> не найдена <code>action</code>, которая соответствует
 этому <code>pathInfo</code>, делается попытка интерпретировать <code>pathInfo</code> как виртуальную
 папку, в которой ищутся файлы <code>index.gsp</code> или <code>index.html</code>.</p>
@@ -268,20 +271,42 @@ url для клиента выглядит как папка.</p>
 <p>Если найден <code>index.html</code>, то делается redirect на на него, соответственно
 url для клиента выглядит как файл.</p>
 <p>При наличии обоих файлов приоритет имеет <code>index.gsp</code>.</p>
-<h2 id="head6">Конфигурация module.cfx</h2>
-<h3 id="head7">web/action</h3>
+<h2 id="root">Action 'root'</h2>
+<p>Специальная action с именем <code>root</code> обрабатывает запрос в корень url
+(http://host или http://host/). По умолчанию настроена на рендеринг
+заглушки gsp. Ее нужно настроить в приложении.</p>
+<p>Можно указать шаблон <code>gsp</code>:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;root&quot;
+                template=&quot;my/app/root.gsp&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>или класс action:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;root&quot;
+                class=&quot;my.app.MyRootAction&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head7">Конфигурация module.cfx</h2>
+<h3 id="head8">web/action</h3>
 <p>Регистрация <code>action</code>.</p>
 <p>Формат:</p>
 <div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
     &lt;web&gt;
         &lt;action name=&quot;NAME&quot;
                 class=&quot;jandcode.core.web.action.BaseAction&quot;
+                template=&quot;template/path.gsp&quot;
         /&gt;
     &lt;/web&gt;
 &lt;/root&gt;</code></pre></div></div>
 <ul>
 <li><code>name</code> - уникальное имя <code>action</code>. Может включать <code>/</code>.</li>
 <li><code>class</code> - класс <code>action</code></li>
+<li><code>template</code> - шаблон <code>gsp</code>. Если указан шаблон и не указан атрибут <code>class</code>,
+то в качестве класса принимается <code>jandcode.core.web.std.action.GspAction</code>,
+которая рендерит указанный шаблон.</li>
 </ul>
 
 </div>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Action для рендеринга gsp</title>
+
+  <link rel="stylesheet" href="../../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../../_data/theme/lib/prism/prism.js"></script>
+  <script src="../../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../../x/x1.html">Модули</a><ul><li class="open "><a href="../index.html">apx - платформа приложения</a><ul><li class=""><a href="../intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Приложение на клиенте</a><ul><li class=""><a href="frames.html">Фреймы</a></li>
+<li class="cur "><a href="action-gsp.html">Action для рендеринга gsp</a></li>
+<li class=""><a href="main-gsp.html">Точка входа в приложение</a></li>
+<li class=""><a href="tst.html">tst</a></li>
+</ul></li>
+</ul></li>
+<li class="folder "><a href="../../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class=""><a href="../../db/index.html">db - базы данных</a></li>
+<li class="folder "><a href="../../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../../index.html">Jandcode Core</a></li>
+<li><a href="../../x/x1.html">Модули</a></li>
+<li><a href="../index.html">apx - платформа приложения</a></li>
+<li><a href="index.html">Приложение на клиенте</a></li>
+<li class="active">Action для рендеринга gsp</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Action для рендеринга gsp</h1>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+
+
+    <li>
+      <span class="cm-code-info--text"><a href="../../web/action.html">Подробнее об action</a></span>
+    </li>
+
+  </ul>
+</fieldset>
+<p>Можно создать произвольный gsp-файл и дать возможность получать
+результат его рендеринга на клиенте через определенный url.</p>
+<p>К примеру, сделаем страницу <code>/about</code>.</p>
+<p>Создадим файл <code>about.gsp</code>:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--title">jandcode/core/samples/docapx1/main/js/pages/about.gsp</div><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.commons.*; jandcode.core.*; jandcode.core.web.*; jandcode.core.web.gsp.*;&quot; %&gt;
+&lt;!doctype html&gt;
+&lt;%
+  BaseGsp th = this
+  def vCore = UtVersion.getVersion(&quot;jandcode.core&quot;)
+  def curDate = UtDateTime.now()
+%&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;About&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;h1&gt;About&lt;/h1&gt;
+
+&lt;div&gt;
+  Current date: &lt;b&gt;${curDate}&lt;/b&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+  jandcode.core Version: &lt;b&gt;${vCore}&lt;/b&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+  Request params: &lt;b&gt;${th.request.params}&lt;/b&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></div>
+<p>Это простой шаблон gsp, который получает некоторые параметры и генерит html.</p>
+<p>Теперь зарегистрируем action <code>about</code> в <code>module.cfx</code> для отображения этой страницы:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--title">jandcode/core/samples/docapx1/main/module.cfx</div><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;about&quot;
+                template=&quot;jandcode/core/samples/docapx1/main/js/pages/about.gsp&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Теперь после перехода на <a href="http://localhost:8080/jc/about">http://localhost:8080/jc/about</a> мы должны увидеть
+то, что нагенерили в <code>about.gsp</code>.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -219,11 +219,75 @@ def n3 = 3
 конец фрагмента - <code>&lt;!-- = --&gt;</code>.
 Начало фрагмента является концом предыдущего, поэтому если фрагменты идут один
 за другим, конец фрагмента можно не указывать.</p>
+<p>Если <code>PART-NAME</code> указан в формате <code>PART-NAME:PATH</code>, то фрагмент будет
+обернут в xml, который соответствует пути.</p>
+<p>Например для такого файла:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;root&gt;
+    &lt;node1&gt;
+        &lt;node2&gt;
+            &lt;!-- = node3 --&gt;
+            &lt;node3/&gt;
+            &lt;!-- = --&gt;
+            &lt;!-- = node4:root/example --&gt;
+            &lt;node4/&gt;
+            &lt;!-- = --&gt;
+        &lt;/node2&gt;
+    &lt;/node1&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Будут такие фрагменты:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--title">part=node3</div><div class="codeblock--content"><pre><code class="language-xml">&lt;node3/&gt;</code></pre></div></div>
+<div class="codeblock" data-language="xml"><div class="codeblock--title">part=node4</div><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;example&gt;
+        &lt;node4/&gt;
+    &lt;/example&gt;
+&lt;/root&gt;</code></pre></div></div>
 <h3 id="head5">vue</h3>
 <p>Для vue-файла опредляются фрагменты: <code>template</code>, <code>script</code>, <code>style</code>.
 Текст фрагмента - тело соответсвующего раздела vue-файла.
 Внутри скриптов и шаблона можно определять свои фрагменты.
 В скрипте - по правилам фрагментов 'js', в шаблоне - по правилам фрагментов 'xml'.</p>
+<p>Например для такого файла:</p>
+<div class="codeblock" data-language="vue"><div class="codeblock--content"><pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+    props: {},
+    //= data1
+    data() {
+        return {}
+    },
+    //=
+    methods: {},
+}
+&lt;/script&gt;
+
+&lt;style&gt;
+.a {
+  color: red;
+}
+&lt;/style&gt;
+
+</code></pre></div></div>
+<p>Будут такие фрагменты:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--title">template</div><div class="codeblock--content"><pre><code class="language-html">&lt;div&gt;
+&lt;/div&gt;</code></pre></div></div>
+<div class="codeblock" data-language="js"><div class="codeblock--title">script</div><div class="codeblock--content"><pre><code class="language-js">export default {
+    props: {},
+    data() {
+        return {}
+    },
+    methods: {},
+}</code></pre></div></div>
+<div class="codeblock" data-language="css"><div class="codeblock--title">style</div><div class="codeblock--content"><pre><code class="language-css">.a {
+  color: red;
+}</code></pre></div></div>
+<div class="codeblock" data-language="js"><div class="codeblock--title">data1</div><div class="codeblock--content"><pre><code class="language-js">data() {
+    return {}
+},</code></pre></div></div>
 <h2 id="gen">Генерация файлов для вставки</h2>
 <p>Для генерации файлов для вставки, создайте файл groovy (или java) в проекте с классом,
 наследником от <code>jandcode.mdoc.cm.BaseCodeGen</code>.</p>
