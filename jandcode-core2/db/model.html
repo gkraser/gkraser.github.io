@@ -1,0 +1,307 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Model</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+  </script>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+    <div class="page-header-item split">
+    </div>
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class="cur "><a href="model.html">Model</a></li>
+</ul></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Model</li>
+</ul>
+
+</div>
+<div class="topic-header">
+  <h1>Model</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="model.html#head1">Введение</a></li>
+<li class=""><a href="model.html#head2">Описание модели</a></li>
+<li class=""><a href="model.html#head3">Зависимости моделей</a></li>
+<li class=""><a href="model.html#head4">Параметры базы данных</a></li>
+<li class="folder "><a href="model.html#head5">Конфигурация module.cfx</a><ul><li class=""><a href="model.html#head6">dbm/model</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.Model</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.ModelService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.ModelDef</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Введение</h2>
+<p><code>Model</code> - это объект, который является проекцией физической базой данных
+в приложении. Он связан с определенной базой данных и предоставляет
+доступ к ней (например выполнение запросов). А также является
+хранилищем логических знаний о своей базе данных.</p>
+<h2 id="head2">Описание модели</h2>
+<p>Пример описания:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+
+        &lt;!-- прототип модель --&gt;
+        &lt;model name=&quot;jandcode.examples5.dbm1&quot;&gt;
+            &lt;include name=&quot;jandcode.core.dbm&quot;/&gt;
+            &lt;x-include path=&quot;model/index.cfx&quot;/&gt;
+        &lt;/model&gt;
+
+        &lt;!-- экземпляр модели --&gt;
+        &lt;model name=&quot;default&quot; instance=&quot;jandcode.examples5.dbm1&quot;&gt;
+            &lt;dbsource name=&quot;default&quot; dbdriver=&quot;mysql&quot;/&gt;
+        &lt;/model&gt;
+
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Существует 2 варианта описания модели:</p>
+<ul>
+<li><strong>прототип модели</strong>. Экземпляры таких моделей
+обычно не создаются и не используются. Имя модели обычно уникальное, длинное и чаще всего
+совпадает с именем модуля, в котором модель описана.
+Можно рассматривать как &quot;абстрактный класс модели&quot;.</li>
+<li><strong>экземпляр модели</strong>. Экземляры таких моделей непосредственно используются
+в приложении. Такая модель обычно в приложении одна, по соглашению имеет имя <code>default</code>.
+Можно рассматривать как &quot;экземпляр объекта&quot;.</li>
+</ul>
+<p>Основное отличие экземпляра модели от прототипа модели: экземпляр модели не должен
+определять никакие дополнительные объекты, влияющие на структуру модели.</p>
+<p>Описание модели можно рассматривать как некий &quot;пакет&quot;, в рамках которого собирается
+информация об объектах модели:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model1&quot;&gt;
+            &lt;field name=&quot;name.long&quot; parent=&quot;string&quot; size=&quot;255&quot;/&gt;
+            &lt;domain name=&quot;domain1&quot;&gt;
+                &lt;field name=&quot;f1&quot; parent=&quot;string&quot;/&gt;
+                &lt;field name=&quot;f2&quot; parent=&quot;string&quot;/&gt;
+            &lt;/domain&gt;
+            &lt;domain name=&quot;domain2&quot;&gt;
+                &lt;field name=&quot;f1&quot; parent=&quot;string&quot;/&gt;
+                &lt;field name=&quot;f2&quot; parent=&quot;string&quot;/&gt;
+            &lt;/domain&gt;
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Обычно так конечно писать не нужно. Объекты модули включаются в модель посредством
+тега <code>x-include</code>, который обычно указывает на файл <code>model/model.cfx</code>, который уже
+и загружает все объекты этой модели.</p>
+<h2 id="head3">Зависимости моделей</h2>
+<p>Зависимости моделей реализованы посредством &quot;включения&quot; одной модели в другую.
+Для этого используется тег <code>include</code>, где в атрибуте <code>name</code> указывается имя
+включаемой модели.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model1&quot;&gt;
+        &lt;/model&gt;
+        &lt;model name=&quot;my-model2&quot;&gt;
+        &lt;/model&gt;
+        &lt;model name=&quot;my-model3&quot;&gt;
+            &lt;include name=&quot;my-model1&quot;/&gt;
+        &lt;/model&gt;
+        &lt;model name=&quot;my-model4&quot;&gt;
+            &lt;include name=&quot;my-model1&quot;/&gt;
+            &lt;include name=&quot;my-model3&quot;/&gt;
+        &lt;/model&gt;
+        &lt;model name=&quot;my-model5&quot;&gt;
+            &lt;include name=&quot;my-model2&quot;/&gt;
+            &lt;include name=&quot;my-model4&quot;/&gt;
+        &lt;/model&gt;
+
+        &lt;model name=&quot;my-model6-inst&quot; instance=&quot;my-model5&quot;&gt;
+        &lt;/model&gt;
+
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>При загрузке такого описание мы имеем 5 моделей, каждая из которых включает только
+то, что непосредствено описано в теге <code>model</code>, в том числе перечисление
+включаемых моделей.</p>
+<p>При создании экземляра модели <code>jandcode.core.dbm.Model</code> по описанию в теге <code>model</code>
+происходит последовательное объединениние всех включаемых моделей в одну структуру
+<code>Conf</code>, по которой уже создается экземпляр <code>jandcode.core.dbm.Model</code>.</p>
+<p>В приведенном выше примере, при создании модели для <code>my-model5</code>, происходит следующее:</p>
+<ul>
+<li>формируется список всех моделей, явно или неявно включенных в <code>my-model5</code>. В данном
+случае этот список выглядет так:
+<ul>
+<li><code>my-model2</code> - явно включена, не имеет зависимостей</li>
+<li><code>my-model1</code> - включена не явно, через включение в <code>my-model4</code></li>
+<li><code>my-model3</code> - включена не явно, через включение в <code>my-model4</code></li>
+<li><code>my-model4</code> - явно включена, зависимости уже в списке</li>
+<li><code>my-model5</code> - рассматриваемая модель, последняя в списке</li>
+</ul>
+</li>
+<li>создается новый пустой объект <code>Conf</code></li>
+<li>в этот объект последовательно накладываются структуры всех моделей из сформированного
+списка зависимости моделей</li>
+<li>по объединенной структуре создается экземпляр объекта <code>jandcode.core.dbm.Model</code></li>
+</ul>
+<p>При созданиеи экземпляра модели (в примере <code>my-model6-inst</code>), список зависимостей
+формируется для модели, указанной в атрибуте <code>instance</code> и к этому списку добавляется
+искомая модель.</p>
+<p>В приведенном выше примере, при создании модели для <code>my-model6-inst</code> список
+зависимостей будет выглядеть так:</p>
+<ul>
+<li><code>my-model2</code></li>
+<li><code>my-model1</code></li>
+<li><code>my-model3</code></li>
+<li><code>my-model4</code></li>
+<li><code>my-model5</code></li>
+<li><code>my-model6-inst</code></li>
+</ul>
+<h2 id="head4">Параметры базы данных</h2>
+<p>Экземпляр модели может иметь только одну базу данных.
+Параметры базы данных указываются в теге <code>&lt;dbsource name=&quot;default&quot;/&gt;</code>.
+Атрибут <code>dbdriver</code> определяет драйвер базы данных. От драйвера
+зависит набор свойств, которые допустимы при конфигурировании базы данных.</p>
+<p>Среди прочих атрибутов, у <code>dbsource</code> имеется атрибут <code>cfg</code>, в котором указывается
+conf-путь, откуда брать конфигурацию базы данных модели.</p>
+<p>По умолчанию значение атрибута <code>cfg=&quot;cfg/dbsource/${modelName}&quot;</code>, т.е. конфигурация
+базы данных хранится в теге <code>cfg/dbsource/ИМЯ-МОДЕЛИ</code>.</p>
+<p>В атрибуте <code>cfg</code> можно использовать подстановки <code>${ATTR}</code>, где <code>ATTR</code> - значение
+атрибута из тега <code>dbsource</code> в модели.</p>
+<p>На практике <code>dbsource</code> должна настраиваться только в экземплярах модели.
+Кроме того, в файле <code>module.cfx</code> не нужно указывать никакие конкретные свойства
+базы данных (например host, username и т.д.). Все эти настройки нужно выносить
+в <code>app.cfx</code> (или <code>_app.cfx</code>).</p>
+<p>Пример настройки базы данных модели:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;!-- module.cfx --&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;default&quot; instance=&quot;jandcode.examples5.dbm1&quot;&gt;
+            &lt;dbsource name=&quot;default&quot; dbdriver=&quot;mariadb&quot;/&gt;
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+
+    &lt;!-- app.cfx --&gt;
+    &lt;cfg&gt;
+        &lt;dbsource name=&quot;default&quot;
+                  host=&quot;localhost&quot;
+                  database=&quot;jandcode_examples5_dbm1__DEV&quot;
+                  username=&quot;root&quot;
+        /&gt;
+    &lt;/cfg&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head5">Конфигурация module.cfx</h2>
+<h3 id="head6">dbm/model</h3>
+<p>Описание модели.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+
+        &lt;!-- прототип модели --&gt;
+        &lt;model name=&quot;MODEL-NAME&quot;&gt;
+            &lt;include name=&quot;MODEL-NAME&quot;/&gt;
+            &lt;x-include path=&quot;PATH&quot;/&gt;
+        &lt;/model&gt;
+
+        &lt;!-- экземпляр модели --&gt;
+        &lt;model name=&quot;MODEL-NAME&quot; instance=&quot;MODEL-NAME&quot;&gt;
+            &lt;dbsource name=&quot;default&quot; dbdriver=&quot;DRIVER-NAME&quot;/&gt;
+        &lt;/model&gt;
+
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Атрибуты:</p>
+<ul>
+<li><code>instance</code> - при наличии этого атрибута модель является экземпляром модели, указанной
+в значении атрибута</li>
+</ul>
+<p>Дочерние элементы:</p>
+<ul>
+<li><code>&lt;include name=&quot;MODEL-NAME&quot;/&gt;</code> - включение зависимости от другой модели.
+Используется только в прототипах модели.</li>
+<li><code>&lt;dbsource name=&quot;default&quot;/&gt;</code> - свойства <code>DbSource</code> этой модели. Обычно используется
+только в экземплярах модели.</li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
