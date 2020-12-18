@@ -14,16 +14,24 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../../index.html';
+      mdoc.topicFile = 'apx/webui/tst.html';
+      mdoc.topicId = 'apx/webui/tst';
   </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head1"},{"title":"Папка _tst","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head2"},{"title":"Выполнение файлов через /_tst/run","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head3","items":[{"title":"**/*.test.js","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head4"},{"title":"**/*.test.vue","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head5"},{"title":"**/*.html.gsp","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head6"}]},{"title":"Особые файлы в _tst","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head7","items":[{"title":"vendor.js","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head8"},{"title":"run-js.gsp","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head9"},{"title":"env-tst.js","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head10"}]},{"title":"run-js.gsp в подкаталоге","topicId":"apx/webui/tst","ref":"apx/webui/tst.html#head11"}]  </script>
+  <script src="../../toc.js"></script>
 </head>
+
 <body>
 <div class="page-wrap">
   <div class="page-header">
     <div class="page-header-item document-title">
       <a href="../../index.html">Jandcode Core</a>
     </div>
+
     <div class="page-header-item split">
     </div>
+
     <div class="page-header-item menu-item">
     </div>
   </div>
@@ -35,6 +43,7 @@
         <div class="tools-block-title">
           Содержание
         </div>
+
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../../intro/intro.html">Введение</a></li>
@@ -71,11 +80,13 @@
 </ul>
 
 </div>
+
 <div class="topic-header">
   <h1>tst</h1>
 </div>
 <div class="topic-toc">
   <div class="topic-toc-title">Содержание</div>
+
   <div class="topic-toc-content">
     <ul><li class=""><a href="tst.html#head1">Введение</a></li>
 <li class=""><a href="tst.html#head2">Папка _tst</a></li>
@@ -168,8 +179,10 @@ describe(__filename, function() {
 &lt;/template&gt;
 
 &lt;script&gt;
+import {tst} from '../vendor'
+
 export default {
-    extends: Vue.component('tst-apx-page'),
+    mixins: [tst.mixins.cfgStore],
     components: {},
     created() {
         this.cfgStore.applyDefault({})
@@ -197,7 +210,7 @@ export default {
 &lt;/template&gt;
 
 &lt;script&gt;
-import {main} from '../vendor'
+import {main, tst} from '../vendor'
 
 // куда монтировать (по умолчанию в .jc-app--main)
 // export let mountTo = '.jc-app--main'
@@ -205,7 +218,7 @@ import {main} from '../vendor'
 main.run()
 
 export default {
-    extends: Vue.component('tst-apx-page'),
+    mixins: [tst.mixins.cfgStore],
     components: {},
     created() {
         this.cfgStore.applyDefault({})
@@ -237,11 +250,13 @@ hello!
 <h3 id="head8">vendor.js</h3>
 <div class="codeblock" data-language="js"><div class="codeblock--title">vendor.js</div><div class="codeblock--content"><pre><code class="language-js">export * from '../js/vendor'
 import * as test from 'jandcode.core.apx.webui/test'
+import * as tst from 'jandcode.core.apx.tst'
 import * as main from '../js/main'
 
 export {
     test,
     main,
+    tst,
 }</code></pre></div></div>
 <p>Этот файл содержит импорт и экспорт среды, в которой будет проводится
 тестирования по умоланию. В своем коде вы можете импортировать из этого файла
