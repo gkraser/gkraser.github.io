@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>commons - утилиты</title>
+  <title>cli, интерфейс командной строки</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -14,9 +14,11 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../index.html';
-      mdoc.topicFile = 'commons/index.html';
-      mdoc.topicId = 'commons/index';
+      mdoc.topicFile = 'commons/cli.html';
+      mdoc.topicId = 'commons/cli';
   </script>
+  <script>
+mdoc.tocTopic=[{"title":"Разбор командной строки","topicId":"commons/cli","ref":"commons/cli.html#head1"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -46,9 +48,9 @@
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
 <li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
-<li class="open cur "><a href="index.html">commons - утилиты</a><ul><li class="folder "><a href="conf.html">Conf</a></li>
+<li class="open "><a href="index.html">commons - утилиты</a><ul><li class="folder "><a href="conf.html">Conf</a></li>
 <li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
-<li class=""><a href="cli.html">cli, интерфейс командной строки</a></li>
+<li class="cur "><a href="cli.html">cli, интерфейс командной строки</a></li>
 <li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
 <li class=""><a href="test.html">Тестирование</a></li>
 </ul></li>
@@ -70,17 +72,25 @@
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode Core</a></li>
 <li><a href="../x/x1.html">Модули</a></li>
-<li class="active">commons - утилиты</li>
+<li><a href="index.html">commons - утилиты</a></li>
+<li class="active">cli, интерфейс командной строки</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>commons - утилиты</h1>
+  <h1>cli, интерфейс командной строки</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="cli.html#head1">Разбор командной строки</a></li>
+</ul>
+  </div>
 </div>
 <div class="topic-body">
-  <p>Общие утилиты для проектов.</p>
-<fieldset class="cm-code-info">
+  <fieldset class="cm-code-info">
   <legend>Связи</legend>
   <ul>
 
@@ -91,31 +101,36 @@
 
 
     <li>
-      <span class="cm-code-info--code">jandcode.commons</span> <span
+      <span class="cm-code-info--code">jandcode.commons.cli</span> <span
         class="cm-code-info--marker">(package)</span>
     </li>
 
+    <li>
+      <span class="cm-code-info--code">jandcode.commons.UtCli</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
 
 
 
   </ul>
 </fieldset>
+<h2 id="head1">Разбор командной строки</h2>
+<p>Пример:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">// допустим имеем такую командную строку
+String[] args = new String[]{&quot;-a&quot;, &quot;-m&quot;, &quot;arg-value&quot;};
+// создаем экземпляр CliDef
+CliDef cli = UtCli.createCliDef();
+// настраиваем опции
+cli.opt(&quot;optWithArg&quot;).names(&quot;-m,--my&quot;).arg(true)
+        .desc(&quot;Это опция с аргументом&quot;);
+cli.opt(&quot;noArgOpt&quot;).names(&quot;-a&quot;)
+        .desc(&quot;Это опция без аргумента&quot;);
+// создаем парзер
+CliParser parser = UtCli.createCliParser(args);
+// забираем значения из командной строки
+Map&lt;String, Object&gt; values = parser.extractOpts(cli);
+// получаем: values = [optWithArg: arg-value, noArgOpt: true]</code></pre></div></div>
 
-</div>
-<div class="topic-toc">
-  <div class="topic-toc-title">Содержание</div>
-
-  <div class="topic-toc-content">
-    <ul><li class="folder "><a href="conf.html">Conf</a><ul><li class=""><a href="conf-cfx.html">Формат файла cfx</a></li>
-<li class=""><a href="conf-json.html">Формат файла json</a></li>
-<li class=""><a href="conf-xml.html">Формат файла xml</a></li>
-</ul></li>
-<li class=""><a href="ansifer.html">Ansi цвета в консоле</a></li>
-<li class=""><a href="cli.html">cli, интерфейс командной строки</a></li>
-<li class=""><a href="groovy_compiler.html">Компилятор groovy</a></li>
-<li class=""><a href="test.html">Тестирование</a></li>
-</ul>
-  </div>
 </div>
     </div>
 

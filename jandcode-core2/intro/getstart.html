@@ -96,7 +96,7 @@
 </div>
 <p>Создадим наш первый проект.</p>
 <p>Переходим в рабочий каталог и запускаем создание проекта:</p>
-<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:apx-app -o:jcsample-project1
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:web-app -o:jcsample-project1
 </code></pre>
 </div></div>
 <p>Будет создан каталог <code>jcsample-project1</code> с проектом.</p>
@@ -116,32 +116,14 @@
 <div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc gen-idea
 </code></pre>
 </div></div>
-<p>В процессе генерации будет произведена настройка проекта, в том числе будут
-загружены необходимые npm-модули, так что в первый раз процесс
-может быть не очень быстрым.</p>
+<p>В процессе генерации будет произведена настройка проекта.</p>
 <p>Теперь можно открыть файл проекта <code>jcsample-project1-(project).ipr</code> в IDEA.</p>
 <p>В проекте мы видим модуль <code>jcsample-project1-main</code>,
 в котором имеется каталог <code>src</code> с исходниками.</p>
-<p>Теперь в каталоге проекта запускаем процесс компиляции клиентских файлов (javascript, css...)
-и отслеживание изменений в них:</p>
-<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc jsa-watch
-</code></pre>
-</div></div><div class="adm-block adm-warning">
-<div class="adm-heading">
-<svg class="adm-icon"><use xlink:href="#adm-warning" /></svg><span>Warning</span>
-</div>
-<div class="adm-body">
-<p>Команда <code>jc jsa-watch</code> запускает процесс, который должен работать все время,
-пока ведется разработка клиенского кода. Если он по каким-то причинам завершится,
-его нужно запустить заново, иначе изменения, внесенные в клиенский код
-не будут компилироватся.</p>
-</div>
-</div>
 <p>Теперь можно запустить приложение в IDE.
 Выбираем в конфигурацию запуска с именем <code>app-run serve</code> и запускаем ее в режиме отладки.
 В консоле отобразится url, по которому приложение доступно: <a href="http://localhost:8080/jc">http://localhost:8080/jc</a>.
-Этот url открываем в браузере.
-Можно заглянуть в консоль разработчика в браузере, там то же что-то выводится.</p>
+Этот url открываем в браузере.</p>
 <p>В первом приближении приложение работает.</p>
 <div class="adm-block adm-note">
 <div class="adm-heading">
@@ -154,7 +136,6 @@
 </div></div></div>
 </div>
 <p>Останавливаем приложение в IDE и переходим в каталог проекта.
-Ранее запущенный <code>jc jsa-watch</code> не останавливаем.
 Запускаем приложение с командной строки:</p>
 <div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc build
 app-run serve
@@ -176,8 +157,7 @@ Address already in use: bind
 </div>
 </div>
 <p>Теперь соберем продукт.</p>
-<p>Останавливаем приложение, запущенное в командной строке и ранее запущенный
-<code>jc jsa-watch</code> так же останавливаем.</p>
+<p>Останавливаем приложение, запущенное в командной строке.</p>
 <p>Запускаем:</p>
 <div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc product
 </code></pre>

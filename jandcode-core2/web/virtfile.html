@@ -18,7 +18,7 @@
       mdoc.topicId = 'web/virtfile';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Конфигурация module.cfx","topicId":"web/virtfile","ref":"web/virtfile.html#head1","items":[{"title":"web/mount","topicId":"web/virtfile","ref":"web/virtfile.html#head2"},{"title":"web/mount-module","topicId":"web/virtfile","ref":"web/virtfile.html#head3"}]},{"title":"META-INF/jc-data/webroot","topicId":"web/virtfile","ref":"web/virtfile.html#head4"}]  </script>
+mdoc.tocTopic=[{"title":"Конфигурация module.cfx","topicId":"web/virtfile","ref":"web/virtfile.html#head1","items":[{"title":"web/mount","topicId":"web/virtfile","ref":"web/virtfile.html#head2"},{"title":"web/mount-module","topicId":"web/virtfile","ref":"web/virtfile.html#head3"}]},{"title":"META-INF/jc-data/webroot","topicId":"web/virtfile","ref":"web/virtfile.html#head4"},{"title":"resource-webroot","topicId":"web/virtfile","ref":"web/virtfile.html#head5"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -57,7 +57,6 @@ mdoc.tocTopic=[{"title":"Конфигурация module.cfx","topicId":"web/vir
 <li class=""><a href="servlet.html">Сервлет</a></li>
 </ul></li>
 <li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
-<li class="folder "><a href="../jsa/index.html">jsa - клиентские приложения на js</a></li>
 <li class="folder "><a href="../db/index.html">db - базы данных</a></li>
 <li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
 </ul></li>
@@ -89,6 +88,7 @@ mdoc.tocTopic=[{"title":"Конфигурация module.cfx","topicId":"web/vir
 <li class=""><a href="virtfile.html#head3">web/mount-module</a></li>
 </ul></li>
 <li class=""><a href="virtfile.html#head4">META-INF/jc-data/webroot</a></li>
+<li class=""><a href="virtfile.html#head5">resource-webroot</a></li>
 </ul>
   </div>
 </div>
@@ -205,11 +205,17 @@ mdoc.tocTopic=[{"title":"Конфигурация module.cfx","topicId":"web/vir
 команда генерации исходников <code>gen-src</code> и сгенерированные исходники
 содержат такой же путь, как и обычные, то он монтируется аналогично нормальным исходникам.</p>
 <h2 id="head4">META-INF/jc-data/webroot</h2>
-<p>Каталоги <code>META-INF/jc-data/webroot</code>, которые были обнаружены в classpath при инициализации
-приложения, автоматически монтируются в корневой каталог виртуальной файловой системы.
+<p>Каталоги <code>META-INF/jc-data/webroot</code>, которые были обнаружены в classpath у модулей,
+которые входят в приложение, автоматически монтируются в корневой каталог виртуальной файловой системы.
 Такие каталоги, к примеру, используются для поставки сторонних библиотек javascript.
 Они монтируются до применения настроек монтирования модулей, что позволяет, при
 необходимости, перекрыть файлы из библиотек своими версиями.</p>
+<h2 id="head5">resource-webroot</h2>
+<p>Каталоги <code>resource-webroot</code>, которые были обнаружены в classpath,
+автоматически монтируются в корневой каталог виртуальной файловой системы.</p>
+<p>Монтирование не учитывает модули, достаточно просто наличие пути в classpath.</p>
+<p>Такие каталоги обычно генерируются какими либо сборщиками. В режиме разработки они
+обычно доступны напрямую, а в prod-режиме пакуются в jar-файлы.</p>
 
 </div>
     </div>
