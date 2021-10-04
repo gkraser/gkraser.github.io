@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>auth - аутентификация и авторизация</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'modules/auth.html';
+      mdoc.topicId = 'modules/auth';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Пример","topicId":"modules/auth","ref":"modules/auth.html#head1"},{"title":"Текущий пользователь","topicId":"modules/auth","ref":"modules/auth.html#head2"},{"title":"Реализация аутентификации","topicId":"modules/auth","ref":"modules/auth.html#head3"},{"title":"Пользователь","topicId":"modules/auth","ref":"modules/auth.html#head4"},{"title":"Токен аутентификации","topicId":"modules/auth","ref":"modules/auth.html#head5"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../db/index.html">db - базы данных</a></li>
+<li class="cur "><a href="auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li class="active">auth - аутентификация и авторизация</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>auth - аутентификация и авторизация</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="auth.html#head1">Пример</a></li>
+<li class=""><a href="auth.html#head2">Текущий пользователь</a></li>
+<li class=""><a href="auth.html#head3">Реализация аутентификации</a></li>
+<li class=""><a href="auth.html#head4">Пользователь</a></li>
+<li class=""><a href="auth.html#head5">Токен аутентификации</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.auth</span> <span
+        class="cm-code-info--marker">(module)</span>
+    </li>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.auth.AuthService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p><strong>Аутентификация</strong> — процедура проверки подлинности, например проверка подлинности
+пользователя путем сравнения введенного им пароля с паролем, сохраненным в базе данных.</p>
+<p><strong>Авторизация</strong> - предоставление определённому лицу или группе лиц прав на
+выполнение определённых действий.</p>
+<h2 id="head1">Пример</h2>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">// получаем сервис auth
+AuthService authSvc = getApp().bean(AuthService.class);
+
+// формируем токен авторизации
+AuthToken authToken = new DefaultUserPasswdAuthToken(&quot;user1&quot;, &quot;passwd1&quot;);
+
+// делаем login и получаем пользователя или ошибку авторизации
+AuthUser user = authSvc.login(authToken);
+
+// делаем пользователя текущим для потока
+authSvc.setCurrentUser(user);
+
+// получаем текущего пользователя (для текущего потока)
+user = authSvc.getCurrentUser();
+
+// атрибуты пользователя, будут заполнены при логине
+IVariantMap userAttrs = user.getAttrs();
+
+// а не гость ли это (гость не авторизован)?
+if (user.isGuest()) {
+    System.out.println(&quot;Гость!&quot;);
+}</code></pre></div></div>
+<h2 id="head2">Текущий пользователь</h2>
+<p>Метод <code>AuthService#getCurrentUser()</code> возвращает пользователя, который привязан к текущему
+потоку. Если пользователь не привязан, т.е. не был вызван метод
+<code>AuthService#setCurrentUser()</code>, метод все равно возвращает экземпляр пользователя,
+но у него установлено в true свойство <code>isGuest()</code>, т.е. пользователь является &quot;гостем&quot;.</p>
+<h2 id="head3">Реализация аутентификации</h2>
+<p>Для реализации аутентификации необходимо создать реализацию интерфейса
+процессора аутентификации <code>jandcode.core.auth.AuthProcessor</code>.</p>
+<p>Необходимо реализовать методы:</p>
+<ul>
+<li><code>isSupportedAuthToken</code> - проверить, что переданный токен можут быть обработан
+этм процессором</li>
+<li><code>login</code> - для переданного токена аутентификации вернуть пользователя, который ему
+соответсвует или сгенерировать ошибку аутенстификации <code>jandcode.core.auth.XErrorAuth</code></li>
+</ul>
+<p>В качестве базового простейшего примера можно посмотреть на код
+<code>jandcode.core.auth.std.DummyAuthProcessor</code>:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">/**
+ * Заглушка для {@link AuthProcessor}.
+ * &lt;p&gt;
+ * Может аутентифицировать пользователей по имени/паролю:
+ * admin/111, user1/111.
+ */
+public class DummyAuthProcessor extends BaseComp implements AuthProcessor {
+
+    public boolean isSupportedAuthToken(AuthToken authToken) {
+        return authToken instanceof UserPasswdAuthToken;
+    }
+
+    public AuthUser login(AuthToken authToken) throws Exception {
+        UserPasswdAuthToken token = (UserPasswdAuthToken) authToken;
+
+        if (&quot;admin&quot;.equals(token.getUsername()) &amp;&amp; &quot;111&quot;.equals(token.getPasswd())) {
+            return createUser(token.getUsername(), 1);
+
+        } else if (&quot;user1&quot;.equals(token.getUsername()) &amp;&amp; &quot;111&quot;.equals(token.getPasswd())) {
+            return createUser(token.getUsername(), 101);
+
+        } else {
+            throw new XErrorAuth(XErrorAuth.msg_invalid_user_passwd);
+        }
+
+    }
+
+    protected AuthUser createUser(String username, long id) {
+        Map&lt;String, Object&gt; attrs = new LinkedHashMap&lt;&gt;();
+        attrs.put(&quot;id&quot;, id);
+        attrs.put(&quot;username&quot;, username);
+        return new DefaultAuthUser(attrs);
+    }
+
+}
+</code></pre>
+</div></div>
+<p>Реализованный процессор необходимо зарегистрировать в <code>module.cfx</code>
+как процессор по умолчанию:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;bean name=&quot;jandcode.core.auth.AuthService&quot;&gt;
+        &lt;auth-processor name=&quot;default&quot;
+                        class=&quot;jandcode.core.auth.std.DummyAuthProcessor&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<p>После этого вызов метода <code>AuthService#login</code> будет транслироваться этому процессору.</p>
+<p>Процессор можут быть сколь угодно сложным, например делегировать выполнение некоему
+другому процессору или вызывать цепочку процессоров. Главное, что бы он после выполнения
+либо вернул пользователя, либо сгенерировал ошибку.</p>
+<h2 id="head4">Пользователь</h2>
+<p>Информация о пользователе представляется интерфейсом <code>jandcode.core.auth.AuthUser</code>.</p>
+<p>Этот интерфейс является набором произвольных атрибутов,
+которыми характеризируется пользователь. Состав атрибутов и их значения формирует
+процессор аутентификации при создании пользователя.</p>
+<h2 id="head5">Токен аутентификации</h2>
+<p>Информация для аутентификации пользователя представляется интерфейсом
+<code>jandcode.core.auth.AuthToken</code>. Это интерфейс-метка. Конкретные токены
+могут быть любыми, какие пожелаете. Например имеется стандартный токен
+для имени пользователя и пароля <code>jandcode.core.auth.UserPasswdAuthToken</code>.</p>
+<p>Токены используются процессорами аутентификации и должны быть совместимыми с ними.
+Т.е. если некий процессор умеет принимать токен <code>jandcode.core.auth.UserPasswdAuthToken</code>,
+то ему и нужно давать его для аутентификации.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
