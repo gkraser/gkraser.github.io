@@ -18,7 +18,7 @@
       mdoc.topicId = 'intro/install';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Настройка среды","topicId":"intro/install","ref":"intro/install.html#head1"},{"title":"Установка","topicId":"intro/install","ref":"intro/install.html#head2","items":[{"title":"Шаг 1. Создание каталога для проектов","topicId":"intro/install","ref":"intro/install.html#head3"},{"title":"Шаг 2. Создание jc-env.bat","topicId":"intro/install","ref":"intro/install.html#head4"},{"title":"Шаг 3. Клонирование репозитория","topicId":"intro/install","ref":"intro/install.html#head5"},{"title":"Шаг 4. Сборка","topicId":"intro/install","ref":"intro/install.html#head6"},{"title":"Шаг 5. jc.bat / jc.sh","topicId":"intro/install","ref":"intro/install.html#head7"},{"title":"Шаг 6. Проверяем, что все работает","topicId":"intro/install","ref":"intro/install.html#head8"}]},{"title":"Обновление","topicId":"intro/install","ref":"intro/install.html#head9"},{"title":"Ветки master и dev","topicId":"intro/install","ref":"intro/install.html#head10"},{"title":"Поддержка запуска jc версии 1.5","topicId":"intro/install","ref":"intro/install.html#head11"}]  </script>
+mdoc.tocTopic=[{"title":"Настройка среды","topicId":"intro/install","ref":"intro/install.html#head1"},{"title":"Установка","topicId":"intro/install","ref":"intro/install.html#head2","items":[{"title":"Шаг 1. Создание каталога для проектов","topicId":"intro/install","ref":"intro/install.html#head3"},{"title":"Шаг 2. Создание jc-env.bat","topicId":"intro/install","ref":"intro/install.html#head4"},{"title":"Шаг 3. Клонирование репозитория","topicId":"intro/install","ref":"intro/install.html#head5"},{"title":"Шаг 4. Сборка","topicId":"intro/install","ref":"intro/install.html#head6"},{"title":"Шаг 5. jc.bat / jc.sh","topicId":"intro/install","ref":"intro/install.html#head7"},{"title":"Шаг 6. Проверяем, что все работает","topicId":"intro/install","ref":"intro/install.html#head8"}]},{"title":"Обновление","topicId":"intro/install","ref":"intro/install.html#head9"},{"title":"Ветки master и dev","topicId":"intro/install","ref":"intro/install.html#head10"},{"title":"Поддержка запуска jc версии 1.5","topicId":"intro/install","ref":"intro/install.html#head11"},{"title":"Запуск глобально в определенной среде","topicId":"intro/install","ref":"intro/install.html#head12"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -85,6 +85,7 @@ mdoc.tocTopic=[{"title":"Настройка среды","topicId":"intro/install
 <li class=""><a href="install.html#head9">Обновление</a></li>
 <li class=""><a href="install.html#head10">Ветки master и dev</a></li>
 <li class=""><a href="install.html#head11">Поддержка запуска jc версии 1.5</a></li>
+<li class=""><a href="install.html#head12">Запуск глобально в определенной среде</a></li>
 </ul>
   </div>
 </div>
@@ -296,6 +297,37 @@ sh ./build-bin.sh
 старой версии.</p>
 <p>Теперь запуск <code>jc</code> в рабочем каталоге с новой версией запустит новую,
 а в рабочем каталоге со старой - старую.</p>
+<h2 id="head12">Запуск глобально в определенной среде</h2>
+<p>Что бы запустить и использовать <code>jc</code> в конкретной глобальной среде, можно создать
+специальный bat-файл для запуска в определенной среде. Например такой способ используется,
+когда производится сборка проектов на сервере сборки.</p>
+<p>Например, мы хотим, что бы bat-файл <code>jc-g.bat</code> запускал <code>jc</code> под конкретной версией
+java и в определенной среде.</p>
+<p>Для начала собираем или скачиваем бинарный дистрибутив jandcode-core2 в какое-нибуть
+место, например в <code>d:\jc-projects\jandcode-core2-bin</code>.</p>
+<p>Затем создаем файл <code>jc-g.bat</code> в каталоге, который указан в переменной среды <code>PATH</code>:</p>
+<div class="codeblock" data-language="batch"><div class="codeblock--title">jc-g.bat</div><div class="codeblock--content"><pre><code class="language-batch">@echo off
+set JAVA_HOME=c:\jdks\jdk17
+set PATH=%JAVA_HOME%\bin;%PATH%
+
+call d:\jc-projects\jandcode-core2-bin\jc-run.bat %*
+</code></pre>
+</div></div><div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Обратите внимание, что вызывать нужно <code>jc-run.bat</code></p>
+</div>
+</div>
+<p>Теперь команда <code>jc-g</code> будет запускать нужный глобальный <code>jc</code>.</p>
+<p>В проекте, который будет использовать этот глобальный <code>jc-g</code> можно создать
+bat-файл для запуска нужной <code>jc</code>. Например так:</p>
+<div class="codeblock" data-language="batch"><div class="codeblock--content"><pre><code class="language-batch">@echo off
+if exist %~dp0\env.bat call %~dp0\env.bat
+call jc-g -f:%~dp0builder.jc %*
+</code></pre>
+</div></div>
 
 </div>
     </div>

@@ -104,7 +104,7 @@ mdoc.tocTopic=[{"title":"Создание нового проекта","topicId"
 <h2 id="head1">Создание нового проекта</h2>
 <p>В каталоге для проектов создадим новый проект, воспользовавшись
 для этого приложением <a href="index.html">jc</a>:</p>
-<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:web -o:sample-project1
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc create -t:web-app -o:sample-project1
 </code></pre>
 </div></div>
 <p>В результате выполнения команды будет создан каталог с проектом <code>sample-project1</code>.</p>
@@ -119,8 +119,7 @@ mdoc.tocTopic=[{"title":"Создание нового проекта","topicId"
 Далее этот каталог будет называтся каталогом проекта, а его содержимое - <em>проектом</em>.</p>
 <p>В каталоге проекта имеется (среди прочих) файл <code>project.jc</code>, в котором наш проект описан.
 Этот файл является текстом класса <code>groovy</code> и описан подробнее в разделе <a href="base.html">Основы jc</a>.</p>
-<p>Внутри каталога проекта имеется каталог <code>sample-project1</code>. Да, он имеет такое же
-имя, как и каталог проекта. Он является модулем проекта.
+<p>Внутри каталога проекта имеется каталог <code>sample-project1-main</code>. Он является модулем проекта.
 Далее этот каталог будет называтся каталогом модуля проекта,
 а его содержимое - <em>модулем проекта</em> или <em>модулем</em>.
 И в нем так же имеется файл <code>project.jc</code>, который описывает модуль.</p>
@@ -131,66 +130,35 @@ unit-тесты модуля.</p>
 <p>Файл <code>project.jc</code> в каталоге модуля описывает модуль.
 Загляните в него.
 Не вдаваясь пока в подробности, рассмотрим ключевые места этого файла.</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">project.name = &quot;sample-project1&quot;
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">project.name = &quot;sample-project1-main&quot;
 </code></pre>
 </div></div>
 <p>В свойстве <code>project.name</code> указано имя модуля. Желательно, что бы имя модуля совпадало
 с именем каталога модуля. Это, конечно, не обязательно, но позволяет меньше путаться
 и запоминать новые незнакомые слова.</p>
 <p>Имя модуля должно быть в нижнем регистре, в качестве разделится слов должен быть
-использован знак <code>- (минус)</code>. Опять таки это правило исключительно для удобства
+использован знак <code>- (минус)</code>. Опять-таки это правило исключительно для удобства
 и унификации.</p>
 <p>При компиляции модуля будет создан jar-файл с именем, соответствующем имени модуля.
-В данном случае <code>sample-project1.jar</code>. Это очень важная информация. Именно модуль
+В данном случае <code>sample-project1-main.jar</code>. Это очень важная информация. Именно модуль
 содержит исходники и именно из модуля собирается jar-файл. В самом проекте исходного
 текста нет. Все исходники содержатся в модуле (или модулях).</p>
 <p>Рассматриваем <code>project.jc</code> далее:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(JavaProject).with {
-    packageRoot = &quot;sample.project1&quot;
-    //
-    depends.prod(
-            &quot;jandcode-core-web&quot;,
-    )
-    depends.dev(
-    )
-    //
+    moduleDef(&quot;sample.project1.main&quot;).with {
+        depends.prod(
+                &quot;jandcode.core.web&quot;,
+        )
+        depends.dev(
+        )
+    }
 }
 </code></pre>
 </div></div>
-<p>Если этот текст не понятен, то вот он же в другом варианте на <code>groovy</code>:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">jandcode.jc.std.JavaProject jm = include(jandcode.jc.std.JavaProject)
-jm.packageRoot = &quot;sample.project1&quot;
-jm.depends.prod(&quot;jandcode-core-web&quot;)
-</code></pre>
-</div></div>
-<p>Или вот, в варианте синтаксиса <code>java</code>:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">jandcode.jc.std.JavaProject jm = include(jandcode.jc.std.JavaProject);
-jm.setPackageRoot(&quot;sample.project1&quot;);
-jm.getDepends().prod(&quot;jandcode-core-web&quot;);
-</code></pre>
-</div></div>
-<p>Надеюсь, теперь понятно, что метод <code>include</code> возвращает экземпляр класса
-<code>jandcode.jc.std.JavaProject</code>, который содержит свойства модуля. Далее
-свойствам этого экземпляра присваиваются значения, описывающие некоторые
-характеристики модуля.</p>
-<p>Кстати, метод <code>include</code> всегда возвращает один и тот же экземпляр, который
-создается при первом вызове <code>include</code>, так что, если сильно хочется,
-можно написать и так:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(jandcode.jc.std.JavaProject).packageRoot = &quot;sample.project1&quot;
-include(jandcode.jc.std.JavaProject).depends.prod.add(&quot;jandcode-core-web&quot;)
-// ну а так как в тексте класса имеется оператор:
-// import jandcode.jc.std.*
-// то можно и сократить текст:
-include(JavaProject).depends.prod.add(&quot;jandcode-core-db-derby&quot;)
-</code></pre>
-</div></div>
-<p>Разобравшись с общим синтаксисом, начинаем разбиратся с конкретными свойствами.</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">packageRoot = &quot;sample.project1&quot;
-</code></pre>
-</div></div>
-<p>Это свойство определяет корневой java-пакет модуля (<code>package</code>). Дело в том, что все
-исходники модуля должны быть расположены в рамках одного пакета и его дочерних пакетов.
-И это имя мы и указываем. Имя корневого пакета обычно совпадает с именем модуля,
+<p>Строка <code>moduleDef(&quot;sample.project1.main&quot;)</code> определяет модуль Jandcode.
+Под модулем подразумевается java-пакет. Все исходники модуля должны быть расположены
+в рамках одного пакета и его дочерних пакетов.
+И это имя мы и указываем. Имя пакета обычно совпадает с именем java-модуля,
 где вместо <code>'-'</code> имеем символ <code>'.'(точка)</code>. Конечно, можно и тут проявить фантазию,
 но это создает дополнительные сложности и потерю унификации. Я бы не советовал.</p>
 <h2 id="head3">Работа с командной строки</h2>
@@ -223,8 +191,8 @@ include(JavaProject).depends.prod.add(&quot;jandcode-core-db-derby&quot;)
 <p>Любой jar-файл, которые используется в проекте, в том числе и полученный в результате
 компиляции модуля, называется <em>библиотекой</em>. А <em>именем библиотеки</em> является
 имя jar-файла, в котором отброшено расширение (и версия, но об этом позже).</p>
-<p>Таким образом, имеем модуль с именем <code>sample-project1</code>, из которого мы получили библиотеку
-с таким же именем <code>sample-project1</code>. Что, собственно, и является целью модуля -
+<p>Таким образом, имеем модуль с именем <code>sample-project1-main</code>, из которого мы получили библиотеку
+с таким же именем <code>sample-project1-main</code>. Что, собственно, и является целью модуля -
 получить из него библиотеку.</p>
 <p>Давайте посмотрим, какие библиотеки уже используются нашим проектом.
 Для этого в каталоге проекта выполним команду:</p>
@@ -274,7 +242,7 @@ jar-файла, он используется напрямую.</p>
 </div></div>
 <p>Как видите, теперь доступны и исходники.</p>
 <h2 id="head5">Зависимости</h2>
-<p>Напомню для начала: модуль при компиляции превращается в библиотека с именем,
+<p>Напомню для начала: модуль при компиляции превращается в библиотеку с именем,
 соответствующем имени модуля. Т.е. модуль можно использовать как библиотеку.</p>
 <p>Зависимости определяются для модуля и представляют собой список библиотек, от которых
 зависит этот модуль.</p>
@@ -285,8 +253,7 @@ jar-файла, он используется напрямую.</p>
 <p>Перейдем в каталог модуля и посмотрим в файл <code>project.jc</code>. В нем определены
 зависимости модуля:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">depends.prod(
-        &quot;jandcode-core-web&quot;,
-        &quot;jandcode-core-db-derby&quot;,
+        &quot;jandcode.core.web&quot;,
 )
 depends.dev(
 )
@@ -297,7 +264,7 @@ depends.dev(
 <p>Свойство <code>depends.dev</code> является списком имен библиотек, от которых зависит модуль
 при компиляции и при выполнении тестов. Они не используются в prоduction-режиме.</p>
 <p>Если библиотека, от которой зависит модуль, так же имеет зависимости, то его
-зависимости так же становятся звисимостями модуля и их явно указывать не обязательно.
+зависимости так же становятся звисимостями модуля и их явно указывать необязательно.
 Поясню на примере. Допустим имеем такие модули и их зависимости:</p>
 <div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">M1 -&gt; M2,M3
 M3 -&gt; M4,M2
@@ -324,7 +291,7 @@ M5 -&gt; M1
 следующий код:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(RootProject).with {
     modules(
-            &quot;sample-project1&quot;,
+            &quot;sample-project1-main&quot;,
     )
 }
 </code></pre>
@@ -335,7 +302,7 @@ M5 -&gt; M1
 Например можно написать так:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(RootProject).with {
     modules(
-            &quot;./sample-project1&quot;,
+            &quot;./sample-project1-main&quot;,
     )
 }
 </code></pre>
@@ -348,7 +315,7 @@ M5 -&gt; M1
 модулей проекта:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">include(RootProject).with {
     modules(
-            &quot;sample-project1&quot;,
+            &quot;sample-project1-main&quot;,
             &quot;sample-project1-module2&quot;,
     )
 }
@@ -361,14 +328,13 @@ M5 -&gt; M1
 модуль:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">depends.prod(
         &quot;jandcode-core-web&quot;,
-        &quot;jandcode-core-db-derby&quot;,
         &quot;sample-project1-module2&quot;,
 )
 </code></pre>
 </div></div>
-<p>Теперь модуль <code>sample-project1</code> зависит от модуля <code>sample-project1-module2</code>. Что кроме
+<p>Теперь модуль <code>sample-project1-main</code> зависит от модуля <code>sample-project1-module2</code>. Что кроме
 всего прочего означает, что модуль <code>sample-project1-module2</code> будет компилироватся
-до модуля <code>sample-project1</code>, а компиляция модуля <code>sample-project1</code> будет пользоватся
+до модуля <code>sample-project1-main</code>, а компиляция модуля <code>sample-project1-main</code> будет пользоватся
 результатом компиляции модуля <code>sample-project1-module2</code>.</p>
 <h2 id="head7">jc gen-idea</h2>
 <p>Изменение структуры проекта в файлах <code>project.jc</code> сразу же доступны в командной строке,
