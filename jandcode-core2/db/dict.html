@@ -1,0 +1,348 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Словари</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/dict.html';
+      mdoc.topicId = 'db/dict';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"db/dict","ref":"db/dict.html#head1"},{"title":"Описание словаря","topicId":"db/dict","ref":"db/dict.html#head2"},{"title":"Работа со словарями","topicId":"db/dict","ref":"db/dict.html#head3"},{"title":"Загрузка данных для словаря","topicId":"db/dict","ref":"db/dict.html#head4"},{"title":"Полностью загружаемые словари","topicId":"db/dict","ref":"db/dict.html#head5"},{"title":"Базовые классы обработчиков для словаря","topicId":"db/dict","ref":"db/dict.html#head6"},{"title":"Кеширование полностью загружаемых словарей","topicId":"db/dict","ref":"db/dict.html#head7"},{"title":"Конфигурация module.cfx","topicId":"db/dict","ref":"db/dict.html#head8","items":[{"title":"dbm/model/dict","topicId":"db/dict","ref":"db/dict.html#head9"}]}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class="cur "><a href="dict.html">Словари</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Словари</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Словари</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="dict.html#head1">Введение</a></li>
+<li class=""><a href="dict.html#head2">Описание словаря</a></li>
+<li class=""><a href="dict.html#head3">Работа со словарями</a></li>
+<li class=""><a href="dict.html#head4">Загрузка данных для словаря</a></li>
+<li class=""><a href="dict.html#head5">Полностью загружаемые словари</a></li>
+<li class=""><a href="dict.html#head6">Базовые классы обработчиков для словаря</a></li>
+<li class=""><a href="dict.html#head7">Кеширование полностью загружаемых словарей</a></li>
+<li class="folder "><a href="dict.html#head8">Конфигурация module.cfx</a><ul><li class=""><a href="dict.html#head9">dbm/model/dict</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+</svg>
+<fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.dict.Dict</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.dict.DictService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Введение</h2>
+<p>Словарь - это объект <code>jandcode.core.dbm.dict.Dict</code>, который содержит соответствие между
+неким кодом (id) и его текстовым представлением.</p>
+<p>Работа со словарями осуществляется через сервис модели
+<code>jandcode.core.dbm.dict.DictService</code>.</p>
+<p>Данные словаря представляют собой табличную структуру типа <code>jandcode.core.store.Store</code>.
+Поле <code>id</code> - это идентификатор записи (код). Остальные поля - текстовые представления
+идентификатора записи.</p>
+<p>Сам объект <code>jandcode.core.dbm.dict.Dict</code> данные не хранит, он содержит информацию о
+структуре словаря и способах загрузки данных.</p>
+<h2 id="head2">Описание словаря</h2>
+<p>Словарь описывается в модели. Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model&quot;&gt;
+
+            &lt;!-- структура словаря - это домен --&gt;
+            &lt;domain name=&quot;dict.my&quot; parent=&quot;dict.base&quot;&gt;
+                &lt;field name=&quot;text2&quot; parent=&quot;string&quot;/&gt;
+            &lt;/domain&gt;
+
+            &lt;!-- словарь --&gt;
+            &lt;dict name=&quot;mydict1&quot; parent=&quot;base&quot; domain=&quot;dict.my&quot;
+                  handler=&quot;pak1.pak2.MyDict1_DictHandler&quot;/&gt;
+
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head3">Работа со словарями</h2>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// получаем сервис словарей
+DictService dictSvc = getModel().bean(DictService.class)
+
+// получаем словарь
+Dict dict1 = dictSvc.getDict(&quot;mydict1&quot;)
+
+// загружаем данные словаря полностью, если он загружаемый
+// т.е. может сразу загрузить все свои данные
+if (dict1.isLoadable()) {
+    DictData dictdata = dictSvc.loadDictData(&quot;mydict1&quot;)
+}
+
+// загружаем только данные для указанных id
+// работает для любых типов словарей
+DictData dictdata = dictSvc.loadDictData(&quot;mydict1&quot;, [1, 2, 6])
+
+// создаем какой-то store
+Store store = mdb.createStore()
+store.addField(&quot;id&quot;, &quot;long&quot;)
+store.addField(&quot;data&quot;, &quot;string&quot;)
+// для поля mydict1 устанавливаем связь со словарем
+store.addField(&quot;mydict1&quot;, &quot;long&quot;).setDict(&quot;mydict1&quot;)
+
+// ... как то заполняем store
+
+// для словарных полей ставим соотвествии между id и текстом
+dictSvc.resolveDicts(store)
+
+// берем запись из store
+StoreRecord rec = store.get(0)
+
+// получаем текст из поля text для id, которое хранится в поле mydict1
+String text = rec.getDictText(&quot;mydict1&quot;)
+// получаем текст из поля text2 для id, которое хранится в поле mydict1
+String text2 = rec.getDictText(&quot;mydict1&quot;, &quot;text2&quot;)
+
+// создаем пустой store со структурой словаря
+Store store1 = dict1.createStore()
+
+// создаем пустой dictdata для словаря
+DictData dictdata1 = dict1.createDictData()</code></pre></div></div>
+<h2 id="head4">Загрузка данных для словаря</h2>
+<p>Данные для словаря загружаются через его обработчик, которые реализует интерфейс
+<code>jandcode.core.dbm.dict.DictHandler</code>.</p>
+<p>При реализации обработчика необходимо для словаря dict загрузить в data строки, которые
+соответсвуют набору id, переданному в параметре ids. Для загрузки можно использовать
+объект mdb, соединение с базой данных установлено.</p>
+<p>Простейший пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dbm.dict.*
+import jandcode.core.dbm.mdb.*
+import jandcode.core.store.*
+
+class MyDict1Handler implements DictHandler {
+
+    void resolveIds(Mdb mdb, Dict dict, Store data, Collection ids) throws Exception {
+        for (id in ids) {
+            data.add(id: id, text: &quot;${dict.name}-text-${id}&quot;)
+        }
+    }
+
+}</code></pre></div></div>
+<h2 id="head5">Полностью загружаемые словари</h2>
+<p>Существуют словари, данные для которых можно загружать сразу полностью. Это обычно часто
+используемые и небольшие словари. Для реализации полной загрузки обработчик должен
+дополнительно реализовывать интерфейс
+<code>jandcode.core.dbm.dict.IDictHandlerLoadDict</code>.</p>
+<p>В случае полностью загружаемого словаря метод <code>Dict@isLoadable()</code> возвращает <code>true</code>.</p>
+<p>Простейший пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dbm.dict.*
+import jandcode.core.dbm.mdb.*
+import jandcode.core.store.*
+
+class MyDict1LoadDictHandler implements DictHandler, IDictHandlerLoadDict {
+
+    void resolveIds(Mdb mdb, Dict dict, Store data, Collection ids) throws Exception {
+        for (id in ids) {
+            data.add(id: id, text: &quot;${dict.name}-text-${id}&quot;)
+        }
+    }
+
+    void loadDict(Mdb mdb, Dict dict, Store data) throws Exception {
+        for (id in 1..10) {
+            data.add(id: id, text: &quot;${dict.name}-text-${id}&quot;)
+        }
+    }
+}</code></pre></div></div>
+<h2 id="head6">Базовые классы обработчиков для словаря</h2>
+<p>Для упрощения разработки имеются 2 базовых класса обработчиков словарей:</p>
+<ul>
+<li><code>jandcode.core.dbm.dict.BaseDictHandlerResolve</code> - для обычных словарей, которые не могут
+быть полностью загруженными</li>
+<li><code>jandcode.core.dbm.dict.BaseDictHandlerLoadable</code> - для словарей, которые могут быть
+полностью загруженными</li>
+</ul>
+<p>Примеры:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--title">jandcode.core.dbm.dict.BaseDictHandlerResolve</div><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dbm.dict.*
+import jandcode.core.dbm.mdb.*
+import jandcode.core.store.*
+
+class BaseDictHandlerResolveExample1 extends BaseDictHandlerResolve {
+
+    BaseDictHandlerResolveExample1() {
+        // размер блока, который будет передан в метод resolveIdsBlock
+        // по умолчанию размер блока равен 200
+        setBlockSize(100)
+    }
+
+    // этот метод загружает блок ids, вызывается несколько раз в зависимости
+    // от количества нужных ids
+    protected void resolveIdsBlock(Mdb mdb, Dict dict, Store data, Collection&lt;Object&gt; ids) throws Exception {
+        for (id in ids) {
+            data.add(id: id, text: &quot;${dict.name}-text-${id}&quot;)
+        }
+    }
+
+}</code></pre></div></div>
+<div class="codeblock" data-language="groovy"><div class="codeblock--title">jandcode.core.dbm.dict.BaseDictHandlerLoadable</div><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dbm.dict.*
+import jandcode.core.dbm.mdb.*
+import jandcode.core.store.*
+
+class BaseDictHandlerLoadableExample1 extends BaseDictHandlerLoadable {
+
+    void loadDict(Mdb mdb, Dict dict, Store data) throws Exception {
+        for (id in 1..10) {
+            data.add(id: id, text: &quot;${dict.name}-text-${id}&quot;)
+        }
+    }
+
+}</code></pre></div></div>
+<h2 id="head7">Кеширование полностью загружаемых словарей</h2>
+<p>Данные полностью загружаемых словарей можно кешировать. Для этого нужно получать
+данные словаря через <code>DictService#getCache()</code>.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">DictService dictSvc = getModel().bean(DictService.class)
+Dict mydict1 = dictSvc.getDict(&quot;mydict1&quot;)
+
+// получить закешированные данные словаря
+DictData dictdata1 = dictSvc.getCache().getDictData(mydict1)
+
+// сбросить кеш для указанного словаря
+dictSvc.getCache().invalidate(mydict1)</code></pre></div></div>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Из кеша возвращаются оригинальные общие данные и разделяются между потоками,
+поэтому их нельзя модифицировать!</p>
+</div>
+</div>
+<h2 id="head8">Конфигурация module.cfx</h2>
+<h3 id="head9">dbm/model/dict</h3>
+<p>Описание словаря.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;MODEL-NAME&quot;&gt;
+            &lt;dict name=&quot;NAME&quot;
+                  domain=&quot;DOMAIN-NAME&quot;
+                  defaultField=&quot;FIELD-NAME&quot;
+                  handler=&quot;jandcode.core.dbm.dict.DictHandler&quot;
+            /&gt;
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<ul>
+<li><code>name</code> - имя словаря</li>
+<li><code>domain</code> - имя домена со структурой словаря. По умолчанию - <code>dict.base</code></li>
+<li><code>defaultField</code> - имя поля по умолчанию для получения текстового представления. По
+умолчанию - <code>text</code></li>
+<li><code>handler</code> - обработчик словаря для загрузки данных. Должен реализовывать интерфейс
+<code>jandcode.core.dbm.dict.DictHandler</code>. Дополнительно может реализовывать интерфейс
+<code>jandcode.core.dbm.dict.IDictHandlerLoadDict</code></li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

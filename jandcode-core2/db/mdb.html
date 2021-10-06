@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>База данных</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/mdb.html';
+      mdoc.topicId = 'db/mdb';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Классы-утилиты для базы данных","topicId":"db/mdb","ref":"db/mdb.html#head1"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="model.html">Model</a></li>
+<li class="cur "><a href="mdb.html">База данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">База данных</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>База данных</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="mdb.html#head1">Классы-утилиты для базы данных</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.mdb.Mdb</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>Каждая модель имеет связанную с ней базу данных. Связанная база данных только одна.</p>
+<p>Для работы с базой данных предназначен интерфейс <code>jandcode.core.dbm.mdb.Mdb</code>.
+Он содержит методы для работы с конкретным соединением с базой данных.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// создаем экземпляр Mdb
+Mdb mdb = getModel().createMdb()
+
+// устанавливаем соединение
+mdb.connect()
+try {
+    // выполняем запросы
+    Store store = mdb.loadQuery(&quot;select * from tab1 where a&gt;:param1&quot;, [param1: 100])
+    mdb.execQuery(&quot;update tab1 set a=1 where id=:id&quot;, [id: 100])
+
+} finally {
+    // разрываем соединение
+    mdb.disconnect()
+}</code></pre></div></div>
+<h2 id="head1">Классы-утилиты для базы данных</h2>
+<p>Классы-утилиты для базы данных являются обертками вокруг экземпляра
+<code>jandcode.core.dbm.mdb.Mdb</code> и предназначены для реализации конкретных
+запросов к базе данных.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dbm.mdb.*
+import jandcode.core.store.*
+
+class MdbUtils1 extends BaseMdbUtils {
+
+    MdbUtils1(Mdb mdb) {
+        this.setMdb(mdb)
+    }
+
+    Store load1(int param1) {
+        return mdb.loadQuery(&quot;select * from tab1 where a&gt;:param1&quot;, [param1: param1])
+    }
+
+}</code></pre></div></div>
+<p>Особенность таких классов:</p>
+<ul>
+<li>они должны принимать в конструкторе экземпляр <code>jandcode.core.dbm.mdb.Mdb</code> и сохранить
+его во внутренней структуре</li>
+<li>экземпляр mdb передается с уже установленным и настроенным соединением,
+т.е. не нужно вызывать методы connect, disconnect. За соединение отвечает кто-то
+вне этих классов</li>
+<li>классы-утилиты легкие и одноразовые: создали, попользовались, забыли. Их экземляры
+нельзя где-то хранить</li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
