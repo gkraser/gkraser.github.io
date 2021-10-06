@@ -53,7 +53,8 @@ mdoc.tocTopic=[{"title":"Введение","topicId":"db/dict","ref":"db/dict.ht
 <li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
 <li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
 <li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
-<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="model.html">Model</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class=""><a href="model.html">Model</a></li>
 <li class=""><a href="mdb.html">База данных</a></li>
 <li class="cur "><a href="dict.html">Словари</a></li>
 </ul></li>
@@ -315,7 +316,8 @@ dictSvc.getCache().invalidate(mydict1)</code></pre></div></div>
 <div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
     &lt;dbm&gt;
         &lt;model name=&quot;MODEL-NAME&quot;&gt;
-            &lt;dict name=&quot;NAME&quot;
+            &lt;dict name=&quot;DICT-NAME&quot;
+                  parent=&quot;DICT-NAME&quot;
                   domain=&quot;DOMAIN-NAME&quot;
                   defaultField=&quot;FIELD-NAME&quot;
                   handler=&quot;jandcode.core.dbm.dict.DictHandler&quot;
@@ -325,6 +327,7 @@ dictSvc.getCache().invalidate(mydict1)</code></pre></div></div>
 &lt;/root&gt;</code></pre></div></div>
 <ul>
 <li><code>name</code> - имя словаря</li>
+<li><code>parent</code> - имя предка словаря</li>
 <li><code>domain</code> - имя домена со структурой словаря. По умолчанию - <code>dict.base</code></li>
 <li><code>defaultField</code> - имя поля по умолчанию для получения текстового представления. По
 умолчанию - <code>text</code></li>

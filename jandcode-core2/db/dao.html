@@ -1,0 +1,508 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dao</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/dao.html';
+      mdoc.topicId = 'db/dao';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"db/dao","ref":"db/dao.html#head1"},{"title":"Dao для базы данных","topicId":"db/dao","ref":"db/dao.html#head2"},{"title":"DaoInvoker","topicId":"db/dao","ref":"db/dao.html#head3"},{"title":"DaoHolder","topicId":"db/dao","ref":"db/dao.html#dao-holder"},{"title":"Примеры регистрации dao-методов","topicId":"db/dao","ref":"db/dao.html#head4","items":[{"title":"Полная регистрация","topicId":"db/dao","ref":"db/dao.html#head5"},{"title":"Класс","topicId":"db/dao","ref":"db/dao.html#head6"},{"title":"Пакет","topicId":"db/dao","ref":"db/dao.html#holder-item-pak"},{"title":"Пакет плоский","topicId":"db/dao","ref":"db/dao.html#head7"},{"title":"Префикс","topicId":"db/dao","ref":"db/dao.html#head8"},{"title":"Дочерние item","topicId":"db/dao","ref":"db/dao.html#head9"},{"title":"Провайдер элементов","topicId":"db/dao","ref":"db/dao.html#head10"},{"title":"invoker","topicId":"db/dao","ref":"db/dao.html#head11"}]},{"title":"DaoHolder модели","topicId":"db/dao","ref":"db/dao.html#head12"},{"title":"DaoHolderItemProvider","topicId":"db/dao","ref":"db/dao.html#head13"},{"title":"Конфигурация module.cfx","topicId":"db/dao","ref":"db/dao.html#head14","items":[{"title":"dao/invoker","topicId":"db/dao","ref":"db/dao.html#head15"}]}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class="cur "><a href="dao.html">Dao</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Dao</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Dao</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="dao.html#head1">Введение</a></li>
+<li class=""><a href="dao.html#head2">Dao для базы данных</a></li>
+<li class=""><a href="dao.html#head3">DaoInvoker</a></li>
+<li class=""><a href="dao.html#dao-holder">DaoHolder</a></li>
+<li class="folder "><a href="dao.html#head4">Примеры регистрации dao-методов</a><ul><li class=""><a href="dao.html#head5">Полная регистрация</a></li>
+<li class=""><a href="dao.html#head6">Класс</a></li>
+<li class=""><a href="dao.html#holder-item-pak">Пакет</a></li>
+<li class=""><a href="dao.html#head7">Пакет плоский</a></li>
+<li class=""><a href="dao.html#head8">Префикс</a></li>
+<li class=""><a href="dao.html#head9">Дочерние item</a></li>
+<li class=""><a href="dao.html#head10">Провайдер элементов</a></li>
+<li class=""><a href="dao.html#head11">invoker</a></li>
+</ul></li>
+<li class=""><a href="dao.html#head12">DaoHolder модели</a></li>
+<li class=""><a href="dao.html#head13">DaoHolderItemProvider</a></li>
+<li class="folder "><a href="dao.html#head14">Конфигурация module.cfx</a><ul><li class=""><a href="dao.html#head15">dao/invoker</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dao</span> <span
+        class="cm-code-info--marker">(module)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm</span> <span
+        class="cm-code-info--marker">(module)</span>
+    </li>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dao.Dao</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dao.DaoService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dao.DaoInvoker</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dao.DaoHolder</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>Dao - это метод класса, который выполняется в определенном настроенном окружении.</p>
+<h2 id="head1">Введение</h2>
+<p>Пример простейшего dao:</p>
+<div class="codeblock" data-language="java"><div class="codeblock--content"><pre><code class="language-java">import jandcode.core.dao.*;
+
+public class DaoSimple1 extends BaseDao {
+
+    @DaoMethod
+    public String meth1(String param1) throws Exception {
+        return &quot;meth1 PARAM1=&quot; + param1;
+    }
+
+    @DaoMethod
+    public String meth2(String param1) throws Exception {
+        return &quot;meth2 PARAM1=&quot; + param1;
+    }
+
+    // это не dao-метод, его никак не вызвать из вне
+    public void noDaoMethod1() {
+    }
+
+    // это метод для внутреннего использования внутри dao
+    protected void utilsMethod1() {
+    }
+
+}</code></pre></div></div>
+<p>Для создания dao необходимо создать класс, который унаследован от
+<code>jandcode.core.dao.BaseDao</code> и реализовать один или несколько публичных методов, которые
+необходимо пометить аннотацией <code>@DaoMethod</code>. Каждый такой метод - dao.</p>
+<p>Методы dao могут иметь произвольные параметры и возвращать произвольные результаты. Это в
+случае, если dao выполняется локально в коде. Если dao предназначен для вызова через
+внешнего клиента (например из браузера через определенный api), то нужно помнить, что
+можно использовать только те типы параметров и результата, которые разрешены этим api.</p>
+<p>В большинстве случаев безопасно использовать стандартные простые типы java
+(int, long, String), списки List, мапы Map, даты <code>jandcode.commons.datetime.XDateTime</code>,
+Store, StoreRecord.</p>
+<p>Выполнение dao:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// берем сервис dao
+DaoService daoSvc = getApp().bean(DaoService.class)
+// берем исполнителя dao
+DaoInvoker daoInv = daoSvc.getDaoInvoker(&quot;default&quot;)
+// создаем экземпляр dao
+DaoSimple1 dao = daoInv.createDao(DaoSimple1.class)
+// выполняем dao метод
+String result = dao.meth1(&quot;p1&quot;)</code></pre></div></div>
+<p><code>DaoService</code> содержит все, что касается dao. <code>DaoInvoker</code> среда исполнения dao.</p>
+<p>Метод <code>createDao</code> создает экземпляр proxy-класса для указанного класса dao. Вызовы
+dao-методов этого proxy-класса транслируются в среду исполнения конкретного
+<code>DaoInvoker</code>, которая может производить всякие манипуляции и инициализации
+(логгирование, установка соединения с базой данных, управление транзакциями и т.д.)
+в процессе исполнения dao, одним из этапов которого будет вызов оригинального метода dao.</p>
+<p>Для proxy-класса можно вызвать только dao-методы (помеченные аннотацией <code>@DaoMethod</code>),
+вызов других методов приведет к ошибке. Например, в классе <code>DaoSimple1</code> из примера выше
+имеется публичный метод <code>noDaoMethod1</code>, его вызвать нельзя:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">DaoSimple1 dao = daoInv.createDao(DaoSimple1.class)
+try {
+    dao.noDaoMethod1()
+} catch (e) {
+    // вызов не dao-метода
+}</code></pre></div></div>
+<p>В dao-классах нет смысла делать публичные методы, которые все равно вне вызвать нельзя.
+Для внутренних нужд создавайте методы protected или private.</p>
+<p>Dao-классы не могут использоваться для разделения кода или какого-либо утилитного кода.
+Для этого предназначены утилитные классы.</p>
+<p>Кешировать экземпляры классов нельзя. Создали, выполнили метод, забыли.</p>
+<h2 id="head2">Dao для базы данных</h2>
+<p>Если dao желает иметь доступ к базе данных, то он реализовывается и исполняется в
+контексте конкретной модели базы данных.</p>
+<p>Такой dao необходимо унаследовать от класса <code>jandcode.core.dbm.dao.BaseModelDao</code>
+и выполнять через DaoInvoker, которой принадлежит модели.</p>
+<p>Пример dao для базы данных:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dao.*
+import jandcode.core.dbm.dao.*
+import jandcode.core.store.*
+
+class DaoModel1 extends BaseModelDao {
+
+    @DaoMethod
+    public Store list() throws Exception {
+        return getMdb().loadQuery(&quot;select * from tab1 order by id&quot;)
+    }
+
+    @DaoMethod
+    public StoreRecord record(long id) throws Exception {
+        return getMdb().loadQueryRecord(&quot;select * from tab1 where id=:id&quot;, [id: id])
+    }
+
+}</code></pre></div></div>
+<p>В методах dao доступен экземпляр <code>jandcode.core.dbm.mdb.Mdb</code> для выполнения запросов к
+базе данных и различные утилиты для упрощения типичных задач. Соединенение с базой данных
+и транзакции поддерживается средой исполнения dao, об этом не нужно беспокоиться в
+процессе написания dao-методов.</p>
+<p>Выполнение dao для модели:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// берем сервис dao для модели
+ModelDaoService daoSvc = getModel().bean(ModelDaoService.class)
+// берем исполнителя dao, он единственный
+DaoInvoker daoInv = daoSvc.getDaoInvoker()
+// создаем экземпляр dao
+DaoModel1 dao = daoInv.createDao(DaoModel1.class)
+// выполняем dao методы
+Store lst = dao.list()
+StoreRecord rect = dao.record(10)</code></pre></div></div>
+<h2 id="head3">DaoInvoker</h2>
+<p>DaoInvoker - это исполнитель dao, который выполняет dao в определенной среде.</p>
+<p>Регистрация invoker:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dao&gt;
+        &lt;invoker name=&quot;invoker1&quot;&gt;
+        &lt;/invoker&gt;
+    &lt;/dao&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Исполнители отличаются фильтрами, которые можно настроить конкретному исполнителю. Фильтры
+влияют на процесс исполнения dao. Настройка фильтров <a href="dao.html#conf-filter">тут</a>.</p>
+<p>Каждая <a href="model.html">модель</a> имеет своего исполнителя с настроенными фильтрами для исполнения
+в контексте базы данных модели.</p>
+<p>Получение исполнителей:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">DaoService daoSvc = getApp().bean(DaoService.class)
+
+// глобально зарегистрированный invoker
+DaoInvoker invokerGlobal = daoSvc.getDaoInvoker(&quot;invoker1&quot;)
+
+// invoker модели с именем model1
+DaoInvoker invokerModel1 = daoSvc.getDaoInvoker(&quot;model:model1&quot;)
+// что соответствует:
+invokerModel1 = getApp().bean(ModelService.class)
+        .getModel(&quot;model1&quot;).bean(ModelDaoService.class).getDaoInvoker()</code></pre></div></div>
+<h2 id="dao-holder">DaoHolder</h2>
+<p>DaoHolder - это хранилище, которое сопоставляет произвольное имя конкретному dao.
+Представлено интерфейсом <code>jandcode.core.dao.DaoHolder</code>, доступно через сервис
+<code>DaoService</code>.</p>
+<p>Простейший пример настройки:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dao&gt;
+        &lt;holder name=&quot;holder1&quot; invoker=&quot;default&quot;&gt;
+            &lt;item name=&quot;dao1/meth1&quot;
+                  class=&quot;pak1.pak2.DaoSimple1&quot;
+                  method=&quot;meth1&quot;
+                  invoker=&quot;default&quot;/&gt;
+        &lt;/holder&gt;
+    &lt;/dao&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>В этом примере мы объявляем хранилище dao с именем <code>holder1</code>. Устанавливаем ему
+исполнителя (invoker) по умолчанию с именем <code>default</code>. В хранилище добавляем
+имя <code>dao1/meth1</code>, которое привязано к методу <code>meth1</code> класса
+<code>pak1.pak2.DaoSimple1</code>. Для исполнения этого dao будет использоваться invoker с
+именем <code>default</code>, который, кстати, может отличаться от invoker по умолчанию, указанного в
+атрибуте invoker самого хранилища.</p>
+<p>Исполнение dao-метода по имени:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">DaoService daoSvc = getApp().bean(DaoService.class)
+
+// получаем DaoHolder по имени
+DaoHolder daoHolder = daoSvc.getDaoHolder(&quot;holder1&quot;)
+// исполняем метод dao по имени
+String res = (String) daoHolder.invokeDao(&quot;dao1/meth1&quot;, &quot;param1&quot;)</code></pre></div></div>
+<p>Метод <code>invokeDao</code> первым аргументом принимает имя зарегистрированного метода dao.
+Остальные аргументы - аргументы зарегистрированного метода. Возвращает результат
+выполнения dao-метода.</p>
+<h2 id="head4">Примеры регистрации dao-методов</h2>
+<p>Допустим у нас имеются следуюшие dao-классы:</p>
+<ul>
+<li><code>pak1.pak2.DictSimple1</code></li>
+<li><code>pak1.pak2.pak3.DictSimple1_Dao</code></li>
+</ul>
+<p>Каждый dao-класс имеет методы <code>meth1</code> и <code>meth2</code>.</p>
+<p>Ниже описаны варианты регистрации dao в хранилище для этих классов.</p>
+<h3 id="head5">Полная регистрация</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1/meth1&quot;
+      class=&quot;pak1.pak2.DaoSimple1&quot;
+      method=&quot;meth1&quot;
+      invoker=&quot;default&quot;/&gt;</code></pre></div></div>
+<p>Регистрация конкретного метода конкретного класса с явным указанием invoker.</p>
+<h3 id="head6">Класс</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1&quot;
+      class=&quot;pak1.pak2.DaoSimple1&quot;/&gt;</code></pre></div></div>
+<p>Регистрация всех dao-методов класса. Имя item становится префиксом для имени dao. Так
+будут зарегистрированы dao с именами:</p>
+<ul>
+<li><code>dao1/meth1</code></li>
+<li><code>dao1/meth2</code></li>
+</ul>
+<h3 id="holder-item-pak">Пакет</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1&quot;
+      pak=&quot;pak1.pak2&quot;
+      recursive=&quot;true&quot;/&gt;</code></pre></div></div>
+<p>Регистрация всех dao-методов всех классов в указанном пакете. Имя item становится общим
+префиксом для имени dao. Для каждого dao-метода делается префикс, состоящий из имени
+пакета, вложенного в указанный и имени класса. Из имени класса удаляется суффикс
+<code>Dao</code> или <code>_Dao</code>. Первый символ имени класса делается строчным. Пакеты будет сканироватся
+рекурсивно (<code>recursive=&quot;true&quot;</code> значение по умолчанию). Так будут зарегистрированы dao с
+именами:</p>
+<ul>
+<li><code>dao1/dictSimple1/meth1</code></li>
+<li><code>dao1/dictSimple1/meth2</code></li>
+<li><code>dao1/pak3/dictSimple1/meth1</code></li>
+<li><code>dao1/pak3/dictSimple1/meth2</code></li>
+</ul>
+<p>Если атрибут <code>recursive</code> будет равен <code>false</code>, то будет сканироватся только указанный
+пакет, без вложенных. В этом случае будут зарегистрированы такие dao:</p>
+<ul>
+<li><code>dao1/dictSimple1/meth1</code></li>
+<li><code>dao1/dictSimple1/meth2</code></li>
+</ul>
+<h3 id="head7">Пакет плоский</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1&quot;
+      pak=&quot;pak1.pak2&quot;
+      flat=&quot;true&quot;/&gt;</code></pre></div></div>
+<p>Так же как и <a href="dao.html#holder-item-pak">пакет</a>, только префикс вложенного пакета удаляется.</p>
+<ul>
+<li><code>dao1/dictSimple1/meth1</code></li>
+<li><code>dao1/dictSimple1/meth2</code></li>
+<li><code>dao1/dictSimple1/meth1</code></li>
+<li><code>dao1/dictSimple1/meth2</code></li>
+</ul>
+<h3 id="head8">Префикс</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1&quot;
+      class=&quot;pak1.pak2.DaoSimple1&quot;
+      prefix=&quot;pfx&quot;/&gt;</code></pre></div></div>
+<p>Можно указать префикс в атрибуте <code>prefix</code>, тогда он будет использоваться как префикс для
+имени. Так будут зарегистрированы dao с именами:</p>
+<ul>
+<li><code>pfx/meth1</code></li>
+<li><code>pfx/meth2</code></li>
+</ul>
+<p>Явно указанные префикс перекрывает любой автоматически сформированный.</p>
+<p>Префикс можно указывать и для пакетов:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1&quot;
+      pak=&quot;pak1.pak2&quot;
+      flat=&quot;true&quot;
+      prefix=&quot;pfx1/pfx2&quot;/&gt;</code></pre></div></div>
+<p>Так будут зарегистрированы dao с именами:</p>
+<ul>
+<li><code>pfx1/pfx2/dictSimple1/meth1</code></li>
+<li><code>pfx1/pfx2/dictSimple1/meth2</code></li>
+<li><code>pfx1/pfx2/dictSimple1/meth1</code></li>
+<li><code>pfx1/pfx2/dictSimple1/meth2</code></li>
+</ul>
+<h3 id="head9">Дочерние item</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;lev1&quot;&gt;
+    &lt;item name=&quot;lev2&quot;&gt;
+        &lt;item name=&quot;dao1&quot;
+              class=&quot;pak1.pak2.DaoSimple1&quot;/&gt;
+    &lt;/item&gt;
+&lt;/item&gt;</code></pre></div></div>
+<p><code>item</code> могут быть вложенными. Тогда для dao в них будет использоваться в качестве префикса
+имя <code>item</code> верхнего уровня, включая его префикс.</p>
+<p>Так будут зарегистрированы dao с именами:</p>
+<ul>
+<li><code>lev1/lev2/dao1/meth1</code></li>
+<li><code>lev1/lev2/dao1/meth2</code></li>
+</ul>
+<h3 id="head10">Провайдер элементов</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;i&quot; prefix=&quot;mydb&quot;
+      provider=&quot;model&quot; model=&quot;mymodel&quot;/&gt;</code></pre></div></div>
+<p>Если указан атрибут <code>provider</code>, то управление передается соотвествующему провайдеру,
+который загружает набор dao с префиксом, который известен для этого элемента.</p>
+<p>Провайдеру передается конфигурация элемента и он сам решает что и как загружать.</p>
+<p>В примере загружаются все dao из персонального хранилища модели <code>mymodel</code>
+с префиксом <code>mydb</code>.</p>
+<h3 id="head11">invoker</h3>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;item name=&quot;dao1&quot;
+      class=&quot;pak1.pak2.DaoSimple1&quot;
+      invoker=&quot;other1&quot;/&gt;</code></pre></div></div>
+<p>По умолчанию для всех dao в хранилище используется тот invoker, который описан
+в <a href="dao.html#dao-holder">конфигурации хранилища</a>. Его можно перекрыть для каждого
+<code>item</code>. Если <code>item</code> порождает несколько dao, то для каждого из них будет
+установлен указанный invoker.</p>
+<p>Можно установить invoker для элементов хранилища по маске с использованием тега <code>rule</code>:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;rule name=&quot;rule1&quot; mask=&quot;**/test*&quot; invoker=&quot;t1&quot;/&gt;
+&lt;rule name=&quot;rule2&quot; mask=&quot;**/*2*/**/*&quot; invoker=&quot;x2&quot;/&gt;</code></pre></div></div>
+<p>Правила срабатывают в обратном порядке: чем позже добавлено правило,
+тем выше его приоритет.</p>
+<p>Если полное имя dao, включая все префиксы, будет совпадать с маской правила,
+то такому dao будет назначен соотвествующий <code>invoker</code>.</p>
+<h2 id="head12">DaoHolder модели</h2>
+<p><a href="model.html">Модель</a> имеет свое собственное хранилище dao.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// берем сервис dao для модели
+ModelDaoService daoSvc = getModel().bean(ModelDaoService.class)
+// получаем хранилище dao
+DaoHolder modelDaoHolder = daoSvc.getDaoHolder()</code></pre></div></div>
+<p>Настройка:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;mymodel&quot;&gt;
+            &lt;dao&gt;
+                &lt;holder name=&quot;default&quot;&gt;
+                    &lt;item name=&quot;dao1&quot;
+                          class=&quot;pak1.pak2.DaoSimple1&quot;/&gt;
+                    &lt;item name=&quot;dao2&quot;
+                          pak=&quot;pak1.pak2&quot;
+                          recursive=&quot;true&quot;/&gt;
+                &lt;/holder&gt;
+            &lt;/dao&gt;
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Элементы из хранилища dao модели можно как есть поместить в другое хранилище, например
+так:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dao&gt;
+        &lt;holder name=&quot;holder1&quot; invoker=&quot;default&quot;&gt;
+            ...
+            &lt;item name=&quot;i&quot; prefix=&quot;mydb&quot;
+                  provider=&quot;model&quot; model=&quot;mymodel&quot;/&gt;
+        &lt;/holder&gt;
+    &lt;/dao&gt;
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head13">DaoHolderItemProvider</h2>
+<p>Провайдер элементов для хранилища dao.
+Для реализации провайдера необходимо реализовать интерфейс
+<code>jandcode.core.dao.DaoHolderItemProvider</code> и зарегистрировать провайдер:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dao&gt;
+        &lt;item-provider name=&quot;my1&quot;
+                       class=&quot;pak1.pak2.My1DaoHolderItemProvider&quot;/&gt;
+    &lt;/dao&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Теперь его можно использовать:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dao&gt;
+        &lt;holder name=&quot;holder1&quot;&gt;
+            &lt;item name=&quot;place1&quot; provider=&quot;my1&quot;/&gt;
+        &lt;/holder&gt;
+    &lt;/dao&gt;
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head14">Конфигурация module.cfx</h2>
+<h3 id="head15">dao/invoker</h3>
+<p>Описание <code>DaoInvoker</code>.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dao&gt;
+        &lt;invoker name=&quot;INVOKER-NAME&quot;
+                 class=&quot;jandcode.core.dao.DefaultDaoInvoker&quot;&gt;
+            &lt;filter name=&quot;FILTER-NAME&quot;
+                    weight=&quot;WEIGHT&quot;
+                    class=&quot;jandcode.core.dao.DaoFilter&quot;/&gt;
+        &lt;/invoker&gt;
+    &lt;/dao&gt;
+&lt;/root&gt;</code></pre></div></div>
+<ul>
+<li><code>name</code> - имя исполнителя</li>
+<li><code>class</code> - класс, указывать не обязательно, только в особых случаях</li>
+</ul>
+<p id="conf-filter"><strong>filter</strong></p>
+<p>Описание фильтров для исполнителя.</p>
+<ul>
+<li><code>name</code> - имя фильтра</li>
+<li><code>weight</code> - вес (int). Чем меньше, тем раньше будет выполнятся</li>
+<li><code>class</code> - класс обработчика фильтрации. Должен реализовывать интерфейс
+<code>jandcode.core.dao.DaoFilter</code></li>
+</ul>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
