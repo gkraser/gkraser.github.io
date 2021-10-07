@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Cfg</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'core/cfg.html';
+      mdoc.topicId = 'core/cfg';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"core/cfg","ref":"core/cfg.html#head1"},{"title":"Подстановки","topicId":"core/cfg","ref":"core/cfg.html#head2","items":[{"title":"Игнорирование подстановок","topicId":"core/cfg","ref":"core/cfg.html#head3"}]},{"title":"Типизированный доступ к конфигурации","topicId":"core/cfg","ref":"core/cfg.html#head4"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="open "><a href="index.html">core - ядро платформы</a><ul><li class=""><a href="module.html">Модуль приложения</a></li>
+<li class=""><a href="module-cfx.html">module.cfx</a></li>
+<li class=""><a href="module-api.html">Module API</a></li>
+<li class=""><a href="env.html">.env</a></li>
+<li class=""><a href="test-app.html">app тесты</a></li>
+<li class="cur "><a href="cfg.html">Cfg</a></li>
+<li class=""><a href="module-conf.html">Конфигурация</a></li>
+</ul></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../db/index.html">db - базы данных</a></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">core - ядро платформы</a></li>
+<li class="active">Cfg</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Cfg</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="cfg.html#head1">Введение</a></li>
+<li class="folder "><a href="cfg.html#head2">Подстановки</a><ul><li class=""><a href="cfg.html#head3">Игнорирование подстановок</a></li>
+</ul></li>
+<li class=""><a href="cfg.html#head4">Типизированный доступ к конфигурации</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core</span> <span
+        class="cm-code-info--marker">(module)</span>
+    </li>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.std.CfgService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.std.Cfg</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Введение</h2>
+<p>Полная конфигурация приложения загружается из <code>app.cfx</code> и доступна в приложении через
+метод <code>App#getConf()</code>. Она включает в себя все, что нужно для приложения, включая
+внутренние (системные) настройки. Эти настройки критичны для работы.</p>
+<p>Однако при установке/настройке приложения необходимо вносить изменения в конфигурацию,
+например настраивать соединения с базой данных.</p>
+<p>Для обеспечения более безопасной модификации настроек вводится соглашение:
+все параметры приложения, которые можно моифицировать при установке/запуске, хранятся в
+узле <code>cfg</code>.</p>
+<p>Например:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;cfg&gt;
+        &lt;section1 param1=&quot;1&quot; param2=&quot;2&quot;/&gt;
+        &lt;section2&gt;
+            &lt;section3 param3=&quot;3&quot;/&gt;
+        &lt;/section2&gt;
+    &lt;/cfg&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>Доступ к этой конфигурации должен осуществлятся через сервис
+<code>jandcode.core.std.CfgService</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// получаем сервис cfg
+CfgService cfgSvc = getApp().bean(CfgService.class)
+// получаем конфигурацию
+Conf cfgConf = cfgSvc.getConf()
+// пользуемся
+String param1 = cfgConf.getString(&quot;section1/param1&quot;)
+String param3 = cfgConf.getString(&quot;section2/section3/param3&quot;)</code></pre></div></div>
+<h2 id="head2">Подстановки</h2>
+<p>В значениях параметров конфигурации можно использовать подстановки <code>${PATH}</code>, где <code>PATH</code> -
+путь значения внутри узла <code>cfg</code>.</p>
+<p>Например:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;cfg&gt;
+        &lt;section1 param1=&quot;1&quot; param2=&quot;2&quot;/&gt;
+        &lt;section2&gt;
+            &lt;section3 param3=&quot;3-${section1/param2}-${section1/param1}&quot;/&gt;
+        &lt;/section2&gt;
+    &lt;/cfg&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>Получаем:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">CfgService cfgSvc = getApp().bean(CfgService.class)
+String param3 = cfgSvc.getConf().getString(&quot;section2/section3/param3&quot;)
+// param3=&quot;3-2-1&quot;</code></pre></div></div>
+<h3 id="head3">Игнорирование подстановок</h3>
+<p>Для некоторых параметров может понадобиться игнорировать подстановки, т.к. их обработкой
+может заниматься кто-то другой и по особым правилам.</p>
+<p>Для этого необходима такая настройка:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;bean name=&quot;jandcode.core.std.CfgService&quot;&gt;
+        &lt;expand-rule
+                name=&quot;NAME&quot;
+                mask=&quot;MASK&quot;
+                ignore=&quot;true&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Где:</p>
+<ul>
+<li><code>name</code> - призвольное имя</li>
+<li><code>mask</code> - маска пути внутри <code>cfg</code>, где подстановки игнорируются, например
+<code>dbsource/**/*</code></li>
+</ul>
+<h2 id="head4">Типизированный доступ к конфигурации</h2>
+<p>Частенько удобнее получать значения параметров конфигурации не напрямую, через
+<code>getConf()</code> с указанием пути, а через некий типизированный интерфейс. Такой интерфейс
+упрощает работу со сложноорганизованными параметрами.</p>
+<p>Для этого необходимо создать интерфейс, унаследовав его от
+<code>jandcode.core.std.Cfg</code>, и описать методы, через которые будет осуществлятся доступ к
+параметрам. Затем реализовать его и зарегистрировать реализацию в качестве бина
+приложения.</p>
+<p>Пример реализации:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.std.*
+
+/**
+ * Моя конфигурация
+ */
+interface MyCfg extends Cfg {
+
+    /**
+     * Базовый url
+     */
+    String getBaseUrl();
+
+}
+
+class MyCfgImpl extends BaseCfg implements MyCfg {
+
+    String getBaseUrl() {
+        return getConf().getString(&quot;url/base&quot;, &quot;http://host:8080&quot;)
+    }
+
+}</code></pre></div></div>
+<p>Пример регистрации:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;bean name=&quot;pak1.pak2.MyCfg&quot;
+          class=&quot;pak1.pak2.MyCfgImpl&quot;/&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Пример использования:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">MyCfg myCfg = getApp().bean(MyCfg.class)
+String baseUrl = myCfg.getBaseUrl()</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
