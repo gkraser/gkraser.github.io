@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>webpack</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'tools/webpack.html';
+      mdoc.topicId = 'tools/webpack';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"WebpackBuilder","topicId":"tools/webpack","ref":"tools/webpack.html#head1"},{"title":"WebpackBuilderPlugin","topicId":"tools/webpack","ref":"tools/webpack.html#head2"},{"title":"*.dyn.js","topicId":"tools/webpack","ref":"tools/webpack.html#head3"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class=""><a href="../intro/intro.html">jandcode-jsmodules</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class=""><a href="../base/index.html">@jandcode/base</a></li>
+<li class=""><a href="../apx/index.html">@jandcode/apx</a></li>
+<li class="open "><a href="index.html">@jandcode/tools</a><ul><li class="cur "><a href="webpack.html">webpack</a></li>
+</ul></li>
+<li class=""><a href="../tst/index.html">@jandcode/tst</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">@jandcode/tools</a></li>
+<li class="active">webpack</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>webpack</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="webpack.html#head1">WebpackBuilder</a></li>
+<li class=""><a href="webpack.html#head2">WebpackBuilderPlugin</a></li>
+<li class=""><a href="webpack.html#head3">*.dyn.js</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">WebpackBuilder</h2>
+<p><code>WebpackBuilder</code> предназначен для построения конфигурации <code>webpack</code>. Пример использования
+в проекте (файл <code>webpack.config.js</code>):</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
+let builder = new jcTools.WebpackBuilder(__dirname)
+builder.merge({})  // дополнительная конфигурация для приложения
+module.exports = builder.build()
+</code></pre>
+</div></div>
+<h2 id="head2">WebpackBuilderPlugin</h2>
+<p>Базовый класс для плагинов <code>WebpackBuilder</code>. Пример:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
+let builder = new jcTools.WebpackBuilder(__dirname)
+
+class MyPlugin extends jcTools.WebpackBuilderPlugin {
+
+    // строим конфигурацию для merge
+    buildConfig(builder) {
+        return {
+            resolve: {
+                alias: {
+                    'jquery$': 'jquery/dist/jquery.slim.js'
+                }
+            }
+        }
+    }
+
+    // изменяем построенную конфигурацию
+    updateConfig(builder, config) {
+        config.devtool = false
+    }
+}
+
+// подключаем плагин
+builder.merge(new MyPlugin())
+
+module.exports = builder.build()
+</code></pre>
+</div></div>
+<p>Можно реализовывать метод <code>buildConfig</code> или <code>updateConfig</code> или оба.</p>
+<h2 id="head3">*.dyn.js</h2>
+<p>Файлы с суффиксом <code>.dyn.js</code> обрабатываются <code>val-loader</code>, т.е. результат их выполнения
+является кодом модуля.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
