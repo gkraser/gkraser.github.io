@@ -18,7 +18,7 @@
       mdoc.topicId = 'commons/conf-cfx';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Тег без атрибутов","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head1"},{"title":"Тег c атрибутами","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head2"},{"title":"Пустой тег","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head3"},{"title":"Дочерние теги","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head4"},{"title":"Атрибут name","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head5"},{"title":"Безымянное свойство","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head6"},{"title":"Специальные символы в имени","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head7"},{"title":"Специальный коментарий","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head8"},{"title":"Функции","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#func","items":[{"title":"Функция: include","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head9"},{"title":"Функция: set","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head10"},{"title":"Функция: if","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head11"},{"title":"Функция: if-not","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head12"}]},{"title":"Подстановки","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#subst"}]  </script>
+mdoc.tocTopic=[{"title":"Тег без атрибутов","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head1"},{"title":"Тег c атрибутами","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head2"},{"title":"Пустой тег","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head3"},{"title":"Дочерние теги","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head4"},{"title":"Атрибут name","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head5"},{"title":"Безымянное свойство","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head6"},{"title":"Специальные символы в имени","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head7"},{"title":"Специальный коментарий","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head8"},{"title":"Функции","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#func","items":[{"title":"Функция: include","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head9"},{"title":"Функция: set","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head10"},{"title":"Функция: set-default","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head11"},{"title":"Функция: if","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head12"},{"title":"Функция: if-not","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#head13"}]},{"title":"Подстановки","topicId":"commons/conf-cfx","ref":"commons/conf-cfx.html#subst"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -100,8 +100,9 @@ mdoc.tocTopic=[{"title":"Тег без атрибутов","topicId":"commons/co
 <li class=""><a href="conf-cfx.html#head8">Специальный коментарий</a></li>
 <li class="folder "><a href="conf-cfx.html#func">Функции</a><ul><li class=""><a href="conf-cfx.html#head9">Функция: include</a></li>
 <li class=""><a href="conf-cfx.html#head10">Функция: set</a></li>
-<li class=""><a href="conf-cfx.html#head11">Функция: if</a></li>
-<li class=""><a href="conf-cfx.html#head12">Функция: if-not</a></li>
+<li class=""><a href="conf-cfx.html#head11">Функция: set-default</a></li>
+<li class=""><a href="conf-cfx.html#head12">Функция: if</a></li>
+<li class=""><a href="conf-cfx.html#head13">Функция: if-not</a></li>
 </ul></li>
 <li class=""><a href="conf-cfx.html#subst">Подстановки</a></li>
 </ul>
@@ -334,7 +335,26 @@ mdoc.tocTopic=[{"title":"Тег без атрибутов","topicId":"commons/co
         attr1: value1 % value2
     }
 }</code></pre></div></div>
-<h3 id="head11">Функция: if</h3>
+<h3 id="head11">Функция: set-default</h3>
+<p>Функция аналогична <code>set</code>, за исключением того, что значение переменной устанавливается
+только если у нее еще нет значения.</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+
+    &lt;x-set var1=&quot;value1&quot;/&gt;
+
+    &lt;x-set-default var1=&quot;default-value1&quot;/&gt;
+    &lt;x-set-default var2=&quot;default-value2&quot;/&gt;
+
+    &lt;node1 attr1=&quot;#{var1} % #{var2}&quot;/&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>получаем:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">{
+    node1: {
+        attr1: value1 % default-value2
+    }
+}</code></pre></div></div>
+<h3 id="head12">Функция: if</h3>
 <p>Загружает тело тега в объект, если соблюдается условие.
 Условием является набор атрибутов. Каждый атрибут рассматривается как условие,
 где имя атрибута - имя переменной, значение атрибута - значение, которое должно
@@ -357,7 +377,7 @@ mdoc.tocTopic=[{"title":"Тег без атрибутов","topicId":"commons/co
         }
     }
 }</code></pre></div></div>
-<h3 id="head12">Функция: if-not</h3>
+<h3 id="head13">Функция: if-not</h3>
 <p>То же, что и <code>if</code>, только проверяется несоблюдение условия.</p>
 <h2 id="subst">Подстановки</h2>
 <p>В значениях атрибутов раскрываются подстановки <code>#{VAR}</code>.
