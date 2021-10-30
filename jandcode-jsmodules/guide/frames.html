@@ -1,0 +1,198 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Фреймы</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'guide/frames.html';
+      mdoc.topicId = 'guide/frames';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"guide/frames","ref":"guide/frames.html#head1"},{"title":"Фрейм - это vue-компонент","topicId":"guide/frames","ref":"guide/frames.html#head2"},{"title":"Декораторы фрейма","topicId":"guide/frames","ref":"guide/frames.html#head3"},{"title":"Собственные декораторы","topicId":"guide/frames","ref":"guide/frames.html#head4"},{"title":"Показ фрейма","topicId":"guide/frames","ref":"guide/frames.html#head5"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class=""><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство</a><ul><li class="cur "><a href="frames.html">Фреймы</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="index.html">Руководство</a></li>
+<li class="active">Фреймы</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Фреймы</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="frames.html#head1">Введение</a></li>
+<li class=""><a href="frames.html#head2">Фрейм - это vue-компонент</a></li>
+<li class=""><a href="frames.html#head3">Декораторы фрейма</a></li>
+<li class=""><a href="frames.html#head4">Собственные декораторы</a></li>
+<li class=""><a href="frames.html#head5">Показ фрейма</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Введение</h2>
+<p>Приложение <code>apx</code> не основывается на клиенском роутинге, как многие.
+Нет, как таковой, роутинг присутствует, но не является основным и обязательным
+механизмом взимодействия с различными частями приложения.</p>
+<p>Вместо клиентского роутинга используются <em>&quot;фреймы&quot;</em>.</p>
+<p>Представим себе такое стандартное расположение основных элементов страницы:</p>
+<div style="display:inline-flex;flex-direction:column;padding:5px;margin:5px;border:1px solid gray">
+    <div style="padding:5px;margin:5px;border:1px solid gray">header</div>
+    <div style="display:inline-flex;flex-direction:row">
+        <div style="padding:5px;margin:5px;border:1px solid gray">menu</div>
+        <div style="padding:5px;margin:5px;border:1px solid gray;width:100px;height:100px">main</div>
+    </div>
+</div>       
+<p>В областях &quot;header&quot; и &quot;menu&quot; - управляющие элементы.
+В области &quot;main&quot; - контент, который меняется, в зависимости от того,
+что выбрано в &quot;header&quot; или &quot;main&quot;, например щелчек по какой-то кнопке.</p>
+<p>Фрейм как раз и предназначен для того, что бы отображать информацию в &quot;main&quot;.</p>
+<p>А теперь представим себе диалог. Такую панель, которая содержит что-то,
+имеет кнопки &quot;ок&quot;, &quot;отмена&quot;. При показе может быть модальным. И т.д.</p>
+<p>Фрейм предназначен еще и для того, что бы отображать информацию в диалогах.</p>
+<h2 id="head2">Фрейм - это vue-компонент</h2>
+<p>Фрейм - это vue-компонент, который <strong>должен</strong> быть унаследован от <code>apx.JcFrame</code>.</p>
+<p>Пример простейшего фрейма:</p>
+<div class="codeblock" data-language="vue"><div class="codeblock--content"><pre><code class="language-vue">&lt;template&gt;
+    &lt;div&gt;
+        Страница
+    &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import {apx} from './vendor'
+export default {
+    extends: apx.JcFrame,
+}
+&lt;/script&gt;</code></pre></div></div>
+<h2 id="head3">Декораторы фрейма</h2>
+<p>Фрейм должен отрисовывать себя сам полностью. Ему предоставляется некоторая область
+экрана (в примере выше это &quot;main&quot;) и он ее полностью отрисовывает, включая все оформление,
+например заголовки.</p>
+<p>Если фрейм используется как диалог, то он должен отрисовать диалог полностью,
+включая все кнопки диалога, его заголовок и т.д.</p>
+<p>Естественно повторять оформление от фрейма к фрейму мало кому хочется.
+Поэтому для фрейма используются декораторы.</p>
+<p>Декоратор фрейма - это vue-компонент, который используется в качестве корневого
+компонента в шаблоне фрейма.</p>
+<p>Пример фрейма с декоратором:</p>
+<div class="codeblock" data-language="vue"><div class="codeblock--content"><pre><code class="language-vue">&lt;template&gt;
+    &lt;decor-page&gt;
+        &lt;template #toolbar&gt;
+            &lt;jc-action icon=&quot;mail&quot;/&gt;
+            &lt;jc-action icon=&quot;calendar&quot;/&gt;
+        &lt;/template&gt;
+        Страница
+    &lt;/decor-page&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import {apx} from './vendor'
+export default {
+    extends: apx.JcFrame,
+    created() {
+        this.title = 'Простая страница'
+        this.title2 = 'Есть мелкий заголовок'
+        this.icon = 'frame'
+    },
+}
+&lt;/script&gt;</code></pre></div></div>
+<p>Компонент <code>decor-page</code> является декоратором фрейма.</p>
+<p>По умолчанию для фрейма зарегистрированы следующие декораторы:</p>
+<ul>
+<li><code>decor-page</code> - для фреймов-страниц в &quot;main&quot;.
+Компонент-декоратор: <code>apxUi.JcDecorFramePage</code></li>
+<li><code>decor-dialog</code> - для фреймов-диалогов.
+Компонент-декоратор: <code>apxUi.JcDecorFrameDialog</code></li>
+</ul>
+<h2 id="head4">Собственные декораторы</h2>
+<p>Никто не мешает Вам разработать собственные декотораторы и использовать их.
+В качестве стартовых примеров можно взять существующие декортаторы.</p>
+<p>Правила их написания просты:</p>
+<ul>
+<li>нужно унаследовать компонент от <code>apx.JcDecorFrame</code></li>
+<li>у вас есть ссылка на оформляемый фрейм в свойстве <code>own</code>. Его свойства можно использовать
+при оформлении. Например - заголовок фрейма.</li>
+</ul>
+<h2 id="head5">Показ фрейма</h2>
+<p>Функция <code>apx.showFrame</code> показывает фрейм как страницу в &quot;main&quot;.</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">apx.showFrame({
+    frame: FRAME,
+    props: {PROPS},
+})
+</code></pre>
+</div></div>
+<p>Параметры:</p>
+<ul>
+<li><code>frame</code> - какой фрейм нужно показать. Может быть компонентом vue, import()-модуля,
+путем в роутинге</li>
+<li><code>props</code> - свойства компонента-фрейма.</li>
+</ul>
+<p>Функция <code>apx.showFrame</code> асинхронная. Она возвращает Promise, который ресолвится экземпляром
+фрейма после показа.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
