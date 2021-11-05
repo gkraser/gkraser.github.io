@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Роутинг</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'guide/router.html';
+      mdoc.topicId = 'guide/router';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"guide/router","ref":"guide/router.html#head1"},{"title":"hash страницы","topicId":"guide/router","ref":"guide/router.html#head2"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство по apx</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="build.html">Настройка и сборка проекта</a></li>
+<li class=""><a href="entry.html">Entry point</a></li>
+<li class=""><a href="vendor-js.html">vendor.js</a></li>
+<li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class="cur "><a href="router.html">Роутинг</a></li>
+<li class=""><a href="tst.html">Среда тестирования</a></li>
+<li class=""><a href="theme.html">Темы</a></li>
+<li class=""><a href="frames.html">Фреймы</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="index.html">Руководство по apx</a></li>
+<li class="active">Роутинг</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Роутинг</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="router.html#head1">Введение</a></li>
+<li class=""><a href="router.html#head2">hash страницы</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+
+
+    <li>
+      <span class="cm-code-info--text"><a href="https://www.npmjs.com/package/path-to-regexp">path-to-regexp</a></span>
+    </li>
+
+  </ul>
+</fieldset>
+<h2 id="head1">Введение</h2>
+<p>В <code>apx</code> отсутствует &quot;настоящий&quot; роутинг. Вместо этого используется понятие
+<a href="frames.html">&quot;фреймы&quot;</a>.</p>
+<p>Однако имеется возможность зарегистрировать некоторые фреймы с короткими именам, типа &quot;
+path&quot;, и при показе фрейма использовать этот короткий путь вместо конкретного
+компонента-фрейма.</p>
+<p>Пример регистрации:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">import {apx} from './vendor'
+import Home from './frames/Home'
+import Frame1 from './frames/Frame1'
+
+let routes = [
+    // пустой путь - страница по умолчанию
+    {path: '', frame: Home},
+
+    // path должен начинатся с '/'
+    {path: '/frame1', frame: Frame1},
+
+    // можно (даже желательно) регистрировать динамический импорт фрейма
+    {path: '/frame1-1', frame: import('./frames/Frame1')},
+]
+
+apx.app.run(() =&gt; {
+    // инициализируем router, обязательно внутри app.apx.run - обработчика
+    apx.app.frameRouter.addRoutes(routes)
+    // ...
+})
+</code></pre>
+</div></div>
+<p>Зарегистрированный фрейм можно показать так:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">apx.showFrame({
+    frame: '/frame1', props: {prop1: 1}
+})
+</code></pre>
+</div></div>
+<h2 id="head2">hash страницы</h2>
+<p>Когда показывается фрейм через router, в hash адреса страницы меняется, в соотвествии с
+параметрами показа фрейма.</p>
+<p>Например, покажем фрейм:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">apx.showFrame({
+    frame: '/frame1', props: {prop1: 1}
+})
+</code></pre>
+</div></div>
+<p>Тогда адрес страницы станет такой:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">http://localhost:8080/jc#/frame1?prop1=1
+</code></pre>
+</div></div>
+<p>Если показывается фрейм не через router, а через конкретный компонент, то hash удаляется.</p>
+<p>Например, покажем фрейм:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">apx.showFrame({
+    frame: import('./frames/Frame1'), props: {prop1: 1}
+})
+</code></pre>
+</div></div>
+<p>Тогда адрес страницы станет такой:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">http://localhost:8080/jc
+</code></pre>
+</div></div>
+<p>Если явно указать в адресной странице параметры фрейма, зарегистрированного в router, то
+при загрузке приложения будет открыт указанный фрейм.</p>
+<p>Допустим введем в адресную строку следующее:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">http://localhost:8080/jc#/frame1?prop1=1
+</code></pre>
+</div></div>
+<p>Тогда при загрузке страницы будет показан фрейм <code>/frame1</code> со свойством <code>prop1=1</code>, что
+эквивалентно запуску такого кода:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">apx.showFrame({
+    frame: '/frame1', props: {prop1: 1}
+})
+</code></pre>
+</div></div>
+<p>Таким образом hash страницы не что иное, как просто закладка на определенные фреймы.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

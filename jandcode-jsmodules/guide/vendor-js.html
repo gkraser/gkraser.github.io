@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Введение</title>
+  <title>vendor.js</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -14,11 +14,9 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../index.html';
-      mdoc.topicFile = 'guide/intro.html';
-      mdoc.topicId = 'guide/intro';
+      mdoc.topicFile = 'guide/vendor-js.html';
+      mdoc.topicId = 'guide/vendor-js';
   </script>
-  <script>
-mdoc.tocTopic=[{"title":"Обзор","topicId":"guide/intro","ref":"guide/intro.html#head1"},{"title":"Импорт модулей apx","topicId":"guide/intro","ref":"guide/intro.html#head2"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -47,10 +45,10 @@ mdoc.tocTopic=[{"title":"Обзор","topicId":"guide/intro","ref":"guide/intro.
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="index.html">Руководство по apx</a><ul><li class="cur "><a href="intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство по apx</a><ul><li class=""><a href="intro.html">Введение</a></li>
 <li class=""><a href="build.html">Настройка и сборка проекта</a></li>
 <li class=""><a href="entry.html">Entry point</a></li>
-<li class=""><a href="vendor-js.html">vendor.js</a></li>
+<li class="cur "><a href="vendor-js.html">vendor.js</a></li>
 <li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
 <li class=""><a href="router.html">Роутинг</a></li>
 <li class=""><a href="tst.html">Среда тестирования</a></li>
@@ -69,40 +67,38 @@ mdoc.tocTopic=[{"title":"Обзор","topicId":"guide/intro","ref":"guide/intro.
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode JsModules</a></li>
 <li><a href="index.html">Руководство по apx</a></li>
-<li class="active">Введение</li>
+<li class="active">vendor.js</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>Введение</h1>
-</div>
-<div class="topic-toc">
-  <div class="topic-toc-title">Содержание</div>
-
-  <div class="topic-toc-content">
-    <ul><li class=""><a href="intro.html#head1">Обзор</a></li>
-<li class=""><a href="intro.html#head2">Импорт модулей apx</a></li>
-</ul>
-  </div>
+  <h1>vendor.js</h1>
 </div>
 <div class="topic-body">
-  <h2 id="head1">Обзор</h2>
-<p>В данном руководстве описано построение приложений <code>apx</code>.</p>
-<p>Приложение <code>apx</code> - это приложение, которое основано на api и соглашениях, предоставленными
-модулем <a href="../apx/index.html">@jandcode/apx</a>.</p>
-<p>Для построения ui используются <a href="https://vuejs.org/">Vue 3</a> и
-<a href="https://quasar.dev/">Quasar 2</a>.</p>
-<p>В качестве проекта с <a href="../intro/samples.html">примерами</a> будет использоватся
-проект <code>jandcode-samples-jsmodules1</code> из поставки <code>jandcode-jsmodules</code>.</p>
-<p>Все описание строится относительно каталога <code>frontend</code> в каталоге проекта с примерами. В
-этом каталоге - nodejs модуль с проектом frontend.</p>
-<h2 id="head2">Импорт модулей apx</h2>
-<p>Типичный импорт модулей <code>apx</code> выглядет так:</p>
-<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">// основное api apx
-import * as apx from '@jandcode/apx'
-// основные ui-компоненты и темы apx
+  <p>В корне исходников модуля имеется файл <code>vendor.js</code> (<code>frontend/src/vendor.js</code>).</p>
+<p>Он предназначен для сосредоточения и унификации импорта внешних модулей в одном месте.</p>
+<p>Если в проекте используются внешние библиотеки, то их импорт лучшо положить в <code>vendor.js</code>,
+а уже оттуда импортировать в места, где они используются. Это, конечно, необязательно, но
+так проще контролировать использование внешних завистимостей.</p>
+<p>Типичное содержимое <code>vendor.js</code>:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">vendor.js</div><div class="codeblock--content"><pre><code class="language-js">import * as apx from '@jandcode/apx'
 import * as apxUi from '@jandcode/apx-ui'
+import * as apxMap from '@jandcode/apx-map'
+
+///
+export {
+    apx,
+    apxUi,
+    apxMap,
+}</code></pre></div></div>
+<p>В остальных модулях исходников осуществляется импорт необходимых элементов из этого файла:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">import {apx} from '../vendor'
+</code></pre>
+</div></div>
+<p>На некоторых, сильно вложенных уровнях, осуществляется простой реэкспорт этого модуля, что
+бы можно было импортировать из <code>vendor</code> более простым способом:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">components/vendor.js</div><div class="codeblock--content"><pre><code class="language-js">export * from '../vendor'
 </code></pre>
 </div></div>
 

@@ -18,7 +18,7 @@
       mdoc.topicId = 'guide/frames';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Введение","topicId":"guide/frames","ref":"guide/frames.html#head1"},{"title":"Фрейм - это vue-компонент","topicId":"guide/frames","ref":"guide/frames.html#head2"},{"title":"Декораторы фрейма","topicId":"guide/frames","ref":"guide/frames.html#head3"},{"title":"Собственные декораторы","topicId":"guide/frames","ref":"guide/frames.html#head4"},{"title":"Показ фрейма","topicId":"guide/frames","ref":"guide/frames.html#head5"}]  </script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"guide/frames","ref":"guide/frames.html#head1"},{"title":"Фрейм - это vue-компонент","topicId":"guide/frames","ref":"guide/frames.html#head2"},{"title":"Декораторы фрейма","topicId":"guide/frames","ref":"guide/frames.html#head3"},{"title":"Собственные декораторы","topicId":"guide/frames","ref":"guide/frames.html#head4"},{"title":"Показ фрейма","topicId":"guide/frames","ref":"guide/frames.html#head5"},{"title":"frameInit","topicId":"guide/frames","ref":"guide/frames.html#head6","items":[{"title":"frameInit не наследуется","topicId":"guide/frames","ref":"guide/frames.html#head7"}]}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -47,10 +47,12 @@ mdoc.tocTopic=[{"title":"Введение","topicId":"guide/frames","ref":"guide
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="index.html">Руководство</a><ul><li class=""><a href="intro.html">Введение</a></li>
-<li class=""><a href="samples.html">Примеры</a></li>
-<li class=""><a href="build.html">Сборка проекта</a></li>
+<li class="open "><a href="index.html">Руководство по apx</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="build.html">Настройка и сборка проекта</a></li>
+<li class=""><a href="entry.html">Entry point</a></li>
+<li class=""><a href="vendor-js.html">vendor.js</a></li>
 <li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class=""><a href="router.html">Роутинг</a></li>
 <li class=""><a href="tst.html">Среда тестирования</a></li>
 <li class=""><a href="theme.html">Темы</a></li>
 <li class="cur "><a href="frames.html">Фреймы</a></li>
@@ -66,7 +68,7 @@ mdoc.tocTopic=[{"title":"Введение","topicId":"guide/frames","ref":"guide
 <div class="topic-breadcrumb">
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode JsModules</a></li>
-<li><a href="index.html">Руководство</a></li>
+<li><a href="index.html">Руководство по apx</a></li>
 <li class="active">Фреймы</li>
 </ul>
 
@@ -84,6 +86,8 @@ mdoc.tocTopic=[{"title":"Введение","topicId":"guide/frames","ref":"guide
 <li class=""><a href="frames.html#head3">Декораторы фрейма</a></li>
 <li class=""><a href="frames.html#head4">Собственные декораторы</a></li>
 <li class=""><a href="frames.html#head5">Показ фрейма</a></li>
+<li class="folder "><a href="frames.html#head6">frameInit</a><ul><li class=""><a href="frames.html#head7">frameInit не наследуется</a></li>
+</ul></li>
 </ul>
   </div>
 </div>
@@ -189,6 +193,111 @@ export default {
 </ul>
 <p>Функция <code>apx.showFrame</code> асинхронная. Она возвращает Promise, который ресолвится
 экземпляром фрейма после показа.</p>
+<h2 id="head6">frameInit</h2>
+<p>Фрейм может иметь опцию-функцию <code>frameInit</code>. Функция может быть асинхронной. Эта функция
+вызывается перед тем, как фрейм будет показан. В качестве параметра в функцию передается
+экземпляр класса <code>apx.FrameWrapper</code>.</p>
+<p>Цель этой функции - загрузить данные в свойство <code>FrameWrapper.frameData</code>, которые затем
+можно использовать как данные в работе компонента-фрейма.</p>
+<p>В момент вызова функции <code>frameInit</code> компонент-фрейм еще не существует. Поэтому <code>this</code>
+внутри тела функции не определен.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="vue"><div class="codeblock--title">frontend/src/frames/FrameInit.vue</div><div class="codeblock--content"><pre><code class="language-vue">&lt;template&gt;
+    &lt;decor-page&gt;
+        &lt;div class=&quot;q-gutter-md&quot;&gt;
+            &lt;div&gt;users: {{ users }}&lt;/div&gt;
+            &lt;div&gt;dummyList: {{ frameData.dummyList }}&lt;/div&gt;
+            &lt;div&gt;post: {{ frameData.post }}&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/decor-page&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import {apx} from '../vendor'
+
+export default {
+    extends: apx.JcFrame,
+    // свойства фрейма
+    props: {
+        // количество генерируемых строк
+        cnt: {}
+    },
+    // метод будет вызван перед монтированием и показом
+    // fw это экземпляр apx.FrameWrapper
+    // функция может быть асинхронной
+    async frameInit(fw) {
+        // данные, которые необходимо заполнить
+        let frameData = fw.frameData
+
+        // свойства, которые были переданы фрейму при вызове showFrame
+        let props = fw.props
+
+        // берем значение свойств
+        let cnt = apx.jcBase.toInt(props.cnt, 5)
+
+        // проверяем их
+        if (cnt &gt; 10) {
+            throw new Error('Слишком много строк заказано')
+        }
+
+        // используем свойства для формирования данных
+        frameData.dummyList = []
+        for (let i = 1; i &lt;= cnt; i++) {
+            frameData.dummyList.push({id: i, text: 'text-' + i})
+        }
+
+        // можно выполнять запросы
+        let users = await apx.jcBase.ajax.request({
+            method: 'get',
+            url: 'https://jsonplaceholder.typicode.com/users'
+        })
+        frameData.users = users.data
+
+        // даже несколько запросов
+        let post = await apx.jcBase.ajax.request({
+            method: 'get',
+            url: 'https://jsonplaceholder.typicode.com/posts/1'
+        })
+        frameData.post = post.data
+
+        // в консоле печатается frameWrapper, можно посмотреть что загрузилось
+    },
+    created() {
+        this.title = 'FrameInit demo'
+
+        // frameData доступно как свойство компонента
+        let frameData = this.frameData
+
+        // можно использовать
+        for (let user of frameData.users) {
+            this.users.push(user.username)
+        }
+
+        // frameData можно напрямую использовать в шаблоне
+    },
+    data() {
+        return {
+            users: [],
+        }
+    },
+}
+&lt;/script&gt;</code></pre></div></div>
+<h3 id="head7">frameInit не наследуется</h3>
+<p><code>frameInit</code> не наследуется при наследовании компонентов! В каждом фрейме должен быть
+собственный <code>frameInit</code>.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">frontend/src/frames/FrameInit-dialog.vue</div><div class="codeblock--content"><pre><code class="language-js">import FrameInit from './FrameInit'
+
+export default {
+    // наследуем существующий фрейм
+    extends: FrameInit,
+
+    // frameInit не наследуется!
+    async frameInit(fw) {
+        // вызываем унаследованный
+        await FrameInit.frameInit(fw)
+    }
+}</code></pre></div></div>
 
 </div>
     </div>

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Сборка проекта</title>
+  <title>Настройка и сборка проекта</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -18,7 +18,7 @@
       mdoc.topicId = 'guide/build';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"webpack","topicId":"guide/build","ref":"guide/build.html#head1"},{"title":"webpack.config.js","topicId":"guide/build","ref":"guide/build.html#head2"},{"title":"Настройка конфигурации webpack","topicId":"guide/build","ref":"guide/build.html#head3"},{"title":"Плагин WpbApxPlugin","topicId":"guide/build","ref":"guide/build.html#head4"},{"title":"main entry","topicId":"guide/build","ref":"guide/build.html#head5"},{"title":"library name","topicId":"guide/build","ref":"guide/build.html#head6"},{"title":"Каталог сборки","topicId":"guide/build","ref":"guide/build.html#head7"},{"title":"entrypoints-manifest.json","topicId":"guide/build","ref":"guide/build.html#entrypoints-manifest"},{"title":"Пример полной конфигурации webpack","topicId":"guide/build","ref":"guide/build.html#head8"}]  </script>
+mdoc.tocTopic=[{"title":"webpack","topicId":"guide/build","ref":"guide/build.html#head1"},{"title":"webpack.config.js","topicId":"guide/build","ref":"guide/build.html#head2"},{"title":"Настройка конфигурации webpack","topicId":"guide/build","ref":"guide/build.html#head3"},{"title":"Плагин WpbApxPlugin","topicId":"guide/build","ref":"guide/build.html#head4"},{"title":"main entry","topicId":"guide/build","ref":"guide/build.html#main-entry"},{"title":"library name","topicId":"guide/build","ref":"guide/build.html#library-name"},{"title":"Каталог сборки","topicId":"guide/build","ref":"guide/build.html#head5"},{"title":"entrypoints-manifest.json","topicId":"guide/build","ref":"guide/build.html#entrypoints-manifest"},{"title":"Пример полной конфигурации webpack","topicId":"guide/build","ref":"guide/build.html#head6"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -47,10 +47,12 @@ mdoc.tocTopic=[{"title":"webpack","topicId":"guide/build","ref":"guide/build.htm
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="index.html">Руководство</a><ul><li class=""><a href="intro.html">Введение</a></li>
-<li class=""><a href="samples.html">Примеры</a></li>
-<li class="cur "><a href="build.html">Сборка проекта</a></li>
+<li class="open "><a href="index.html">Руководство по apx</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class="cur "><a href="build.html">Настройка и сборка проекта</a></li>
+<li class=""><a href="entry.html">Entry point</a></li>
+<li class=""><a href="vendor-js.html">vendor.js</a></li>
 <li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class=""><a href="router.html">Роутинг</a></li>
 <li class=""><a href="tst.html">Среда тестирования</a></li>
 <li class=""><a href="theme.html">Темы</a></li>
 <li class=""><a href="frames.html">Фреймы</a></li>
@@ -66,14 +68,14 @@ mdoc.tocTopic=[{"title":"webpack","topicId":"guide/build","ref":"guide/build.htm
 <div class="topic-breadcrumb">
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode JsModules</a></li>
-<li><a href="index.html">Руководство</a></li>
-<li class="active">Сборка проекта</li>
+<li><a href="index.html">Руководство по apx</a></li>
+<li class="active">Настройка и сборка проекта</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>Сборка проекта</h1>
+  <h1>Настройка и сборка проекта</h1>
 </div>
 <div class="topic-toc">
   <div class="topic-toc-title">Содержание</div>
@@ -83,11 +85,11 @@ mdoc.tocTopic=[{"title":"webpack","topicId":"guide/build","ref":"guide/build.htm
 <li class=""><a href="build.html#head2">webpack.config.js</a></li>
 <li class=""><a href="build.html#head3">Настройка конфигурации webpack</a></li>
 <li class=""><a href="build.html#head4">Плагин WpbApxPlugin</a></li>
-<li class=""><a href="build.html#head5">main entry</a></li>
-<li class=""><a href="build.html#head6">library name</a></li>
-<li class=""><a href="build.html#head7">Каталог сборки</a></li>
+<li class=""><a href="build.html#main-entry">main entry</a></li>
+<li class=""><a href="build.html#library-name">library name</a></li>
+<li class=""><a href="build.html#head5">Каталог сборки</a></li>
 <li class=""><a href="build.html#entrypoints-manifest">entrypoints-manifest.json</a></li>
-<li class=""><a href="build.html#head8">Пример полной конфигурации webpack</a></li>
+<li class=""><a href="build.html#head6">Пример полной конфигурации webpack</a></li>
 </ul>
   </div>
 </div>
@@ -223,13 +225,13 @@ module.exports = builder.build()
 <li><code>themes</code> - список <a href="theme.html">тем</a>, которые будет доступны в приложении</li>
 <li><code>themeDefault</code> - <a href="theme.html">тема</a> по умолчанию</li>
 </ul>
-<h2 id="head5">main entry</h2>
+<h2 id="main-entry">main entry</h2>
 <p>В качестве основной <a href="https://webpack.js.org/concepts/#entry">точки входа</a>
 приложения используется модуль <code>'./src/index.js</code>, который регистрируется как entry с
 именем <code>main</code>.</p>
 <p>Зарезервированной является еще одна entry: <code>tst</code>. Остальные, при необходимости, можете
 определять как нужно приложению.</p>
-<h2 id="head6">library name</h2>
+<h2 id="library-name">library name</h2>
 <p>При сборке проекта используется следующая
 настройка <a href="https://webpack.js.org/configuration/output/#outputlibrary">library</a>:</p>
 <div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">module.exports = {
@@ -241,7 +243,7 @@ module.exports = builder.build()
 };
 </code></pre>
 </div></div>
-<h2 id="head7">Каталог сборки</h2>
+<h2 id="head5">Каталог сборки</h2>
 <p>Проект собирается в каталог <code>frontend/_gen/frontend</code>. Это соглашение используется и в
 других местах jandcode, поэтому не стоит менять этот каталог, хотя это и возможно.</p>
 <h2 id="entrypoints-manifest">entrypoints-manifest.json</h2>
@@ -268,7 +270,7 @@ module.exports = builder.build()
 }
 </code></pre>
 </div></div>
-<h2 id="head8">Пример полной конфигурации webpack</h2>
+<h2 id="head6">Пример полной конфигурации webpack</h2>
 <p>Пример полного файла сборки:</p>
 <div class="codeblock" data-language="js"><div class="codeblock--title">frontend/webpack.config.js</div><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
 let path = require('path')

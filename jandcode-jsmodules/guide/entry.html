@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Entry point</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'guide/entry.html';
+      mdoc.topicId = 'guide/entry';
+  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство по apx</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="build.html">Настройка и сборка проекта</a></li>
+<li class="cur "><a href="entry.html">Entry point</a></li>
+<li class=""><a href="vendor-js.html">vendor.js</a></li>
+<li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class=""><a href="router.html">Роутинг</a></li>
+<li class=""><a href="tst.html">Среда тестирования</a></li>
+<li class=""><a href="theme.html">Темы</a></li>
+<li class=""><a href="frames.html">Фреймы</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="index.html">Руководство по apx</a></li>
+<li class="active">Entry point</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Entry point</h1>
+</div>
+<div class="topic-body">
+  <p>Entry point - это модуль, с которого начинается загрузка приложения. Почитать об этом
+можно в <a href="https://webpack.js.org/concepts/#entry">документации</a> webpack.</p>
+<p>Как уже <a href="build.html#main-entry">было сказано</a>, в конфигурации webpack определена entry с
+именем <code>main</code>, которая указывает на файл <code>./src/index.js</code>.</p>
+<p>Модуль, который является точкой входа, должен экспортировать функцию с именем <code>run()</code>,
+которая будет вызвана после подключения собранного бандла на странице.</p>
+<p>Таким образом, типичный <code>index.js</code> (или любой другой модуль, выбранный как entry), должен
+иметь такое содержимое как минимум:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">export function run() {
+    // код приложения
+}
+</code></pre>
+</div></div>
+<p>Собранный бандл, который подключается на странице html, доступен через глобальную
+переменную <code>JcEntry</code> (см. <a href="build.html#library-name">тут</a>). Эта переменная содержит все,
+что экспортирует модуль entry.</p>
+<p>Например, имеем такой <code>index.js</code>:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">index.js</div><div class="codeblock--content"><pre><code class="language-js">export function run() {
+    console.info(&quot;run method called!&quot;);
+}
+
+export function run2() {
+    console.info(&quot;run2 method called!&quot;);
+}
+</code></pre>
+</div></div>
+<p>Тогда в html можно использовать такой скрипт:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">...
+&lt;script&gt;
+    JcEntry.run()
+    JcEntry.run2()
+&lt;/script&gt;
+...
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
