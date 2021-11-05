@@ -46,7 +46,7 @@ mdoc.tocTopic=[{"title":"WebpackBuilder","topicId":"tools/webpack","ref":"tools/
 
         <div class="tools-block-body">
           <div class="doc-toc">
-            <ul><li class=""><a href="../intro/intro.html">Введение</a></li>
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
 <li class="folder "><a href="../guide/index.html">Руководство</a></li>
 <li class="open "><a href="../x/x1.html">Модули</a><ul><li class=""><a href="../base/index.html">@jandcode/base</a></li>
 <li class=""><a href="../apx/index.html">@jandcode/apx</a></li>
@@ -127,8 +127,9 @@ module.exports = builder.build()
 </div></div>
 <p>Можно реализовывать метод <code>buildConfig</code> или <code>updateConfig</code> или оба.</p>
 <h2 id="head3">*.dyn.js</h2>
-<p>Файлы с суффиксом <code>.dyn.js</code> обрабатываются <code>val-loader</code>, т.е. результат их выполнения
-является кодом модуля.</p>
+<p>Файлы с суффиксом <code>.dyn.js</code>
+обрабатываются <a href="https://webpack.js.org/loaders/val-loader/">val-loader</a>, т.е. результат их
+выполнения является кодом модуля.</p>
 
 </div>
     </div>

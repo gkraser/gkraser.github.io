@@ -1,0 +1,341 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Сборка проекта</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'guide/build.html';
+      mdoc.topicId = 'guide/build';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"webpack","topicId":"guide/build","ref":"guide/build.html#head1"},{"title":"webpack.config.js","topicId":"guide/build","ref":"guide/build.html#head2"},{"title":"Настройка конфигурации webpack","topicId":"guide/build","ref":"guide/build.html#head3"},{"title":"Плагин WpbApxPlugin","topicId":"guide/build","ref":"guide/build.html#head4"},{"title":"main entry","topicId":"guide/build","ref":"guide/build.html#head5"},{"title":"library name","topicId":"guide/build","ref":"guide/build.html#head6"},{"title":"Каталог сборки","topicId":"guide/build","ref":"guide/build.html#head7"},{"title":"entrypoints-manifest.json","topicId":"guide/build","ref":"guide/build.html#entrypoints-manifest"},{"title":"Пример полной конфигурации webpack","topicId":"guide/build","ref":"guide/build.html#head8"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="samples.html">Примеры</a></li>
+<li class="cur "><a href="build.html">Сборка проекта</a></li>
+<li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class=""><a href="tst.html">Среда тестирования</a></li>
+<li class=""><a href="theme.html">Темы</a></li>
+<li class=""><a href="frames.html">Фреймы</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="index.html">Руководство</a></li>
+<li class="active">Сборка проекта</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Сборка проекта</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="build.html#head1">webpack</a></li>
+<li class=""><a href="build.html#head2">webpack.config.js</a></li>
+<li class=""><a href="build.html#head3">Настройка конфигурации webpack</a></li>
+<li class=""><a href="build.html#head4">Плагин WpbApxPlugin</a></li>
+<li class=""><a href="build.html#head5">main entry</a></li>
+<li class=""><a href="build.html#head6">library name</a></li>
+<li class=""><a href="build.html#head7">Каталог сборки</a></li>
+<li class=""><a href="build.html#entrypoints-manifest">entrypoints-manifest.json</a></li>
+<li class=""><a href="build.html#head8">Пример полной конфигурации webpack</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+</svg>
+<fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+    <li>
+      <span class="cm-code-info--code">@jandcode/tools</span> <span
+        class="cm-code-info--marker">(lib)</span>
+    </li>
+
+
+
+
+
+    <li>
+      <span class="cm-code-info--text"><a href="../tools/webpack.html">@jandcode/tools webpack</a></span>
+    </li>
+
+  </ul>
+</fieldset>
+<h2 id="head1">webpack</h2>
+<p>В качестве сборщика проекта используется webpack.</p>
+<h2 id="head2">webpack.config.js</h2>
+<p>Конфигурация webpack строится с помощью <code>WebpackBuilder</code>, входящего в
+поставку <code>jandcode-jsmodules</code>.</p>
+<p>Минимальная конфигурация webpack выглядет так:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">frontend/webpack.config.js</div><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
+let builder = new jcTools.WebpackBuilder(__dirname)
+module.exports = builder.build()
+</code></pre>
+</div></div>
+<p>Результатом работы <code>builder.build()</code> будет конфигурация <code>webpack</code>, ее можно модифицировать
+при необходимости. Или напечатать для отладки.</p>
+<p>Например можно посмотреть настроенные алиасы:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">console.info(&quot;module.exports.resolve.alias&quot;, module.exports.resolve.alias);
+</code></pre>
+</div></div>
+<p>Имея конфигурацию webpack, мы можем собрать проект.</p>
+<p>В корне проекта <code>jandcode-samples-jsmodules1</code> (предпочтительный способ):</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc nodejs-build
+</code></pre>
+</div></div>
+<p>Или (в каталоге <code>jandcode-samples-jsmodules1/frontend</code>):</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc @ npm run build
+</code></pre>
+</div></div>
+<p>Или (в каталоге <code>jandcode-samples-jsmodules1/frontend</code>):</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc @ webpack
+</code></pre>
+</div></div><div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Команда <code>jc nodejs-build</code> фактически вызывает <code>jc @ npm run build</code>, но, перед
+запуском, она проверяет и, при необходимости, устанавливает зависимости npm.</p>
+</div>
+</div>
+<h2 id="head3">Настройка конфигурации webpack</h2>
+<p>Базовая конфигурация webpack генерируется автоматически. Она включает в себя все
+необходимые настройки для сборки приложения.</p>
+<p>При необходимости ее можно расширить. Для этого используется метод <code>merge</code>:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">frontend/webpack.config.js</div><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
+let builder = new jcTools.WebpackBuilder(__dirname)
+builder.merge({
+    plugins: [],
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /node_modules/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
+    },
+})
+module.exports = builder.build()
+</code></pre>
+</div></div>
+<p>Метод <code>merge</code> под капотом
+использует <a href="https://www.npmjs.com/package/webpack-merge">webpack-merge</a>.</p>
+<h2 id="head4">Плагин WpbApxPlugin</h2>
+<p>Плагин <code>WpbApxPlugin</code> для <code>WebpackBuilder</code> используется для настройки конфигурации webpack
+по соглашениям модуля <a href="../apx/index.html">@jandcode/apx</a>. Его использование обязательно,
+если вы используете в приложении этот модуль.</p>
+<p>Подключение плагина:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
+let builder = new jcTools.WebpackBuilder(__dirname)
+let WpbApxPlugin = require('@jandcode/apx/wpb-plugin')
+builder.merge(new WpbApxPlugin({
+    apxModules: [
+        '@jandcode/apx-map',
+        '@jandcode/apx-datagrid',
+    ],
+    tstModules: [
+        '@jandcode/apx',
+        '@jandcode/apx-ui',
+    ],
+    themes: [
+        'apx-base',
+    ],
+    themeDefault: 'app',
+}))
+module.exports = builder.build()
+</code></pre>
+</div></div>
+<p>Краткое описание опций:</p>
+<ul>
+<li><code>apxModules</code> - список модулей, которые будут использоватся для построения приложения.
+Это модули, которые зависят от модуля <a href="../apx/index.html">@jandcode/apx</a> и предоставляют приложению
+определенную информацию, например иконки, темы и т.д. Если модуль не включить сюда, но
+использовать в коде, то работать он будет и без этого. Но если этот модуль
+предоставляет, например, иконки, то они в проект включены не будут. В этот список
+автоматически включены модули <a href="../apx/index.html">@jandcode/apx</a> и  <a href="../apx-ui/index.html">@jandcode/apx-ui</a>.</li>
+<li><code>tstModules</code> - список модулей, чьи тесты будут отображатся в среде тестирования.
+(см: <a href="tst.html">Среда тестирования</a>). Сюда автоматически включен модуль, в рамках которого используется
+<code>webpack.config.js</code>, т.е. <code>frontend</code> в данном случае.</li>
+<li><code>themes</code> - список <a href="theme.html">тем</a>, которые будет доступны в приложении</li>
+<li><code>themeDefault</code> - <a href="theme.html">тема</a> по умолчанию</li>
+</ul>
+<h2 id="head5">main entry</h2>
+<p>В качестве основной <a href="https://webpack.js.org/concepts/#entry">точки входа</a>
+приложения используется модуль <code>'./src/index.js</code>, который регистрируется как entry с
+именем <code>main</code>.</p>
+<p>Зарезервированной является еще одна entry: <code>tst</code>. Остальные, при необходимости, можете
+определять как нужно приложению.</p>
+<h2 id="head6">library name</h2>
+<p>При сборке проекта используется следующая
+настройка <a href="https://webpack.js.org/configuration/output/#outputlibrary">library</a>:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">module.exports = {
+  // …
+  output: {
+    library: 'JcEntry',
+    type: 'var'
+  },
+};
+</code></pre>
+</div></div>
+<h2 id="head7">Каталог сборки</h2>
+<p>Проект собирается в каталог <code>frontend/_gen/frontend</code>. Это соглашение используется и в
+других местах jandcode, поэтому не стоит менять этот каталог, хотя это и возможно.</p>
+<h2 id="entrypoints-manifest">entrypoints-manifest.json</h2>
+<p>При сборке проекта генерируется специальный файл манифеста <code>entrypoints-manifest.json</code>, в
+котором указаны все entry, определенные в проекте.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="json"><div class="codeblock--title">entrypoints-manifest.json</div><div class="codeblock--content"><pre><code class="language-json">{
+  &quot;main&quot;: {
+    &quot;assets&quot;: {
+      &quot;js&quot;: [
+        &quot;vendors.bundle.js&quot;,
+        &quot;main.bundle.js&quot;
+      ]
+    }
+  },
+  &quot;tst&quot;: {
+    &quot;assets&quot;: {
+      &quot;js&quot;: [
+        &quot;vendors.bundle.js&quot;,
+        &quot;tst.bundle.js&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+</div></div>
+<h2 id="head8">Пример полной конфигурации webpack</h2>
+<p>Пример полного файла сборки:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">frontend/webpack.config.js</div><div class="codeblock--content"><pre><code class="language-js">let jcTools = require(&quot;@jandcode/tools&quot;)
+let path = require('path')
+let fs = require('fs')
+
+let WpbApxPlugin = require('@jandcode/apx/wpb-plugin')
+
+let builder = new jcTools.WebpackBuilder(__dirname)
+
+builder.merge(new WpbApxPlugin({
+    tstModules: [
+        '@jandcode/apx',
+        '@jandcode/apx-ui',
+        '@jandcode/base',
+        '@jandcode/apx-map',
+        '@jandcode/apx-chart',
+        '@jandcode/apx-datagrid',
+    ],
+    apxModules: [
+        '@jandcode/apx-map',
+        '@jandcode/apx-datagrid',
+    ],
+    themes: [
+        'app',
+        'apx-base',
+    ],
+    themeDefault: 'app',
+}))
+
+builder.merge({
+    plugins: [],
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /node_modules/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
+    },
+})
+
+// перекрытие для конкретного разработчика
+let devConfig = path.resolve(__dirname, '_dev.config.js')
+if (fs.existsSync(devConfig)) {
+    let fn = require(devConfig)
+    fn(builder)
+}
+
+//
+module.exports = builder.build()
+
+//console.info(&quot;module.exports&quot;, module.exports);
+console.info(&quot;module.exports.resolve.alias&quot;, module.exports.resolve.alias);</code></pre></div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

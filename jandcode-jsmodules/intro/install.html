@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Установка</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'intro/install.html';
+      mdoc.topicId = 'intro/install';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Настройка среды","topicId":"intro/install","ref":"intro/install.html#head1"},{"title":"Установка","topicId":"intro/install","ref":"intro/install.html#head2"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="open "><a href="intro.html">Введение</a><ul><li class="cur "><a href="install.html">Установка</a></li>
+</ul></li>
+<li class="folder "><a href="../guide/index.html">Руководство</a></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="intro.html">Введение</a></li>
+<li class="active">Установка</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Установка</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="install.html#head1">Настройка среды</a></li>
+<li class=""><a href="install.html#head2">Установка</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Настройка среды</h2>
+<p>Проект предназначен для работы в качестве расширения проекта jandcode-core2.</p>
+<p>Для начала необходимо, что бы был установлен <a href="https://gkraser.github.io/jandcode-core2/intro/install.html">Jandcode Core2</a>.</p>
+<h2 id="head2">Установка</h2>
+<p>В рабочий каталог для проектов (например <code>D:\jc-projects</code> для Windows или <code>~/jc-projects</code> для Linux) необходимо клонировать проект <code>jandcode-jsmodules</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">cd /D D:\jc-projects
+git clone https://github.com/gkraser/jandcode-jsmodules
+</code></pre>
+</div></div>
+<p>Переключите проект <code>jandcode-jsmodules</code> на нужную ветку. В данный момент - это ветка <code>dev</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">git checkout dev
+</code></pre>
+</div></div>
+<p>Необходимо создать (или иметь готовый) проект jandcode:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">cd /D D:\jc-projects
+jc create -t:apx-app -o:jcsample-project2
+</code></pre>
+</div></div>
+<p>Проект необходимо настроить для работы с nodejs, описано <a href="https://gkraser.github.io/jandcode-core2/web/nodejs.html">тут</a>.</p>
+<p>В <code>beforeLoad</code> проекта дополнительно добавьте загрузку проекта <code>jandcode-jsmodules</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">class Project1 extends ProjectScript {
+        
+    static beforeLoad = {
+        // ...
+        // загружаем проект jandcode-jsmodules
+        load(&quot;../jandcode-jsmodules&quot;)
+    }
+    
+    // ...
+    
+}
+</code></pre>
+</div></div>
+<p>Создайте модуль <code>frontend</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">cd /D D:\jc-projects
+cd jcsample-project2
+mkdir frontend
+cd frontend
+npm init -y
+</code></pre>
+</div></div>
+<p>На этом все, можно пользоваться.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Использование frontend в gsp</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'guide/gsp.html';
+      mdoc.topicId = 'guide/gsp';
+  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="samples.html">Примеры</a></li>
+<li class=""><a href="build.html">Сборка проекта</a></li>
+<li class="cur "><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class=""><a href="tst.html">Среда тестирования</a></li>
+<li class=""><a href="theme.html">Темы</a></li>
+<li class=""><a href="frames.html">Фреймы</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="index.html">Руководство</a></li>
+<li class="active">Использование frontend в gsp</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Использование frontend в gsp</h1>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.web.std.gsp.JsIndexGspContext</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.apx.web.gsp.FrontendIndexGspContext</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<p>После сборки модуля <code>frontend</code>, мы имеем каталог <code>frontend/_gen/frontend</code>, в котором
+имеется собранное клиентское приложение. Теперь необходимо подключить этот собранный код к
+генерируемой с помощью gsp странице html.</p>
+<p>Конечно, можно воспользоваться
+плагином <a href="https://webpack.js.org/plugins/html-webpack-plugin/">HtmlWebpackPlugin</a>, однако
+на практике чаще нужно полностью управлять генерацией страницы, к которой подключается
+клиенский код.</p>
+<p>Пример, как это можно сделать:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.core.apx.web.gsp.*; jandcode.core.web.gsp.*;jandcode.core.web.std.gsp.*;&quot; %&gt;
+&lt;!doctype html&gt;
+&lt;%
+  /*
+    Запуск entry main из сгенерированного webpack приложения
+   */
+
+  BaseGsp th = this
+  //
+  def ctx = th.inst(JsIndexGspContext)
+  def wpCtx = th.inst(FrontendIndexGspContext)
+  //
+  ctx.title = &quot;Jandcode Samples Jsmodules1&quot;
+  // добавляем в ссылки entry с именем 'main'
+  wpCtx.addLink(&quot;main&quot;)
+%&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;${ctx.title}&lt;/title&gt;
+  &lt;link rel=&quot;icon&quot; href=&quot;data:,&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div id=&quot;jc-app&quot;&gt;&lt;/div&gt;
+%{-- выводим все ссылки, которые были добавлены в addLink выше--}%
+&lt;% ctx.outLinks() %&gt;
+%{-- выводим запуск entry, фактически генерируется JcEntry.run() --}%
+&lt;script&gt;
+    ${wpCtx.libraryName}.run()
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></div>
+<p>Класс <code>JsIndexGspContext</code> знает про наличие и формат <a href="build.html#entrypoints-manifest">entrypoints-manifest.json</a> и
+с использованием этой информации правильно генерирует подключение скриптов.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
