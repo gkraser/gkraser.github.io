@@ -1,0 +1,266 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Поддержка nodejs</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'web/nodejs.html';
+      mdoc.topicId = 'web/nodejs';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"web/nodejs","ref":"web/nodejs.html#head1"},{"title":"Суть","topicId":"web/nodejs","ref":"web/nodejs.html#head2"},{"title":"Настройка","topicId":"web/nodejs","ref":"web/nodejs.html#head3"},{"title":"mainModule","topicId":"web/nodejs","ref":"web/nodejs.html#head4"},{"title":"Сборка проекта","topicId":"web/nodejs","ref":"web/nodejs.html#head5"},{"title":"Системные каталоги и файлы","topicId":"web/nodejs","ref":"web/nodejs.html#head6"},{"title":"Команды jc","topicId":"web/nodejs","ref":"web/nodejs.html#head7","items":[{"title":"prepare","topicId":"web/nodejs","ref":"web/nodejs.html#head8"},{"title":"nodejs-build","topicId":"web/nodejs","ref":"web/nodejs.html#head9"},{"title":"nodejs-watch","topicId":"web/nodejs","ref":"web/nodejs.html#head10"},{"title":"nodejs-showlibs","topicId":"web/nodejs","ref":"web/nodejs.html#head11"},{"title":"nodejs-showdeps","topicId":"web/nodejs","ref":"web/nodejs.html#head12"}]}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class=""><a href="action.html">Action</a></li>
+<li class=""><a href="gsp.html">GSP</a></li>
+<li class=""><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class=""><a href="ext-resource.html">Внешние статические ресурсы</a></li>
+<li class="cur "><a href="nodejs.html">Поддержка nodejs</a></li>
+<li class=""><a href="servlet.html">Сервлет</a></li>
+</ul></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../db/index.html">db - базы данных</a></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">Поддержка nodejs</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Поддержка nodejs</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="nodejs.html#head1">Введение</a></li>
+<li class=""><a href="nodejs.html#head2">Суть</a></li>
+<li class=""><a href="nodejs.html#head3">Настройка</a></li>
+<li class=""><a href="nodejs.html#head4">mainModule</a></li>
+<li class=""><a href="nodejs.html#head5">Сборка проекта</a></li>
+<li class=""><a href="nodejs.html#head6">Системные каталоги и файлы</a></li>
+<li class="folder "><a href="nodejs.html#head7">Команды jc</a><ul><li class=""><a href="nodejs.html#head8">prepare</a></li>
+<li class=""><a href="nodejs.html#head9">nodejs-build</a></li>
+<li class=""><a href="nodejs.html#head10">nodejs-watch</a></li>
+<li class=""><a href="nodejs.html#head11">nodejs-showlibs</a></li>
+<li class=""><a href="nodejs.html#head12">nodejs-showdeps</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+    <li>
+      <span class="cm-code-info--code">jandcode-core-nodejs-jc</span> <span
+        class="cm-code-info--marker">(lib)</span>
+    </li>
+
+
+
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Введение</h2>
+<p>Вы можете разрабатывать клиентские приложения с использованием nodejs любым способом,
+который Вам подходит и с использованием любых технологий. Все что необходимо в проекте -
+это подключить собранное frontend-приложение в
+качестве <a href="ext-resource.html">статических ресурсов</a>.</p>
+<p>В этом случае, дальше можете не читать.</p>
+<p>Однако, в случае, когда ваше приложение состоит из нескольких модулей nodejs, которые
+разрабатываются отдельно и зачастую лежат в разных репозиториях, удобно иметь возможность
+использовать такие модули напрямую из исходников, пропуская этап публикации их в реестр
+npm, локальный или основной.</p>
+<p>Для этих случаев существуют различные механизмы и утилиты. Например workspaces в npm, или
+проект lerna. По разными причинам они не подходят полностью. Поэтому в Jandcode Core
+имеется свой простой взгляд на многомодульную разработку на nodejs.</p>
+<h2 id="head2">Суть</h2>
+<p>У Вас имеется набор модулей nodejs, которые могут находится как в репозитории проекта, так
+и вне него, например в другом репозитории.</p>
+<p>Каждый модуль nodejs располагается в отдельном каталоге и имеет в корне
+файл <code>package.json</code> с описанием модуля. Имя модуля указывается в <code>package.json</code> и оно
+уникально среди всех остальных используемых модулей. Имя модуля можно использовать в
+виде <code>@mycompany/mymodule</code>. Тут все стандартно.</p>
+<p>Каждый модуль может иметь зависимости, указанные в <code>package.json</code>. Тут тоже все
+стандартно.</p>
+<p>В файле проекта <code>project.jc</code> Вы указываете, где расположены модули nodejs, которые
+необходимо использовать в проекте. Таким образом собирается реестр модулей в исходниках.</p>
+<p>Если модуль в исходниках зависит от другого модуля в исходниках, то такую зависимость
+нужно указывать в разделе <code>optionalDependencies</code>:</p>
+<div class="codeblock" data-language="json"><div class="codeblock--content"><pre><code class="language-json">{
+  &quot;name&quot;: &quot;@mycompany/mymodule1&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;optionalDependencies&quot;: {
+    &quot;@jandcode/apx&quot;: &quot;^1.0.0&quot;
+  }
+}
+</code></pre>
+</div></div>
+<p>Это нужно для того, что бы npm не устанавливал их сам, т.к. они отсутствуют в реестре npm.</p>
+<p>Для собранного реестра модулей собираются все не опциональные зависимости и формируется
+единый список зависимостей. Для этого списка зависимостей формируется скрытый модуль
+nodejs. Для него устанавливаются все зависимости с использованием npm.</p>
+<p>Формируется особая среда в переменных nodejs <code>NODE_PATH</code> и <code>NODE_OPTIONS</code>, в которой
+модули в исходниках будут доступны node по своим именам.</p>
+<p>После этого в каталоге приложения можно выполнять node и любые команды
+из <code>node_modules/.bin</code>, предваряя их префиксом <code>jc @</code>, например <code>jc @ node</code>
+, <code>jc @ webpack</code>.</p>
+<p>Все модули в исходниках будут доступны в node и webpack по своим именам, наряду с
+модулями, установленными в <code>node_modules</code>.</p>
+<h2 id="head3">Настройка</h2>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.nodejs.jc.*
+import jandcode.jc.*
+
+class Project1 extends ProjectScript {
+
+    static beforeLoad = {
+        // ...
+        // подключаем инструментарий nodejs
+        classpath(&quot;jandcode-core-nodejs-jc&quot;)
+    }
+
+    void onInclude() {
+        // ...
+        // подключаем поддержку nodejs
+        include(NodeJsRootProject).with {
+            // добавляем модули
+            modules(
+                    // как каталог, который содержит package.json
+                    &quot;./frontend&quot;,
+                    // как маску для файлов package.json
+                    &quot;./js-modules/*/package.json&quot;,
+            )
+
+            /* указываем в каком каталоге располагается главный модуль,
+               результаты сборки которого будут подключены как ресурсы в приложение */
+            mainModule = &quot;./frontend&quot;
+        }
+
+    }
+}</code></pre></div></div>
+<h2 id="head4">mainModule</h2>
+<p>Главный модуль имеет важное отличие от всех остальных.</p>
+<p>Он используется для сборки frontend приложения. Собирать приложение он должен в
+каталог <code>_gen</code> в корне главного модуля. Каталог <code>_gen</code> будет подключен к приложению в
+корень виртуальной файловой системы.</p>
+<p>Для унификации принято соглашение, что сборка осуществляется в каталог <code>_gen/frontend</code>.</p>
+<p>Команды для сборки должны быть указаны в <code>package.json</code> как скрипты <code>build</code> (для сборки)
+и <code>watch</code> (для сборки, ожидания изменения в файлах и сборки измененных).</p>
+<p>Например:</p>
+<div class="codeblock" data-language="json"><div class="codeblock--content"><pre><code class="language-json">{
+  &quot;name&quot;: &quot;jandcode-samples-jsmodules1&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;&quot;,
+  &quot;main&quot;: &quot;./src/index.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;webpack&quot;,
+    &quot;watch&quot;: &quot;webpack -w&quot;
+  }
+}</code></pre></div></div>
+<h2 id="head5">Сборка проекта</h2>
+<p>Сборка проекта <code>jc build</code> дополнительно вызывает сборку главного модуля.</p>
+<h2 id="head6">Системные каталоги и файлы</h2>
+<p>Системные каталоги, используемые для nodejs:</p>
+<ul>
+<li><code>_jc/nodejs-nm-holder</code> - в этом каталоге находится сгенерированный <code>package.json</code>, в
+который помещены все зависимости npm. В нем же - <code>node_modules</code>, который получен из этих
+зависимостей. Этот <code>node_modules</code> и используется как единая точка разрешения
+зависимостей для всех модулей.</li>
+<li><code>_jc/nodejs-prepare</code> - в этом каталоге сгенерированные файлы для поддержки среды nodejs</li>
+<li><code>_jc/jc-env.bat</code> - в этот файл генерируются переменные среды для поддержки среды nodejs</li>
+<li><code>_jc/nodejs-prepare/webpack-dummy.config.js</code> - в этом файле сгенерирована конфигурация
+webpack, которую использует IDEA для определения какие модули где лежат, что бы работали
+ее подсказки</li>
+<li><code>_jc/nodejs-prepare/jc-nodejs-modules.js</code> - это сгенерированный файл, в котором
+определены все подключенные модули nodejs в исходниках. Подключение этого файла в любой
+js-файл настроит среду исполнения nodejs так, что бы она видела модули в исходниках как
+родные</li>
+</ul>
+<h2 id="head7">Команды jc</h2>
+<h3 id="head8">prepare</h3>
+<p>Стандартная команда <code>prepare</code> расширена настройкой среды nodejs и установки зависимостей
+npm. Когда добавляете/удаляете/изменяете зависимости, выполните <code>jc prepare</code>
+или <code>jc gen-idea</code>.</p>
+<h3 id="head9">nodejs-build</h3>
+<p>Собрать проект mainModule. Фактически команда запускает <code>jc @ npm run build</code> в каталоге
+главного модуля.</p>
+<h3 id="head10">nodejs-watch</h3>
+<p>Собрать проект mainModule и ожидать изменения в файлово системе. Фактически команда
+запускает <code>jc @ npm run watch</code> в каталоге главного модуля.</p>
+<h3 id="head11">nodejs-showlibs</h3>
+<p>Показывает все модули nodejs, подключенные к проекту.</p>
+<h3 id="head12">nodejs-showdeps</h3>
+<p>Показывает все зависимости npm, которые используются в проекте.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
