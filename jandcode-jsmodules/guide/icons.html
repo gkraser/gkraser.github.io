@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Иконки</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'guide/icons.html';
+      mdoc.topicId = 'guide/icons';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Обзор","topicId":"guide/icons","ref":"guide/icons.html#head1"},{"title":"Регистрация иконок","topicId":"guide/icons","ref":"guide/icons.html#head2"},{"title":"Иконки из Quasar.iconSet","topicId":"guide/icons","ref":"guide/icons.html#head3"},{"title":"Перекрытие","topicId":"guide/icons","ref":"guide/icons.html#head4"},{"title":"Требования к svg-файлам","topicId":"guide/icons","ref":"guide/icons.html#head5"},{"title":"Просмотр всех иконок","topicId":"guide/icons","ref":"guide/icons.html#head6"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode JsModules</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="index.html">Руководство по apx</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="build.html">Настройка и сборка проекта</a></li>
+<li class=""><a href="entry.html">Entry point</a></li>
+<li class=""><a href="jsonrpc.html">JsonRpc</a></li>
+<li class=""><a href="vendor-js.html">vendor.js</a></li>
+<li class="cur "><a href="icons.html">Иконки</a></li>
+<li class=""><a href="gsp.html">Использование frontend в gsp</a></li>
+<li class=""><a href="router.html">Роутинг</a></li>
+<li class=""><a href="tst.html">Среда тестирования</a></li>
+<li class=""><a href="theme.html">Темы</a></li>
+<li class=""><a href="frames.html">Фреймы</a></li>
+</ul></li>
+<li class="folder "><a href="../x/x1.html">Модули</a></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode JsModules</a></li>
+<li><a href="index.html">Руководство по apx</a></li>
+<li class="active">Иконки</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Иконки</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="icons.html#head1">Обзор</a></li>
+<li class=""><a href="icons.html#head2">Регистрация иконок</a></li>
+<li class=""><a href="icons.html#head3">Иконки из Quasar.iconSet</a></li>
+<li class=""><a href="icons.html#head4">Перекрытие</a></li>
+<li class=""><a href="icons.html#head5">Требования к svg-файлам</a></li>
+<li class=""><a href="icons.html#head6">Просмотр всех иконок</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Обзор</h2>
+<p>В проектах <code>apx</code> используются svg-икноки.</p>
+<p>Что бы иконка появилась в проекте, ее svg-файл необходимо положить в каталог
+модуля <code>assets/icons</code>. Имя такого файла будет использовано в качестве имени иконки.</p>
+<p>Иконки могут быть цветными или черно-белыми.</p>
+<p>Для удобства группировки в каталоге <code>assets/icons</code> можно создавать подкаталоги и
+располагать иконки там.</p>
+<p>После этого, можно использовать иконку по имени везде,
+где <a href="https://quasar.dev/vue-components/icon">можно</a> в Quasar.</p>
+<p>Допустим, что у нас имеется файл <code>frontend/assets/icons/air1.svg</code>. Тогда мы можем
+использовать иконку <code>air1</code>:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">
+&lt;q-icon name=&quot;air1&quot;/&gt;
+&lt;jc-btn icon=&quot;air1&quot; label=&quot;Кнопка&quot;/&gt;
+</code></pre>
+</div></div>
+<h2 id="head2">Регистрация иконок</h2>
+<p>Все иконки из всех файлов <code>assets/icons/**/*.svg</code> доступны в виртуальном
+модуле <code>all/icons</code>. При запуске приложения их необходимо зарегистрировать:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">import * as apx from '@jandcode/apx'
+import icons from 'all/icons'
+
+apx.icons.registerIcons(icons)
+</code></pre>
+</div></div>
+<p>Вы можете зарегистрировать и другие иконки. Вот пример с пояснениями:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--content"><pre><code class="language-js">apx.icons.registerIcons({
+
+    // регистрируем иконку с именем icon1, как алиас для svg-иконки air1
+    'icon1': 'svg:air1',
+
+    // регистрируем иконку с именем png1, как http-ссылку на указанный файл png
+    'png1': require('./images/png1.png'),
+
+    // регистрируем иконку с именем svg1, как http-ссылку на указанный файл svg
+    'svg1': require('./images/svg1.png'),
+
+    // регистрируем иконку с именем svg1, как текст svg-файла
+    'svg2': `&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot;&gt;...&lt;/svg&gt;`
+})
+</code></pre>
+</div></div>
+<p>Все файлы в модуле с маской <code>assets/icons/*.js</code> рассматриваются как модули, которые
+экспортируют по умолчанию информацию для регистрации иконок. Например, создадим файл
+<code>frontend/assets/icons/std-icons.js</code>:</p>
+<div class="codeblock" data-language="js"><div class="codeblock--title">frontend/assets/icons/std-icons.js</div><div class="codeblock--content"><pre><code class="language-js">export default {
+    'std-air': 'svg:air1',
+}
+</code></pre>
+</div></div>
+<p>Теперь мы можем использовать иконку <code>std-air</code>.</p>
+<h2 id="head3">Иконки из Quasar.iconSet</h2>
+<p>Все иконки из <a href="https://quasar.dev/options/quasar-icon-sets">Quasar.iconSet</a>
+зарегистрированы с именами <code>quasar.PATH</code>, где <code>PATH</code> - путь в iconSet.</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">
+&lt;q-icon name=&quot;quasar.datetime.today&quot;/&gt;
+</code></pre>
+</div></div>
+<h2 id="head4">Перекрытие</h2>
+<p>Если в каком-то модуле, который Вы используете (например <a href="../apx-ui/index.html">@jandcode/apx-ui</a>), определена
+иконка, то в своем проекте можно создать иконку с таким же именем, она перекроет иконку из
+используемого модуля.</p>
+<h2 id="head5">Требования к svg-файлам</h2>
+<p>Из svg-файлов необходимо убрать атрибуты <code>width</code> и <code>height</code>, однако атрибут <code>viewBox</code>
+обязателен.</p>
+<p>Если иконка черно-белая, удалите из нее всю информацию о цвете, иначе цвет иконки нельзя
+будет поменять в приложении. Цвет <code>currentColor</code> можно использовать.</p>
+<h2 id="head6">Просмотр всех иконок</h2>
+<p>Для просмотра всех иконок (в режиме разработки) перейдите по адресу
+<a href="http://localhost:8080/jc/_tst/frontend">http://localhost:8080/jc/_tst/frontend</a> и выберете &quot;Tools/Все иконки (all/icons)&quot;.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
