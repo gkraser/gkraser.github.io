@@ -140,6 +140,12 @@ m.genSrc(wd('_gen/data2')) {t-&gt;
 }
 </code></pre>
 </div></div>
+<p>Если задача генерации не указана, то каталог генерации не будет очищен. Считается,
+что исходники в этом каталоге сгенерированы вне процесса компиляции.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// в каталоге src.gen файлы сгенерены вне процесса компиляции
+m.genSrc(wd('src.gen'))
+</code></pre>
+</div></div>
 
 </div>
     </div>

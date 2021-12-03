@@ -122,9 +122,9 @@ mdoc.tocTopic=[{"title":"Синтаксис шаблонов gsp","topicId":"web
 идентифицировать место возникновения ошибки в шаблоне (в отличии от оригинального <code>gsp</code>,
 где нет соответствия между сгенерированным классом и оригинальным шаблоном).</p>
 <p>К примеру, из такого шаблона:</p>
-<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.commons.*; jandcode.commons.groovy.*&quot; %&gt;
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.commons.datetime.*; jandcode.commons.*; jandcode.commons.groovy.*&quot; %&gt;
 &lt;%
-  def d = UtDateTime.create(&quot;2011-11-23&quot;)
+  def d = XDateTime.create(&quot;2011-11-23&quot;)
   def func1 = { p1 -&gt;
     out(&quot;P1=${p1}&quot;)
   }
@@ -145,12 +145,12 @@ item: ${i}
 End
 </code></pre></div></div>
 <p>генерируется вот такой класс:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.commons.*; import jandcode.commons.groovy.*;
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.commons.datetime.*; import jandcode.commons.*; import jandcode.commons.groovy.*;
 public class G__gsp_syntax1__app1___inc__90b3e070f3b3653b5d4cfc9b2c61e144 extends jandcode.core.web.gsp.BaseGsp {
 protected void onRender() {
 
 
- def d = UtDateTime.create(&quot;2011-11-23&quot;)
+ def d = XDateTime.create(&quot;2011-11-23&quot;)
  def func1 = { p1 -&gt;
    out(&quot;P1=${p1}&quot;)
  }

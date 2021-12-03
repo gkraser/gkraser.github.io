@@ -137,12 +137,12 @@ mdoc.tocTopic=[{"title":"Создание экземпляра","topicId":"commo
 объекты Conf. Значениями не могут быть объекты <code>List</code> и <code>Map</code>.</p>
 <h2 id="head1">Создание экземпляра</h2>
 <p>Пустой объект:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();</code></pre></div></div>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();</code></pre></div></div>
 <p>Из <code>Map</code>:</p>
 <div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Map m = new LinkedHashMap();
 m.put(&quot;a&quot;, 1);
 m.put(&quot;b&quot;, 2);
-Conf x = UtConf.create(m);
+Conf x = Conf.create(m);
 /*
 {
     a: 1
@@ -155,7 +155,7 @@ lst.add(1);
 lst.add(&quot;q1&quot;);
 lst.add(new HashMap&lt;&gt;());
 lst.add(Arrays.asList(1, 2));
-Conf x = UtConf.create(lst);
+Conf x = Conf.create(lst);
 /*
 {
     #0: 1
@@ -170,7 +170,7 @@ Conf x = UtConf.create(lst);
 */</code></pre></div></div>
 <h2 id="head2">Значения свойств</h2>
 <p>Установить значение можно с помощью метода <code>setValue</code> или <code>put</code>:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
 x.setValue(&quot;a&quot;, 1);
 x.put(&quot;b&quot;, 2);
 /*
@@ -195,7 +195,7 @@ int i = x.getInt(&quot;int1&quot;);
 <h2 id="head3">Путь</h2>
 <p>Путь до свойства описывается как имена свойств, разделенных символом <code>'/'</code>.
 Можно читать и писать значения по пути:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
 x.setValue(&quot;a/b/c&quot;, 1);
 x.setValue(&quot;a/b/d&quot;, 2);
 /*
@@ -212,8 +212,8 @@ String s = x.getString(&quot;a/b/c&quot;);
 // 1</code></pre></div></div>
 <h2 id="head4">Conf как значение свойства</h2>
 <p>В качестве значения свойства может быть указан объект <code>Conf</code>:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
-x.setValue(&quot;a&quot;, UtConf.create());
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
+x.setValue(&quot;a&quot;, Conf.create());
 /*
 {
     a: {
@@ -223,8 +223,8 @@ x.setValue(&quot;a&quot;, UtConf.create());
 <p>Для получения значения как <code>Conf</code> имееются специальные методы <code>getConf</code> и <code>findConf</code>.
 Если значения по пути отсутсвует или оно не <code>Conf</code>, то <code>getConf</code> сгенерирует ошибку,
 а <code>findConf</code> вернет null:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
-x.setValue(&quot;a&quot;, UtConf.create());
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
+x.setValue(&quot;a&quot;, Conf.create());
 Conf x1 = x.getConf(&quot;a&quot;);
 x1.setValue(&quot;b&quot;, 2);
 /*
@@ -244,7 +244,7 @@ x1 = x.findConf(&quot;AAA&quot;);
 // null</code></pre></div></div>
 <p><code>findConf</code> может автоматически создавать объекты по указанному пути. Для этого
 нужно указать вторым параметром <code>true</code>:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
 Conf x1 = x.findConf(&quot;a/b/c&quot;, true);
 /*
 x =
@@ -260,7 +260,7 @@ x =
 <h2 id="head5">Безымянное свойство</h2>
 <p>Для имитации списков предусмотрено специальное безымянное свойство <code>#</code>.
 При присвоении значения такому свойству генерируется уникальное имя свойства:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
 x.setValue(&quot;#&quot;, 0);
 x.setValue(&quot;#&quot;, 1);
 /*
@@ -274,7 +274,7 @@ x =
 <p>Типы <code>Map</code> и <code>List</code> преобразуются в тип <code>Conf</code>.
 Для типа <code>List</code> создается объект <code>Conf</code> где для каждого элемента списка
 создается безымянное свойство:</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
 
 Map m = new LinkedHashMap();
 m.put(&quot;a&quot;, 1);
@@ -305,7 +305,7 @@ x =
 <p>Загрузка возможна из файлов формата <a href="conf-cfx.html">cfx</a>, <a href="conf-xml.html">xml</a> или
 <a href="conf-json.html">json</a>.
 При загрузке существующие данные в объекте не стираются.</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x1 = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x1 = Conf.create();
 UtConf.load(x1).fromString(&quot;{\&quot;a\&quot;:1}&quot;, &quot;a.json&quot;);
 /*
 x =
@@ -313,7 +313,7 @@ x =
     a: 1.0
 }
 */
-Conf x2 = UtConf.create();
+Conf x2 = Conf.create();
 UtConf.load(x2).fromString(&quot;&lt;root&gt;&lt;b&gt;2&lt;/b&gt;&lt;/root&gt;&quot;, &quot;a.cfx&quot;);
 /*
 x =
@@ -321,7 +321,7 @@ x =
     b: 2
 }
 */
-Conf x3 = UtConf.create();
+Conf x3 = Conf.create();
 UtConf.load(x3).fromString(&quot;&lt;root&gt;&lt;a z=\&quot;3\&quot;&gt;a&lt;/a&gt;&lt;b&gt;2&lt;/b&gt;&lt;/root&gt;&quot;, &quot;a.xml&quot;);
 /*
 x =
@@ -341,10 +341,10 @@ x =
 <p>Объекты <code>Conf</code> можно объединять методом <code>join</code>. При этом в объект, в который
 объединяем, присваиваются свойства из объекта, который объединяем. Для свойств
 типа <code>Conf</code> делаются копии.</p>
-<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = UtConf.create();
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">Conf x = Conf.create();
 x.setValue(&quot;a/b&quot;, 1);
 
-Conf x1 = UtConf.create();
+Conf x1 = Conf.create();
 x1.setValue(&quot;a/c&quot;, 2);
 
 x.join(x1);

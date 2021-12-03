@@ -18,7 +18,7 @@
       mdoc.topicId = 'db/dict';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Введение","topicId":"db/dict","ref":"db/dict.html#head1"},{"title":"Описание словаря","topicId":"db/dict","ref":"db/dict.html#head2"},{"title":"Работа со словарями","topicId":"db/dict","ref":"db/dict.html#head3"},{"title":"Загрузка данных для словаря","topicId":"db/dict","ref":"db/dict.html#head4"},{"title":"Полностью загружаемые словари","topicId":"db/dict","ref":"db/dict.html#head5"},{"title":"Базовые классы обработчиков для словаря","topicId":"db/dict","ref":"db/dict.html#head6"},{"title":"Кеширование полностью загружаемых словарей","topicId":"db/dict","ref":"db/dict.html#head7"},{"title":"Конфигурация module.cfx","topicId":"db/dict","ref":"db/dict.html#head8","items":[{"title":"dbm/model/dict","topicId":"db/dict","ref":"db/dict.html#head9"}]}]  </script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"db/dict","ref":"db/dict.html#head1"},{"title":"Описание словаря","topicId":"db/dict","ref":"db/dict.html#head2"},{"title":"Работа со словарями","topicId":"db/dict","ref":"db/dict.html#head3"},{"title":"Загрузка данных для словаря","topicId":"db/dict","ref":"db/dict.html#head4"},{"title":"Полностью загружаемые словари","topicId":"db/dict","ref":"db/dict.html#head5"},{"title":"Базовые классы обработчиков для словаря","topicId":"db/dict","ref":"db/dict.html#head6"},{"title":"Кеширование полностью загружаемых словарей","topicId":"db/dict","ref":"db/dict.html#head7"},{"title":"Словарь с данными из конфигурации","topicId":"db/dict","ref":"db/dict.html#head8"},{"title":"Конфигурация module.cfx","topicId":"db/dict","ref":"db/dict.html#head9","items":[{"title":"dbm/model/dict","topicId":"db/dict","ref":"db/dict.html#head10"},{"title":"dbm/model/dict/dictdata","topicId":"db/dict","ref":"db/dict.html#head11"}]}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -92,7 +92,9 @@ mdoc.tocTopic=[{"title":"Введение","topicId":"db/dict","ref":"db/dict.ht
 <li class=""><a href="dict.html#head5">Полностью загружаемые словари</a></li>
 <li class=""><a href="dict.html#head6">Базовые классы обработчиков для словаря</a></li>
 <li class=""><a href="dict.html#head7">Кеширование полностью загружаемых словарей</a></li>
-<li class="folder "><a href="dict.html#head8">Конфигурация module.cfx</a><ul><li class=""><a href="dict.html#head9">dbm/model/dict</a></li>
+<li class=""><a href="dict.html#head8">Словарь с данными из конфигурации</a></li>
+<li class="folder "><a href="dict.html#head9">Конфигурация module.cfx</a><ul><li class=""><a href="dict.html#head10">dbm/model/dict</a></li>
+<li class=""><a href="dict.html#head11">dbm/model/dict/dictdata</a></li>
 </ul></li>
 </ul>
   </div>
@@ -309,8 +311,31 @@ dictSvc.getCache().invalidate(mydict1)</code></pre></div></div>
 поэтому их нельзя модифицировать!</p>
 </div>
 </div>
-<h2 id="head8">Конфигурация module.cfx</h2>
-<h3 id="head9">dbm/model/dict</h3>
+<h2 id="head8">Словарь с данными из конфигурации</h2>
+<p>Имеются словари, чьи данные фиксированы и могут быть загружены из конфигурации.
+Для поддержки таких словарей имеется специальный обработчик словаря
+<code>jandcode.core.dbm.dict.std.ConfDictHandler</code>. Он загружает данные словаря из
+узла конфигурации словаря <code>dictdata</code>.</p>
+<p>Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model&quot;&gt;
+
+            &lt;dict name=&quot;memdict1&quot; parent=&quot;base&quot;
+                  handler=&quot;jandcode.core.dbm.dict.std.ConfDictHandler&quot;&gt;
+                &lt;dictdata&gt;
+                    &lt;i id=&quot;1&quot; text=&quot;YES&quot;/&gt;
+                    &lt;i id=&quot;2&quot; text=&quot;NO&quot;/&gt;
+                &lt;/dictdata&gt;
+            &lt;/dict&gt;
+
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head9">Конфигурация module.cfx</h2>
+<h3 id="head10">dbm/model/dict</h3>
 <p>Описание словаря.</p>
 <p>Формат:</p>
 <div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
@@ -334,6 +359,29 @@ dictSvc.getCache().invalidate(mydict1)</code></pre></div></div>
 <li><code>handler</code> - обработчик словаря для загрузки данных. Должен реализовывать интерфейс
 <code>jandcode.core.dbm.dict.DictHandler</code>. Дополнительно может реализовывать интерфейс
 <code>jandcode.core.dbm.dict.IDictHandlerLoadDict</code></li>
+</ul>
+<h3 id="head11">dbm/model/dict/dictdata</h3>
+<p>Данные словаря для обработчика <code>jandcode.core.dbm.dict.std.ConfDictHandler</code>.</p>
+<p>Формат:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;MODEL-NAME&quot;&gt;
+            &lt;dict name=&quot;DICT-NAME&quot;
+                  handler=&quot;jandcode.core.dbm.dict.std.ConfDictHandler&quot;&gt;
+                &lt;dictdata&gt;
+                    &lt;i id=&quot;VALUE1&quot; anyfield1=&quot;VALUE2&quot;/&gt;
+                    &lt;i id=&quot;VALUE2&quot; anyfield1=&quot;VALUE2&quot;/&gt;
+                    ...
+                &lt;/dictdata&gt;
+            &lt;/dict&gt;
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<ul>
+<li><code>handler</code> - должен быть классом <code>jandcode.core.dbm.dict.std.ConfDictHandler</code> или
+совместимым с ним по интерпретации конфигурации</li>
+<li><code>dictdata</code> - данные словаря. Каждый дочерний узел - строка в словаре. Атрибуты узла -
+значения полей строки</li>
 </ul>
 
 </div>
