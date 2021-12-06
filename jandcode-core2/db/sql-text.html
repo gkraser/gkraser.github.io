@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>SqlText</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/sql-text.html';
+      mdoc.topicId = 'db/sql-text';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Заменяемые части sql","topicId":"db/sql-text","ref":"db/sql-text.html#head1","items":[{"title":"select","topicId":"db/sql-text","ref":"db/sql-text.html#head2"},{"title":"where","topicId":"db/sql-text","ref":"db/sql-text.html#head3"},{"title":"order by","topicId":"db/sql-text","ref":"db/sql-text.html#head4"}]}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class="cur "><a href="sql-text.html">SqlText</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">SqlText</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>SqlText</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class="folder "><a href="sql-text.html#head1">Заменяемые части sql</a><ul><li class=""><a href="sql-text.html#head2">select</a></li>
+<li class=""><a href="sql-text.html#head3">where</a></li>
+<li class=""><a href="sql-text.html#head4">order by</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>Объект для хранения текста sql и манипуляций с ним.</p>
+<h2 id="head1">Заменяемые части sql</h2>
+<h3 id="head2">select</h3>
+<p>Часть текста sql между <code>select</code> и <code>from</code>. Для сложных sql, где и <code>select</code> и <code>from</code> может
+встречаться много раз, слова помечаются коментарием
+<code>/**/</code>, который ставится до <code>select</code> или <code>from</code>:</p>
+<div class="codeblock" data-language="sql"><div class="codeblock--content"><pre><code class="language-sql">select * from aaa where 0=0 order by id
+
+/**/select * /**/from aaa where 0=0 and (b in select a from c) order by id
+</code></pre>
+</div></div>
+<p>Используется для подмены или дополнения списка полей. Например, для запроса общего количества
+записей можно заменить поля в select на <code>count(*) as cnt</code>.</p>
+<h3 id="head3">where</h3>
+<p>Место вставки условия фильтрации. Автоматически выявляется по наличию слова <code>where</code>
+в тексте запроса, после которого и вставляется условие фильтрации.</p>
+<p>Если в тексте sql несколько <code>where</code>, то нужный помечается коментарием <code>/**/</code> до <code>where</code>.</p>
+<p>Если в тексте sql имеется несколько <code>where</code>, в которых нужно разместить условия фильтрации,
+то место вставки помечается коментарием <code>/*where:name*/</code>, где <code>name</code> - имя <code>where</code>.
+Коментарий <code>/*where*/</code> эквивалентен <code>/*where:default*/</code>.</p>
+<p>Существующие условия фильтрации дополняются новымы через <code>and</code>.</p>
+<div class="codeblock" data-language="sql"><div class="codeblock--content"><pre><code class="language-sql">select * from aaa where 0=0 order by id
+
+select * from aaa /**/where 0=0 order by id
+
+select * from aaa where 0=0 /*where*/ order by id
+
+select * from aaa where 0=0 /*where:default*/ order by id
+
+select * from aaa /**/where 0=0 and (b in select a from c where c=1 /*where:w1*/) order by id
+</code></pre>
+</div></div>
+<h3 id="head4">order by</h3>
+<p>Место вставки сортировки. Автоматически выявляется по фразе <code>order by</code>. Если в тексте sql
+несколько операторов order by, то нужный помечается коментарием <code>/**/</code>. Текст order by
+рассматривается до конца текста sql либо до коментария <code>/*end*/</code>:</p>
+<div class="codeblock" data-language="sql"><div class="codeblock--content"><pre><code class="language-sql">select * from aaa where 0=0 order by id
+
+select * from aaa where 0=0 and
+(b in select a from c where c=1 order by a)
+/**/order by tab/*end*/ group by id
+</code></pre>
+</div></div>
+<p>Используется для подмены сортировки или ее исключения.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
