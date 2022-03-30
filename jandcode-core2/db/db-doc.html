@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Генерация документации к базе данных</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/db-doc.html';
+      mdoc.topicId = 'db/db-doc';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Настройка проекта","topicId":"db/db-doc","ref":"db/db-doc.html#head1"},{"title":"Генерация","topicId":"db/db-doc","ref":"db/db-doc.html#head2"},{"title":"Список моделей","topicId":"db/db-doc","ref":"db/db-doc.html#head3"},{"title":"Шаблон генерации","topicId":"db/db-doc","ref":"db/db-doc.html#head4"},{"title":"Диаграммы","topicId":"db/db-doc","ref":"db/db-doc.html#head5"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class=""><a href="domain.html">Domain</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="sql-text.html">SqlText</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class="cur "><a href="db-doc.html">Генерация документации к базе данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Генерация документации к базе данных</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Генерация документации к базе данных</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="db-doc.html#head1">Настройка проекта</a></li>
+<li class=""><a href="db-doc.html#head2">Генерация</a></li>
+<li class=""><a href="db-doc.html#head3">Список моделей</a></li>
+<li class=""><a href="db-doc.html#head4">Шаблон генерации</a></li>
+<li class=""><a href="db-doc.html#head5">Диаграммы</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.jc.DbmRootProject</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Настройка проекта</h2>
+<p>Для работы генератора документации необходимо подключить в корневой <code>project.jc</code>
+скрипт <code>jandcode.core.dbm.jc.DbmRootProject</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--title">project.jc</div><div class="codeblock--content"><pre><code class="language-groovy">include(jandcode.core.dbm.jc.DbmRootProject)
+</code></pre>
+</div></div>
+<h2 id="head2">Генерация</h2>
+<p>Генерация документации осуществляется для конкретной модели в приложении
+посредством команды:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc db-doc
+</code></pre>
+</div></div>
+<p>Сгенерированные файлы по умолчанию копирются в каталог <code>temp/db-doc</code>.</p>
+<p>При генерации по умолчанию используется модель <code>default</code>. Можно указать произвольную
+модель через опцию <code>-m:model-name</code>:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc db-doc -m:my.model
+</code></pre>
+</div></div>
+<p>В качестве модели можно использовать как экземпляр модели, так и прототип модели.</p>
+<h2 id="head3">Список моделей</h2>
+<p>Список доступных моделей можно посмотреть командой:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc app-showinfo
+</code></pre>
+</div></div>
+<h2 id="head4">Шаблон генерации</h2>
+<p>Для генерации используется механим <a href="../jc/gen-gsp.html">Генерация по шаблонам</a>.
+Оригинальный шаблон находится в модуле <code>jandcode-core-dbm-jc</code>:
+<code>/jc-data/dbm/db-doc/db-doc.gsp</code>. В каталоге этого файла так же находятся вспомогательные
+файлы: стили, утилиты.</p>
+<p>Посталяемый шаблон очень простой. Если Вас он не устраивает, то можно поместить
+его в проект и модифициовать по смоему усмотрению.</p>
+<p>Для этого необходимо в корне проекта создать каталог <code>jc-data/dbm/db-doc</code>
+и скопировать в него содержимое оригинального каталога. Теперь вы можете модифицировать
+шаблон в проекте.</p>
+<p>Кроме того, вы можете скопировать файлы шаблона  произвольное место в проекте и
+указывать шаблон при запуске команды:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">jc db-doc -s:./scripts/mydoc/db-doc.gsp
+</code></pre>
+</div></div>
+<p>Таким образом можно иметь различное офоормление для разных задач.</p>
+<h2 id="head5">Диаграммы</h2>
+<p>Диаграммы при генерации формируются посредством <a href="https://plantuml.com/ru/">PlantUML</a>.
+Библиотека <code>plantuml.jar</code> входит в поставку.</p>
+<p>Принцип использования: генерируем все необходимые файлы диаграм в процессе генерации
+документации. Финальным шагом генерации - генерируем изображения из описаний. Например
+так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// получаем ссылку на библиотеку plantuml
+def lib = th.ctx.getLib(&quot;plantuml&quot;)
+// запускаем процесс генерации в каталоге images внутри каталога, куда генерируем
+ut.runcmd(cmd: ['java', '-jar', lib.jar, '-tsvg', '.'], dir: &quot;${th.outDir}/images&quot;)
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>

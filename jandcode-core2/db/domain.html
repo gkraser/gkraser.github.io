@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>db - базы данных</title>
+  <title>Domain</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -14,9 +14,11 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../index.html';
-      mdoc.topicFile = 'db/index.html';
-      mdoc.topicId = 'db/index';
+      mdoc.topicFile = 'db/domain.html';
+      mdoc.topicId = 'db/domain';
   </script>
+  <script>
+mdoc.tocTopic=[{"title":"Зарезервированные имена доменов","topicId":"db/domain","ref":"db/domain.html#head1"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -51,8 +53,8 @@
 <li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
 <li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
 <li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
-<li class="open cur "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
-<li class=""><a href="domain.html">Domain</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class="cur "><a href="domain.html">Domain</a></li>
 <li class=""><a href="model.html">Model</a></li>
 <li class=""><a href="sql-text.html">SqlText</a></li>
 <li class=""><a href="mdb.html">База данных</a></li>
@@ -73,32 +75,34 @@
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode Core</a></li>
 <li><a href="../x/x1.html">Модули</a></li>
-<li class="active">db - базы данных</li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Domain</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>db - базы данных</h1>
-</div>
-<div class="topic-body">
-  <p>В этом разделе собраны материалы по различным аспектам разработки
-приложений для работы с базами данных.</p>
-
+  <h1>Domain</h1>
 </div>
 <div class="topic-toc">
   <div class="topic-toc-title">Содержание</div>
 
   <div class="topic-toc-content">
-    <ul><li class=""><a href="dao.html">Dao</a></li>
-<li class=""><a href="domain.html">Domain</a></li>
-<li class=""><a href="model.html">Model</a></li>
-<li class=""><a href="sql-text.html">SqlText</a></li>
-<li class=""><a href="mdb.html">База данных</a></li>
-<li class=""><a href="db-doc.html">Генерация документации к базе данных</a></li>
-<li class=""><a href="dict.html">Словари</a></li>
+    <ul><li class=""><a href="domain.html#head1">Зарезервированные имена доменов</a></li>
 </ul>
   </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Зарезервированные имена доменов</h2>
+<p>Зарезервированы следующие имена доменов:</p>
+<ul>
+<li><code>base</code> - базовый домен, не имеет полей. Используется как средство расширения
+функциональности доменов. В частности в нем определяются bean с дополнительной
+функциональностью для доменов.</li>
+<li><code>id</code> - домен с полем <code>id</code> типа <code>long</code>. Можно использовать как базовый предок для
+доменов-таблиц</li>
+</ul>
+
 </div>
     </div>
 
