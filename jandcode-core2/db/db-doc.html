@@ -18,7 +18,7 @@
       mdoc.topicId = 'db/db-doc';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Настройка проекта","topicId":"db/db-doc","ref":"db/db-doc.html#head1"},{"title":"Генерация","topicId":"db/db-doc","ref":"db/db-doc.html#head2"},{"title":"Список моделей","topicId":"db/db-doc","ref":"db/db-doc.html#head3"},{"title":"Шаблон генерации","topicId":"db/db-doc","ref":"db/db-doc.html#head4"},{"title":"Диаграммы","topicId":"db/db-doc","ref":"db/db-doc.html#head5"}]  </script>
+mdoc.tocTopic=[{"title":"Настройка проекта","topicId":"db/db-doc","ref":"db/db-doc.html#head1"},{"title":"Генерация","topicId":"db/db-doc","ref":"db/db-doc.html#head2"},{"title":"Список моделей","topicId":"db/db-doc","ref":"db/db-doc.html#head3"},{"title":"Шаблон генерации","topicId":"db/db-doc","ref":"db/db-doc.html#head4"},{"title":"Аргументы в шаблоне","topicId":"db/db-doc","ref":"db/db-doc.html#head5"},{"title":"Диаграммы","topicId":"db/db-doc","ref":"db/db-doc.html#head6"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -92,7 +92,8 @@ mdoc.tocTopic=[{"title":"Настройка проекта","topicId":"db/db-doc
 <li class=""><a href="db-doc.html#head2">Генерация</a></li>
 <li class=""><a href="db-doc.html#head3">Список моделей</a></li>
 <li class=""><a href="db-doc.html#head4">Шаблон генерации</a></li>
-<li class=""><a href="db-doc.html#head5">Диаграммы</a></li>
+<li class=""><a href="db-doc.html#head5">Аргументы в шаблоне</a></li>
+<li class=""><a href="db-doc.html#head6">Диаграммы</a></li>
 </ul>
   </div>
 </div>
@@ -153,7 +154,14 @@ mdoc.tocTopic=[{"title":"Настройка проекта","topicId":"db/db-doc
 </code></pre>
 </div></div>
 <p>Таким образом можно иметь различное офоормление для разных задач.</p>
-<h2 id="head5">Диаграммы</h2>
+<h2 id="head5">Аргументы в шаблоне</h2>
+<p>В шаблон передается экземпляр класса <code>jandcode.core.dbm.dbstruct.DomainDbUtils</code>
+в аргументе <code>dbUtils</code>. В шаблоне его можно получить так:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">DomainDbUtils dbUtils = this.args.dbUtils
+</code></pre>
+</div></div>
+<p>Это экземпляр содержит все необходимые домены, ссылку на модель и некоторые утилиты.</p>
+<h2 id="head6">Диаграммы</h2>
 <p>Диаграммы при генерации формируются посредством <a href="https://plantuml.com/ru/">PlantUML</a>.
 Библиотека <code>plantuml.jar</code> входит в поставку.</p>
 <p>Принцип использования: генерируем все необходимые файлы диаграм в процессе генерации
