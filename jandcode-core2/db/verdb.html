@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Domain</title>
+  <title>verdb</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -14,11 +14,9 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../index.html';
-      mdoc.topicFile = 'db/domain.html';
-      mdoc.topicId = 'db/domain';
+      mdoc.topicFile = 'db/verdb.html';
+      mdoc.topicId = 'db/verdb';
   </script>
-  <script>
-mdoc.tocTopic=[{"title":"Зарезервированные имена доменов","topicId":"db/domain","ref":"db/domain.html#head1"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -54,10 +52,10 @@ mdoc.tocTopic=[{"title":"Зарезервированные имена доме�
 <li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
 <li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
 <li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
-<li class="cur "><a href="domain.html">Domain</a></li>
+<li class=""><a href="domain.html">Domain</a></li>
 <li class=""><a href="model.html">Model</a></li>
 <li class=""><a href="sql-text.html">SqlText</a></li>
-<li class=""><a href="verdb.html">verdb</a></li>
+<li class="cur "><a href="verdb.html">verdb</a></li>
 <li class=""><a href="mdb.html">База данных</a></li>
 <li class=""><a href="db-doc.html">Генерация документации к базе данных</a></li>
 <li class=""><a href="dict.html">Словари</a></li>
@@ -78,32 +76,16 @@ mdoc.tocTopic=[{"title":"Зарезервированные имена доме�
 <li><a href="../index.html">Jandcode Core</a></li>
 <li><a href="../x/x1.html">Модули</a></li>
 <li><a href="index.html">db - базы данных</a></li>
-<li class="active">Domain</li>
+<li class="active">verdb</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>Domain</h1>
-</div>
-<div class="topic-toc">
-  <div class="topic-toc-title">Содержание</div>
-
-  <div class="topic-toc-content">
-    <ul><li class=""><a href="domain.html#head1">Зарезервированные имена доменов</a></li>
-</ul>
-  </div>
+  <h1>verdb</h1>
 </div>
 <div class="topic-body">
-  <h2 id="head1">Зарезервированные имена доменов</h2>
-<p>Зарезервированы следующие имена доменов:</p>
-<ul>
-<li><code>base</code> - базовый домен, не имеет полей. Используется как средство расширения
-функциональности доменов. В частности в нем определяются bean с дополнительной
-функциональностью для доменов.</li>
-<li><code>id</code> - домен с полем <code>id</code> типа <code>long</code>. Можно использовать как базовый предок для
-доменов-таблиц</li>
-</ul>
+  <p>verdb - механизм версионности и миграции структуры базы данных.</p>
 
 </div>
     </div>

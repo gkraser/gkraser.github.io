@@ -1,0 +1,183 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Тестирование</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/test.html';
+      mdoc.topicId = 'db/test';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Предок для тестов Dbm_Test","topicId":"db/test","ref":"db/test.html#head1"},{"title":"Автосоздание базы данных для тестов","topicId":"db/test","ref":"db/test.html#head2"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class=""><a href="domain.html">Domain</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="sql-text.html">SqlText</a></li>
+<li class=""><a href="verdb.html">verdb</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class=""><a href="db-doc.html">Генерация документации к базе данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+<li class="cur "><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Тестирование</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Тестирование</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="test.html#head1">Предок для тестов Dbm_Test</a></li>
+<li class=""><a href="test.html#head2">Автосоздание базы данных для тестов</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <p>В этом разделе описаны вопросы тестирования в контексте модели и базы данных.</p>
+<h2 id="head1">Предок для тестов Dbm_Test</h2>
+<p>Классы unittest-ов должны быть унаследованы от класса
+<code>jandcode.core.dbm.test.Dbm_Test</code>.</p>
+<p>В тестовых методах доступны определенные инструменты, пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dbm.*
+import jandcode.core.dbm.mdb.*
+import jandcode.core.dbm.test.*
+import org.junit.jupiter.api.*
+
+class Dbm_Test_Example extends Dbm_Test {
+
+    @Test
+    public void test1() throws Exception {
+        // Модель, в контексте которой выполняются тесты
+        Model model = this.getModel()
+
+        // Экземпляр класса jandcode.core.dbm.mdb.Mdb
+        // Соединение с базой данных будет установлено автоматически
+        // при вервом обращении к базе данных
+        Mdb mdb = this.getMdb()  // в groovy-коде можно использовать mdb, вместо getMdb()
+
+        // Экземпляр класса jandcode.core.dbm.test.DbmTestSvc
+        // Набор утилитных методов для модели и базы данных
+        DbmTestSvc dbm = this.dbm
+    }
+
+}</code></pre></div></div>
+<p>Без дополнительной настройки, в тестах будет использоватся модель <code>default</code>.
+Можно настроить конкретную модель дл использования в тестах.
+Для этого в файле <code>test.cfx</code> необходимо указать необходимую модель:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+
+    &lt;test&gt;
+        &lt;!-- Определение модели по умолчанию в тестах.
+        --&gt;
+        &lt;dbm
+                model-default=&quot;my.model.name&quot;
+        /&gt;
+    &lt;/test&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<h2 id="head2">Автосоздание базы данных для тестов</h2>
+<p>Система тестирования может создавать базу данных в момент первого обращения к ней.
+Настройка:</p>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;root&gt;
+
+    &lt;test&gt;
+        &lt;!-- Определение модели по умолчанию в тестах и указание,
+             что базу данных нужно создавать, если она не существует.
+             Также в базе будет создана структура базы.
+        --&gt;
+        &lt;dbm
+                model-default=&quot;default&quot;
+                create-db=&quot;true&quot;
+                create-db-struct=&quot;true&quot;
+        /&gt;
+    &lt;/test&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>Свойства:</p>
+<ul>
+<li><code>create-db</code> - если значение <code>true</code> и база не существует, то пустая база данных
+будет создана автоматически, при первом обращении к ней</li>
+<li><code>create-db-struct</code> - если значение <code>true</code>, то в базе данных будет выполнен скрипт,
+который создаст структуру базы данных по текущему состоянию модели.</li>
+</ul>
+<p>Если параметры <code>create-db</code> и <code>create-db-struct</code> равны <code>true</code>, и база данных существует
+и в ней какая-то структура, например от последнего выполнения тестов, то выполняется
+сравнение теукщей структуры в модели и структуры в базе данных. Если они отличаются,
+база данных удаляется и создается заново, с актуальной структурой.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
