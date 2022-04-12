@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>GenId - генератор уникальных значений</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/genid.html';
+      mdoc.topicId = 'db/genid';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Использование","topicId":"db/genid","ref":"db/genid.html#head1"},{"title":"Кешированные генераторы","topicId":"db/genid","ref":"db/genid.html#head2"},{"title":"Регистрация","topicId":"db/genid","ref":"db/genid.html#head3"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class=""><a href="domain.html">Domain</a></li>
+<li class="cur "><a href="genid.html">GenId - генератор уникальных значений</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="sql-text.html">SqlText</a></li>
+<li class=""><a href="verdb.html">verdb</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class=""><a href="db-doc.html">Генерация документации к базе данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">GenId - генератор уникальных значений</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>GenId - генератор уникальных значений</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="genid.html#head1">Использование</a></li>
+<li class=""><a href="genid.html#head2">Кешированные генераторы</a></li>
+<li class=""><a href="genid.html#head3">Регистрация</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <svg xmlns="http://www.w3.org/2000/svg" class="adm-hidden">
+<symbol id="adm-note">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g fill="currentColor">
+<path d="m15.4 5h4.5v2.7h-4.5z" transform="matrix(-.7071 -.7071 .7071 -.7071 25.7188 23.288)"/>
+<path d="m13.9 7 3.1 3.1-9.5 9.6-3.5.3.3-3.5z"/>
+</g>
+</svg>
+</symbol>
+</svg>
+<fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.genid.GenId</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+    <li>
+      <span class="cm-code-info--code">jandcode.core.dbm.genid.GenIdService</span> <span
+        class="cm-code-info--marker">(class)</span>
+    </li>
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Использование</h2>
+<p>Класс <code>jandcode.core.dbm.genid.GenId</code> представляет собой поименнованный генератор
+уникальных значений.</p>
+<p>Через сервис модели <code>jandcode.core.dbm.genid.GenIdService</code>
+можно получить генератор и работать непоседственно с ним.</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// получаем сервис GenIdService
+GenIdService svc = getModel().bean(GenIdService.class)
+
+// получаем генератор
+GenId genId = svc.getGenId(&quot;my_gen&quot;)
+
+// получаем следующее уникальное значение
+long val = genId.getNextId()</code></pre></div></div>
+<p>Класс <code>jandcode.core.dbm.mdb.Mdb</code> так же имеет методы для работы с генераторами:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// ... где-то в методе dao ...
+
+// получаем генератор по имени
+GenId genId = getMdb().getGenId(&quot;my_gen&quot;)
+
+// получаем следующее уникальное значение
+long val = getMdb().getNextId(&quot;my_gen&quot;)</code></pre></div></div>
+<p>Генераторы, полученные через <code>mdb</code> выполняют свои запросы через существующее
+в <code>mdb</code> соединение. Генераторы, полученные через сервис <code>GenIdService</code> используют
+собственное соединение и транзакцию. При необходимости генератор можно принудительно
+использовать определенную <code>mdb</code>:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// получаем сервис GenIdService
+GenIdService svc = getModel().bean(GenIdService.class)
+
+// получаем генератор с привязкой к mdb
+GenId genId = svc.getGenId(&quot;my_gen&quot;).withMdb(getMdb())</code></pre></div></div>
+<h2 id="head2">Кешированные генераторы</h2>
+<p>При необходимости использования большого числа сгенерированных значений, например при
+массовой вставке записей, можно использовать кешированный генератор:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">// получаем кешированный генератор по имени
+// с указанием сколько значений нам потребуется
+GenId genId = getMdb().getGenId(&quot;my_gen&quot;, 20)
+
+// получаем следующее уникальное значение
+long val = genId.getNextId()</code></pre></div></div>
+<p>Кешированные генераторы обращаются на сервер только один раз для получения указанного
+количеста значений. Если в процессе работы с ними еш исчерпается, автоматически будет
+получена следующая группа значений с сервера.</p>
+<div class="adm-block adm-note">
+<div class="adm-heading">
+<svg class="adm-icon"><use xlink:href="#adm-note" /></svg><span>Note</span>
+</div>
+<div class="adm-body">
+<p>Не все реализации генераторов поддерживают кеширование. В этом случае
+кешированный генератор будет вести себя как обычный.</p>
+</div>
+</div>
+<h2 id="head3">Регистрация</h2>
+<p>По умолчанию для каждого домена, который представляет собой таблицу в базе данных
+регистрируется генератор с именем, совпадающем с именем таблицы. Кроме того,
+можно регистрировать генераторы без привязки к имени таблицы. Пример:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model&quot;&gt;
+
+            &lt;domain name=&quot;my_table_1&quot; parent=&quot;id&quot; tag.db=&quot;true&quot;
+                    genid.start=&quot;1000&quot; genid.step=&quot;2&quot;&gt;
+            &lt;/domain&gt;
+
+            &lt;domain name=&quot;no_db_table&quot; parent=&quot;id&quot;&gt;
+            &lt;/domain&gt;
+
+            &lt;genid name=&quot;my_gen_1&quot;/&gt;
+            &lt;genid name=&quot;my_gen_2&quot; start=&quot;2000&quot; step=&quot;1&quot;/&gt;
+
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+
+&lt;/root&gt;</code></pre></div></div>
+<p>В этом примере регистрируются следующие генераторы:</p>
+<ul>
+<li><code>my_table_1</code>, так как домен <code>my_table_1</code> является таблицей в базе данных
+(<code>tag.db=&quot;true&quot;</code>). У этого генератора начальное значение по умолчанию <code>1000</code> с
+шагом приращения <code>2</code></li>
+<li><code>my_gen_1</code>, явно зарегистрированный, вне описания таблиц. Начальное значение
+и шаг приращения будут установлены в значения по умолчанию (<code>1000</code> и <code>1</code>)
+соответсвенно</li>
+<li><code>my_gen_1</code>, явно зарегистрированные, вне описания таблиц. Начальное значение
+и шаг приращения будут взяты из свойств <code>start</code> и <code>step</code></li>
+</ul>
+<p>Для домена <code>no_db_table</code> не будет зарегистрирован генератор, т.к.
+это таблица не в базе данных.</p>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
