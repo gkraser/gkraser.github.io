@@ -180,6 +180,9 @@ long val = genId.getNextId()</code></pre></div></div>
 </div>
 </div>
 <h2 id="head3">Регистрация</h2>
+<p>Для использования генераторов в модель необходимо включить зависимость от модели
+<code>jandcode.core.dbm.genid</code>. Она содержит стандартные реализации генераторов для
+различных баз данных.</p>
 <p>По умолчанию для каждого домена, который представляет собой таблицу в базе данных
 регистрируется генератор с именем, совпадающем с именем таблицы. Кроме того,
 можно регистрировать генераторы без привязки к имени таблицы. Пример:</p>
@@ -187,6 +190,9 @@ long val = genId.getNextId()</code></pre></div></div>
 
     &lt;dbm&gt;
         &lt;model name=&quot;my-model&quot;&gt;
+
+            &lt;!-- подключаем реализацию генераторов --&gt;
+            &lt;include name=&quot;jandcode.core.dbm.genid&quot;/&gt;
 
             &lt;domain name=&quot;my_table_1&quot; parent=&quot;id&quot; tag.db=&quot;true&quot;
                     genid.start=&quot;1000&quot; genid.step=&quot;2&quot;&gt;
