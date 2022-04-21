@@ -18,7 +18,7 @@
       mdoc.topicId = 'db/dao';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Введение","topicId":"db/dao","ref":"db/dao.html#head1"},{"title":"Dao для базы данных","topicId":"db/dao","ref":"db/dao.html#head2"},{"title":"DaoInvoker","topicId":"db/dao","ref":"db/dao.html#head3"},{"title":"DaoHolder","topicId":"db/dao","ref":"db/dao.html#dao-holder"},{"title":"Примеры регистрации dao-методов","topicId":"db/dao","ref":"db/dao.html#head4","items":[{"title":"Метод","topicId":"db/dao","ref":"db/dao.html#head5"},{"title":"Методы класса","topicId":"db/dao","ref":"db/dao.html#head6"},{"title":"Класс","topicId":"db/dao","ref":"db/dao.html#head7"},{"title":"Пакет","topicId":"db/dao","ref":"db/dao.html#holder-item-pak"},{"title":"Пакет плоский","topicId":"db/dao","ref":"db/dao.html#head8"},{"title":"Пакет с пропуском использованных","topicId":"db/dao","ref":"db/dao.html#head9"},{"title":"Префикс","topicId":"db/dao","ref":"db/dao.html#head10"},{"title":"Дочерние item","topicId":"db/dao","ref":"db/dao.html#head11"},{"title":"Провайдер элементов","topicId":"db/dao","ref":"db/dao.html#head12"},{"title":"invoker","topicId":"db/dao","ref":"db/dao.html#head13"}]},{"title":"DaoHolder модели","topicId":"db/dao","ref":"db/dao.html#head14"},{"title":"DaoHolderItemProvider","topicId":"db/dao","ref":"db/dao.html#head15"},{"title":"Конфигурация module.cfx","topicId":"db/dao","ref":"db/dao.html#head16","items":[{"title":"dao/invoker","topicId":"db/dao","ref":"db/dao.html#head17"}]}]  </script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"db/dao","ref":"db/dao.html#head1"},{"title":"Dao для базы данных","topicId":"db/dao","ref":"db/dao.html#head2"},{"title":"DaoInvoker","topicId":"db/dao","ref":"db/dao.html#head3"},{"title":"DaoHolder","topicId":"db/dao","ref":"db/dao.html#dao-holder"},{"title":"Примеры регистрации dao-методов","topicId":"db/dao","ref":"db/dao.html#head4","items":[{"title":"Метод","topicId":"db/dao","ref":"db/dao.html#head5"},{"title":"Методы класса","topicId":"db/dao","ref":"db/dao.html#head6"},{"title":"Класс","topicId":"db/dao","ref":"db/dao.html#head7"},{"title":"Пакет","topicId":"db/dao","ref":"db/dao.html#holder-item-pak"},{"title":"Пакет плоский","topicId":"db/dao","ref":"db/dao.html#head8"},{"title":"Пакет с пропуском использованных","topicId":"db/dao","ref":"db/dao.html#head9"},{"title":"Префикс","topicId":"db/dao","ref":"db/dao.html#head10"},{"title":"Дочерние item","topicId":"db/dao","ref":"db/dao.html#head11"},{"title":"Провайдер элементов","topicId":"db/dao","ref":"db/dao.html#head12"},{"title":"invoker","topicId":"db/dao","ref":"db/dao.html#head13"}]},{"title":"DaoHolder модели","topicId":"db/dao","ref":"db/dao.html#head14"},{"title":"DaoHolderItemProvider","topicId":"db/dao","ref":"db/dao.html#head15"},{"title":"Абстрактные классы dao и метод impl()","topicId":"db/dao","ref":"db/dao.html#head16"},{"title":"Конфигурация module.cfx","topicId":"db/dao","ref":"db/dao.html#head17","items":[{"title":"dao/invoker","topicId":"db/dao","ref":"db/dao.html#head18"}]}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -108,7 +108,8 @@ mdoc.tocTopic=[{"title":"Введение","topicId":"db/dao","ref":"db/dao.html
 </ul></li>
 <li class=""><a href="dao.html#head14">DaoHolder модели</a></li>
 <li class=""><a href="dao.html#head15">DaoHolderItemProvider</a></li>
-<li class="folder "><a href="dao.html#head16">Конфигурация module.cfx</a><ul><li class=""><a href="dao.html#head17">dao/invoker</a></li>
+<li class=""><a href="dao.html#head16">Абстрактные классы dao и метод impl()</a></li>
+<li class="folder "><a href="dao.html#head17">Конфигурация module.cfx</a><ul><li class=""><a href="dao.html#head18">dao/invoker</a></li>
 </ul></li>
 </ul>
   </div>
@@ -322,7 +323,7 @@ String res = (String) daoHolder.invokeDao(&quot;dao1/meth1&quot;, &quot;param1&q
       class=&quot;pak1.pak2.DaoSimple1&quot;/&gt;</code></pre></div></div>
 <p>Регистрация всех dao-методов класса. Имя класса используется как дополнительный префикс
 для имени dao.<br />
-Из имени класса удаляется суффикс <code>Dao</code> или <code>_Dao</code>.
+Из имени класса удаляется суффикс <code>_dao</code>, <code>Dao</code> или <code>_Dao</code>.
 Первый символ имени класса делается строчным.
 Так будут зарегистрированы dao с именами:</p>
 <ul>
@@ -481,8 +482,50 @@ DaoHolder modelDaoHolder = daoSvc.getDaoHolder()</code></pre></div></div>
         &lt;/holder&gt;
     &lt;/dao&gt;
 &lt;/root&gt;</code></pre></div></div>
-<h2 id="head16">Конфигурация module.cfx</h2>
-<h3 id="head17">dao/invoker</h3>
+<h2 id="head16">Абстрактные классы dao и метод impl()</h2>
+<p>Класс dao может быть абстрактным. В этом случае у него должен быть метод <code>impl()</code>,
+который должен вернуть экземпляр объекта, который реализует все абстрактные методы:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">import jandcode.core.dao.*
+
+/**
+ * Это некий интерфейс для сбора и описания dao-методов
+ */
+interface IMyDao {
+    String method1()
+}
+
+/**
+ * Это реализатор интерфейса IMyDao
+ */
+class MyDao_impl implements IMyDao {
+    String tag
+
+    MyDao_impl(String tag) {
+        this.tag = tag
+    }
+
+    String method1() {
+        return &quot;m1:${this.tag}&quot;
+    }
+}
+
+/**
+ * Это dao. Этот класс будет использоватся как сборник и dao-методов,
+ * но вызов его абстрактных методов будет делегироватся объекту,
+ * который вернет метод impl().
+ */
+abstract class MyDao_dao extends BaseDao implements IMyDao {
+
+    /**
+     * Предоставление реализатора методов dao
+     */
+    public MyDao_impl impl() {
+        return new MyDao_impl(&quot;t1&quot;)
+    }
+
+}</code></pre></div></div>
+<h2 id="head17">Конфигурация module.cfx</h2>
+<h3 id="head18">dao/invoker</h3>
 <p>Описание <code>DaoInvoker</code>.</p>
 <p>Формат:</p>
 <div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
