@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>apx - платформа приложения</title>
+  <title>auth - аутентификация</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -14,9 +14,11 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../index.html';
-      mdoc.topicFile = 'apx/index.html';
-      mdoc.topicId = 'apx/index';
+      mdoc.topicFile = 'apx/auth.html';
+      mdoc.topicId = 'apx/auth';
   </script>
+  <script>
+mdoc.tocTopic=[{"title":"Описание","topicId":"apx/auth","ref":"apx/auth.html#head1"}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -45,8 +47,8 @@
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open cur "><a href="index.html">apx - платформа приложения</a><ul><li class=""><a href="intro.html">Введение</a></li>
-<li class=""><a href="auth.html">auth - аутентификация</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">apx - платформа приложения</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class="cur "><a href="auth.html">auth - аутентификация</a></li>
 </ul></li>
 <li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
 <li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
@@ -68,28 +70,65 @@
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode Core</a></li>
 <li><a href="../x/x1.html">Модули</a></li>
-<li class="active">apx - платформа приложения</li>
+<li><a href="index.html">apx - платформа приложения</a></li>
+<li class="active">auth - аутентификация</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>apx - платформа приложения</h1>
-</div>
-<div class="topic-body">
-  <p>Платформа приложения. Набор модулей, которые собирают вместе
-все остальное и дают основу для разработки приложения
-в рамках определенных правил и соглашений.</p>
-
+  <h1>auth - аутентификация</h1>
 </div>
 <div class="topic-toc">
   <div class="topic-toc-title">Содержание</div>
 
   <div class="topic-toc-content">
-    <ul><li class=""><a href="intro.html">Введение</a></li>
-<li class=""><a href="auth.html">auth - аутентификация</a></li>
+    <ul><li class=""><a href="auth.html#head1">Описание</a></li>
 </ul>
   </div>
+</div>
+<div class="topic-body">
+  <fieldset class="cm-code-info">
+  <legend>Связи</legend>
+  <ul>
+
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.apx</span> <span
+        class="cm-code-info--marker">(module)</span>
+    </li>
+
+    <li>
+      <span class="cm-code-info--code">jandcode.core.apx.auth</span> <span
+        class="cm-code-info--marker">(package)</span>
+    </li>
+
+
+
+
+  </ul>
+</fieldset>
+<h2 id="head1">Описание</h2>
+<p>В состав <code>apx</code> входит базовая реализация слоя аутентификаци.</p>
+<p>web-фильтры:</p>
+<ul>
+<li><code>jandcode.core.apx.auth.AuthFilter</code> - устанавливает текущего пользователя
+для сервиса аутентификации <code>jandcode.core.auth.AuthService</code>, информацию берет из
+сессии</li>
+<li><code>jandcode.core.apx.auth.AuthAutoLoginFilter</code> - устанавливает режим autologon,
+автоматический login пользователя при первом обращении к серверу. Используется
+и подключается только в режиме разработки</li>
+</ul>
+<p>web-action:</p>
+<ul>
+<li><code>jandcode.core.apx.auth.AuthAction</code> базовая реализация login/logout</li>
+</ul>
+<p>ClientCfgProvider:</p>
+<ul>
+<li><code>jandcode.core.apx.auth.AuthClientCfgProvider</code> - провайдер конфигурации для
+клиентского приложения, предоставляет основную информацию о пользователе</li>
+</ul>
+
 </div>
     </div>
 

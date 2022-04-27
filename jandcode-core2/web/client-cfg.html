@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>apx - платформа приложения</title>
+  <title>Конфигурация для клиента</title>
 
   <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
   <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
@@ -14,8 +14,8 @@
   <script>
       window.mdoc = window.mdoc || {};
       mdoc.indexRef = '../index.html';
-      mdoc.topicFile = 'apx/index.html';
-      mdoc.topicId = 'apx/index';
+      mdoc.topicFile = 'web/client-cfg.html';
+      mdoc.topicId = 'web/client-cfg';
   </script>
   <script src="../toc.js"></script>
 </head>
@@ -45,13 +45,19 @@
         <div class="tools-block-body">
           <div class="doc-toc">
             <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
-<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open cur "><a href="index.html">apx - платформа приложения</a><ul><li class=""><a href="intro.html">Введение</a></li>
-<li class=""><a href="auth.html">auth - аутентификация</a></li>
-</ul></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
 <li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
 <li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
 <li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
-<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class=""><a href="action.html">Action</a></li>
+<li class=""><a href="gsp.html">GSP</a></li>
+<li class=""><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class=""><a href="ext-resource.html">Внешние статические ресурсы</a></li>
+<li class=""><a href="gsp-tools.html">Инструменты для GSP</a></li>
+<li class="cur "><a href="client-cfg.html">Конфигурация для клиента</a></li>
+<li class=""><a href="nodejs.html">Поддержка nodejs</a></li>
+<li class=""><a href="servlet.html">Сервлет</a></li>
+</ul></li>
 <li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
 <li class="folder "><a href="../db/index.html">db - базы данных</a></li>
 <li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
@@ -68,28 +74,24 @@
   <ul class="breadcrumb">
 <li><a href="../index.html">Jandcode Core</a></li>
 <li><a href="../x/x1.html">Модули</a></li>
-<li class="active">apx - платформа приложения</li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">Конфигурация для клиента</li>
 </ul>
 
 </div>
 
 <div class="topic-header">
-  <h1>apx - платформа приложения</h1>
+  <h1>Конфигурация для клиента</h1>
 </div>
 <div class="topic-body">
-  <p>Платформа приложения. Набор модулей, которые собирают вместе
-все остальное и дают основу для разработки приложения
-в рамках определенных правил и соглашений.</p>
+  <p>Сервис <code>jandcode.core.web.cfg.ClientCfgService</code> предназначен для сбора конфигурации,
+которая будет доступна клиенскому приложению.</p>
+<p>Используется, например в <a href="gsp-tools.html#JsIndexGspContext">JsIndexGspContext</a></p>
+<p>Принцип работы прост. При вызове метода <code>grabClientCfg()</code> создается пустая конфигурация,
+затем для всех бинов приложения, которые реализуют интерфейс
+<code>jandcode.core.web.cfg.ClientCfgProvider</code>, вызывается метод <code>grabClientCfg(conf)</code> с
+конфигурацией, которую провайдер должен заполнить нужными данными.</p>
 
-</div>
-<div class="topic-toc">
-  <div class="topic-toc-title">Содержание</div>
-
-  <div class="topic-toc-content">
-    <ul><li class=""><a href="intro.html">Введение</a></li>
-<li class=""><a href="auth.html">auth - аутентификация</a></li>
-</ul>
-  </div>
 </div>
     </div>
 

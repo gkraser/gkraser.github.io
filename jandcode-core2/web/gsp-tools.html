@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Инструменты для GSP</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'web/gsp-tools.html';
+      mdoc.topicId = 'web/gsp-tools';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"JsIndexGspContext","topicId":"web/gsp-tools","ref":"web/gsp-tools.html#JsIndexGspContext"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="open "><a href="index.html">web - web-приложение</a><ul><li class=""><a href="action.html">Action</a></li>
+<li class=""><a href="gsp.html">GSP</a></li>
+<li class=""><a href="virtfile.html">Виртуальная файловая система web</a></li>
+<li class=""><a href="ext-resource.html">Внешние статические ресурсы</a></li>
+<li class="cur "><a href="gsp-tools.html">Инструменты для GSP</a></li>
+<li class=""><a href="client-cfg.html">Конфигурация для клиента</a></li>
+<li class=""><a href="nodejs.html">Поддержка nodejs</a></li>
+<li class=""><a href="servlet.html">Сервлет</a></li>
+</ul></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../db/index.html">db - базы данных</a></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">web - web-приложение</a></li>
+<li class="active">Инструменты для GSP</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Инструменты для GSP</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="gsp-tools.html#JsIndexGspContext">JsIndexGspContext</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="JsIndexGspContext">JsIndexGspContext</h2>
+<p>Класс <code>jandcode.core.web.std.gsp.JsIndexGspContext</code>.</p>
+<p>Сервисные методы для использования в index.gsp и аналогичных файлах, которые формируют
+стартовый html-файл для js-приложения.</p>
+<p>Пример использования:</p>
+<div class="codeblock" data-language="gsp"><div class="codeblock--content"><pre><code class="language-gsp">&lt;%@ page import=&quot;jandcode.commons.*; jandcode.core.web.*; jandcode.core.web.gsp.*;jandcode.core.web.std.gsp.*;&quot; %&gt;
+&lt;!doctype html&gt;
+&lt;%
+  BaseGsp th = this
+  // запрещаем кеширование этой страницы
+  th.request.disableCache()
+  // берем экземпляр JsIndexGspContext
+  def ctx = th.inst(JsIndexGspContext)
+  // заголовок
+  ctx.title = &quot;NTBD&quot;
+  // добавляем ссылки на js/css 
+  ctx.addLink(&quot;my/css/style.css&quot;)
+  ctx.addLink(&quot;my/js/scipt.js&quot;)
+%&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;title&gt;${ctx.title}&lt;/title&gt;   %{-- выводим заголовок--}%
+  &lt;link rel=&quot;icon&quot; href=&quot;data:,&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div id=&quot;jc-app&quot;&gt;&lt;/div&gt;
+&lt;% ctx.outLinks() %&gt;            %{-- выводим ссылки и конфигурацию--}%
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+</div></div>
+<p>Метод <code>outLinks</code>, кроме явно добавленных ссылок, выводит также конфигурацию, собранную
+сервисом <code>jandcode.core.web.cfg.ClientCfgService</code>. А также дополнительную конфигурацию,
+жизненно необходимую для корректной работы js-приложений.</p>
+<p>Пример вывода метода <code>outLinks</code>:</p>
+<div class="codeblock" data-language="html"><div class="codeblock--content"><pre><code class="language-html">&lt;script&gt;
+window.Jc_cfg={
+  &quot;baseUrl&quot;: &quot;/jc/&quot;,
+  &quot;envDev&quot;: true,
+  &quot;envSource&quot;: true,
+  &quot;userInfo&quot;: {
+    &quot;guest&quot;: true
+  }
+}
+&lt;/script&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/jc/my/css/style.css&quot;/&gt;
+&lt;script src=&quot;/jc/my/js/scipt.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
