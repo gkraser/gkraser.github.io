@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>DDL и create.sql</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/ddl.html';
+      mdoc.topicId = 'db/ddl';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Описание","topicId":"db/ddl","ref":"db/ddl.html#head1"},{"title":"stage","topicId":"db/ddl","ref":"db/ddl.html#head2"},{"title":"dbdata","topicId":"db/ddl","ref":"db/ddl.html#head3","items":[{"title":"csv","topicId":"db/ddl","ref":"db/ddl.html#head4"},{"title":"xml","topicId":"db/ddl","ref":"db/ddl.html#head5"}]}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class="cur "><a href="ddl.html">DDL и create.sql</a></li>
+<li class=""><a href="domain.html">Domain</a></li>
+<li class=""><a href="genid.html">GenId - генератор уникальных значений</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="sql-text.html">SqlText</a></li>
+<li class=""><a href="verdb.html">verdb</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class=""><a href="db-doc.html">Генерация документации к базе данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">DDL и create.sql</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>DDL и create.sql</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="ddl.html#head1">Описание</a></li>
+<li class=""><a href="ddl.html#head2">stage</a></li>
+<li class="folder "><a href="ddl.html#head3">dbdata</a><ul><li class=""><a href="ddl.html#head4">csv</a></li>
+<li class=""><a href="ddl.html#head5">xml</a></li>
+</ul></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Описание</h2>
+<p>В конфигурации модели можно указывать ddl-скрипты, которые собираются и на основе их
+формируется скрипт <code>create.sql</code>, который используется для создания структры базы данных.</p>
+<p>Пример использования:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model&quot;&gt;
+
+            &lt;!-- скрипт из указанного файла --&gt;
+            &lt;ddl name=&quot;ddl.1&quot;
+                 stage=&quot;afterTables&quot;
+                 file=&quot;#{path}/script1.sql&quot;/&gt;
+
+            &lt;!-- генерация скрипта с помощью gsp --&gt;
+            &lt;ddl name=&quot;ddl.2&quot;
+                 stage=&quot;tables&quot;
+                 file=&quot;#{path}/script1.gsp&quot;/&gt;
+
+            &lt;!-- генерация ddl с помощью ddl-провайдера --&gt;
+            &lt;ddl name=&quot;ddl.3&quot;
+                 stage=&quot;afterTables&quot;
+                 class=&quot;jandcode.core.dbm.ddl.DDLProvider&quot;/&gt;
+
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p><code>ddl.1</code> - можно просто указать файл с текстом ddl-операторов, разделенных строкой <code>~~</code>,
+которая должна быть в начале строки и в этой строке более ничего быть не должно:</p>
+<div class="codeblock" data-language="sql"><div class="codeblock--content"><pre><code class="language-sql">create table t1(
+  id varchar(10)
+)
+~~
+create table t2(
+  id varchar(10)
+)
+~~
+</code></pre>
+</div></div>
+<p><code>ddl.2</code> - можно указать gsp-скрипт, который сгенерирует текст ddl-операторов,
+разделенных <code>~~</code>. Примеры можно посмотреть в
+<code>jandcode/core/dbm/dbstruct/ddl/domain-table.gsp</code> и других файлов в этом пакете.</p>
+<p><code>ddl.3</code> - можно указать реализатор интерфейса
+<code>jandcode.core.dbm.ddl.DDLProvider</code>, который вернет набор ddl-операторов. Пример
+реализации: <code>jandcode.core.dbm.ddl.impl.DefaultDDLProvider</code>.</p>
+<h2 id="head2">stage</h2>
+<p>Сбор ddl осуществляется в несколько стадий. Стадии описаны в
+<code>jandcode.core.dbm.ddl.DDLStage</code>. В конфигурации <code>dll</code> указываетя соотвествующая стадия,
+для которой предназначен этот ddl.</p>
+<p>Это позволяет разместить текст ddl в ожидаемой части общео скрипта <code>create.sql</code>.
+Например ddl должен расчитывать, что все таблицы уже созданы, тогда стадия
+должна быть <code>afterTables</code>.</p>
+<h2 id="head3">dbdata</h2>
+<p>Имеется возможность сгенерировать набор insert-операторов по файлам csv и xml.</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;dbm&gt;
+        &lt;model name=&quot;my-model&quot;&gt;
+
+            &lt;ddl name=&quot;dbdata.system&quot;
+                 class=&quot;jandcode.core.dbm.dbdata.DDLProvider_dbdata&quot;
+                 stage=&quot;data&quot;
+                 path=&quot;#{path}/dbdata/*.*&quot;/&gt;
+
+        &lt;/model&gt;
+    &lt;/dbm&gt;
+&lt;/root&gt;</code></pre></div></div>
+<p>Указываем провайдер <code>jandcode.core.dbm.dbdata.DDLProvider_dbdata</code>, stage <code>data</code>, и путь, в
+котором лежат csv/xml файлы с именам, как у таблиц, для которых эти данные предназначены.</p>
+<h3 id="head4">csv</h3>
+<p>Формат csv: разделитель запятая, если значение содержит запятую, то значение берется в
+двойные кавычки, первая строка - имена столбцов.</p>
+<div class="codeblock" data-language="csv"><div class="codeblock--content"><pre><code class="language-csv">id,val
+1,val1
+2,&quot;val2,2&quot;
+</code></pre>
+</div></div>
+<h3 id="head5">xml</h3>
+<p>Каждый тег верхнего уровня - строка. Атрибут - значение поля с соответствующем именем.</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;row id=&quot;1&quot; val=&quot;val1&quot;/&gt;
+    &lt;row id=&quot;2&quot; val=&quot;val2,2&quot;/&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
