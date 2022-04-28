@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>JsonRPC</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'apx/jsonrpc.html';
+      mdoc.topicId = 'apx/jsonrpc';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Описание","topicId":"apx/jsonrpc","ref":"apx/jsonrpc.html#head1"},{"title":"Запросы и параметры","topicId":"apx/jsonrpc","ref":"apx/jsonrpc.html#head2"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="open "><a href="index.html">apx - платформа приложения</a><ul><li class=""><a href="intro.html">Введение</a></li>
+<li class=""><a href="auth.html">auth - аутентификация</a></li>
+<li class="cur "><a href="jsonrpc.html">JsonRPC</a></li>
+</ul></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="folder "><a href="../db/index.html">db - базы данных</a></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">apx - платформа приложения</a></li>
+<li class="active">JsonRPC</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>JsonRPC</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="jsonrpc.html#head1">Описание</a></li>
+<li class=""><a href="jsonrpc.html#head2">Запросы и параметры</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Описание</h2>
+<p>Для взаимодействия с сервером клиентских приложений в <code>apx</code> используется
+протокол <a href="https://www.jsonrpc.org/">JsonRPC</a>.</p>
+<p>Суть в следующем: выбирается некий <a href="../db/dao.html#dao-holder">DaoHolder</a>
+и предоставляется http-интерфейс для выполнения его методов через определенную
+entry-point.</p>
+<p>По умолчанию в <code>apx</code> настроена entry-point с именем <code>api</code>, которая транслирует
+методы <code>DaoHolder</code> с именем <code>api</code>:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;api&quot;
+                class=&quot;jandcode.core.apx.jsonrpc.JsonRpcAction&quot;
+                daoHolder=&quot;api&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<p>Web-action <code>jandcode.core.apx.jsonrpc.JsonRpcAction</code> является обработчиком JsonRPC.</p>
+<p>Можно настраивать различные entry-point для нужных DaoHolder в приложении по смоему
+усмотрению:</p>
+<div class="codeblock" data-language="xml"><div class="codeblock--content"><pre><code class="language-xml">&lt;root&gt;
+    &lt;web&gt;
+        &lt;action name=&quot;api&quot;
+                class=&quot;jandcode.core.apx.jsonrpc.JsonRpcAction&quot;
+                daoHolder=&quot;api&quot;/&gt;
+        &lt;action name=&quot;api-v2&quot;
+                class=&quot;jandcode.core.apx.jsonrpc.JsonRpcAction&quot;
+                daoHolder=&quot;api-new&quot;/&gt;
+    &lt;/web&gt;
+&lt;/root&gt;
+</code></pre>
+</div></div>
+<h2 id="head2">Запросы и параметры</h2>
+<p>Тип запроса должен быть POST.</p>
+<p>Арибут <code>&quot;jsonrpc&quot;: &quot;2.0&quot;</code> является не обязательным.</p>
+<p>В качестве параметров можно указывать объект, который содержит поименнованные параметры
+метода:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">POST http://localhost:8080/jc/api
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;1&quot;,
+  &quot;method&quot;: &quot;my/dao1&quot;,
+  &quot;params&quot;: {
+    &quot;id&quot;: 1215
+  }
+}
+</code></pre>
+</div></div>
+<p>Так же в качестве параметров можно указывать массив, которые содержит позиционные
+параметры метода:</p>
+<div class="codeblock" data-language="txt"><div class="codeblock--content"><pre><code class="language-txt">POST http://localhost:8080/jc/api
+Content-Type: application/json
+
+{
+  &quot;id&quot;: &quot;1&quot;,
+  &quot;method&quot;: &quot;my/dao1&quot;,
+  &quot;params&quot;: [1215]
+}
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
