@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Валидация данных</title>
+
+  <link rel="stylesheet" href="../_data/theme/lib/normalize/normalize.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/prism.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/admonition.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style.css"/>
+  <link rel="stylesheet" href="../_data/theme/css/style-mdoc-ext.css"/>
+  <script src="../_data/theme/lib/prism/prism.js"></script>
+  <script src="../_data/theme/js/prism-ext.js"></script>
+  <script>
+      window.mdoc = window.mdoc || {};
+      mdoc.indexRef = '../index.html';
+      mdoc.topicFile = 'db/validate.html';
+      mdoc.topicId = 'db/validate';
+  </script>
+  <script>
+mdoc.tocTopic=[{"title":"Введение","topicId":"db/validate","ref":"db/validate.html#head1"},{"title":"Регистрация валидатора","topicId":"db/validate","ref":"db/validate.html#head2"},{"title":"Валидаторы для домена и поля","topicId":"db/validate","ref":"db/validate.html#head3"},{"title":"Прямой вызов валидатора","topicId":"db/validate","ref":"db/validate.html#head4"},{"title":"Валидация конкретного поля","topicId":"db/validate","ref":"db/validate.html#head5"},{"title":"Валидация записи","topicId":"db/validate","ref":"db/validate.html#head6"}]  </script>
+  <script src="../toc.js"></script>
+</head>
+
+<body>
+<div class="page-wrap">
+  <div class="page-header">
+    <div class="page-header-item document-title">
+      <a href="../index.html">Jandcode Core</a>
+    </div>
+
+    <div class="page-header-item split">
+    </div>
+
+    <div class="page-header-item menu-item">
+    </div>
+  </div>
+
+  <div class="page-body">
+
+    <div class="page-tools">
+      <div class="tools-block">
+        <div class="tools-block-title">
+          Содержание
+        </div>
+
+        <div class="tools-block-body">
+          <div class="doc-toc">
+            <ul><li class="folder "><a href="../intro/intro.html">Введение</a></li>
+<li class="open "><a href="../x/x1.html">Модули</a><ul><li class="folder "><a href="../apx/index.html">apx - платформа приложения</a></li>
+<li class="folder "><a href="../commons/index.html">commons - утилиты</a></li>
+<li class="folder "><a href="../jc/index.html">jc - приложение</a></li>
+<li class="folder "><a href="../core/index.html">core - ядро платформы</a></li>
+<li class="folder "><a href="../web/index.html">web - web-приложение</a></li>
+<li class="folder "><a href="../mdoc/index.html">mdoc - генератор документации</a></li>
+<li class="open "><a href="index.html">db - базы данных</a><ul><li class=""><a href="dao.html">Dao</a></li>
+<li class=""><a href="ddl.html">DDL и create.sql</a></li>
+<li class=""><a href="domain.html">Domain</a></li>
+<li class=""><a href="genid.html">GenId - генератор уникальных значений</a></li>
+<li class=""><a href="model.html">Model</a></li>
+<li class=""><a href="sql-text.html">SqlText</a></li>
+<li class=""><a href="verdb.html">verdb</a></li>
+<li class=""><a href="mdb.html">База данных</a></li>
+<li class="cur "><a href="validate.html">Валидация данных</a></li>
+<li class=""><a href="db-doc.html">Генерация документации к базе данных</a></li>
+<li class=""><a href="dict.html">Словари</a></li>
+<li class=""><a href="test.html">Тестирование</a></li>
+</ul></li>
+<li class=""><a href="../modules/auth.html">auth - аутентификация и авторизация</a></li>
+<li class="folder "><a href="../tutorial/index.html">How to (учебник)</a></li>
+</ul></li>
+</ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-content">
+<div class="topic-breadcrumb">
+  <ul class="breadcrumb">
+<li><a href="../index.html">Jandcode Core</a></li>
+<li><a href="../x/x1.html">Модули</a></li>
+<li><a href="index.html">db - базы данных</a></li>
+<li class="active">Валидация данных</li>
+</ul>
+
+</div>
+
+<div class="topic-header">
+  <h1>Валидация данных</h1>
+</div>
+<div class="topic-toc">
+  <div class="topic-toc-title">Содержание</div>
+
+  <div class="topic-toc-content">
+    <ul><li class=""><a href="validate.html#head1">Введение</a></li>
+<li class=""><a href="validate.html#head2">Регистрация валидатора</a></li>
+<li class=""><a href="validate.html#head3">Валидаторы для домена и поля</a></li>
+<li class=""><a href="validate.html#head4">Прямой вызов валидатора</a></li>
+<li class=""><a href="validate.html#head5">Валидация конкретного поля</a></li>
+<li class=""><a href="validate.html#head6">Валидация записи</a></li>
+</ul>
+  </div>
+</div>
+<div class="topic-body">
+  <h2 id="head1">Введение</h2>
+<p>Валидатор - это класс, реализующий интерфейс <code>jandcode.core.dbm.validate.Validator</code>.</p>
+<p>Нужно реализовать метод <code>validate</code>, который получает в качестве параметра
+контекст валидации <code>jandcode.core.dbm.validate.ValidatorContext</code>.</p>
+<p>Все валидаторы работают в контексте экземпляра <code>jandcode.core.dbm.mdb.Mdb</code>.</p>
+<h2 id="head2">Регистрация валидатора</h2>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;dbm&gt;
+    &lt;model name=&quot;my-model&quot;&gt;
+        &lt;validator name=&quot;mycheck1&quot;
+                   class=&quot;my.pak1.Validator_mycheck1&quot;
+                   attr1=&quot;1&quot;/&gt;
+    &lt;/model&gt;
+&lt;/dbm&gt;</code></pre></div></div>
+<p>Валидаторы регистрируются на уровне модели.</p>
+<p>Для валидатора указывается <code>class</code>, реализующий интерфейс
+<code>jandcode.core.dbm.validate.Validator</code>. Все остальные атрибуты используются как
+атрибуты контекста при выполнении валидатора.</p>
+<h2 id="head3">Валидаторы для домена и поля</h2>
+<div class="codeblock" data-language="cfx"><div class="codeblock--content"><pre><code class="language-cfx">&lt;dbm&gt;
+    &lt;model name=&quot;my-model&quot;&gt;
+        &lt;domain name=&quot;MyDomain1&quot;&gt;
+
+            &lt;!-- валидаторы записи --&gt;
+
+            &lt;!-- mycheck1 - имя зарегистрированного валидатора
+                 атрибуты перекрывают атрибуты, указанные при регистрации валидатора
+            --&gt;
+            &lt;validator name=&quot;mycheck1&quot; attr1=&quot;2&quot;/&gt;
+
+            &lt;!-- mycheck1 - имя зарегистрированного валидатора,
+                 в этом случае имя узла может быть произвольным
+             --&gt;
+            &lt;validator name=&quot;any-name&quot; validator=&quot;mycheck1&quot;/&gt;
+
+            &lt;!-- валидаторы для полей указываются внутри тега поля
+                 для таких валидаторов дополнительно ставится атрибут field,
+                 с именем поля, где валидатор используется
+            --&gt;
+            &lt;field name=&quot;f1&quot;&gt;
+                &lt;validator name=&quot;mycheck1&quot; attr1=&quot;2&quot;/&gt;
+                &lt;validator name=&quot;any-name&quot; validator=&quot;mycheck1&quot;/&gt;
+            &lt;/field&gt;
+
+            &lt;!-- можно описывать валидаторы для поля вне поля,
+                 для этого просто укажите в атрибуте field для какого поля
+                 этот валидатор
+             --&gt;
+            &lt;validator name=&quot;any-name&quot; validator=&quot;mycheck1&quot; field=&quot;f1&quot;/&gt;
+
+        &lt;/domain&gt;
+    &lt;/model&gt;
+&lt;/dbm&gt;</code></pre></div></div>
+<h2 id="head4">Прямой вызов валидатора</h2>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">mdb.validate(rec, &quot;minmax&quot;, [field: &quot;f1&quot;, min: 2, max: 20, title: &quot;Поле f1&quot;])
+</code></pre>
+</div></div>
+<p>Здесь для объекта-записи <code>rec</code> вызывается валидатор с именем <code>minmax</code> и атрибутам,
+среди которых явно указывается поле <code>f1</code>, которое нужно проверять.</p>
+<h2 id="head5">Валидация конкретного поля</h2>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">mdb.validateField(rec, &quot;f1&quot;)
+</code></pre>
+</div></div>
+<p>Здесь для объекта-записи <code>rec</code> вызывается валидатор с именем <code>field</code>.
+Этот валидатор запускает все зарегистрированные для поля валидаторы.</p>
+<p>Условие: запись должна обладать информацией о домене. Если такой информации нет,
+нужно явно указать домен в атрибутах:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">mdb.validateField(rec, &quot;f1&quot;, [domain:'MyDomain1'])
+</code></pre>
+</div></div>
+<h2 id="head6">Валидация записи</h2>
+<p>Пример:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">mdb.validateRecord(rec)
+</code></pre>
+</div></div>
+<p>Здесь для объекта-записи <code>rec</code> вызывается валидатор с именем <code>record</code>.
+Этот валидатор запускает для каждого поля валидатор <code>field</code>, а затем
+все зарегистрированные валидаторы для записи в целом.</p>
+<p>Условие: запись должна обладать информацией о домене. Если такой информации нет,
+нужно явно указать домен в атрибутах:</p>
+<div class="codeblock" data-language="groovy"><div class="codeblock--content"><pre><code class="language-groovy">mdb.validateRecord(rec, [domain:'MyDomain1'])
+</code></pre>
+</div></div>
+
+</div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+
+  </div>
+
+</div>
+
+</body>
+</html>
