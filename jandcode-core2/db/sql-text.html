@@ -18,7 +18,7 @@
       mdoc.topicId = 'db/sql-text';
   </script>
   <script>
-mdoc.tocTopic=[{"title":"Заменяемые части sql","topicId":"db/sql-text","ref":"db/sql-text.html#head1","items":[{"title":"select","topicId":"db/sql-text","ref":"db/sql-text.html#head2"},{"title":"where","topicId":"db/sql-text","ref":"db/sql-text.html#head3"},{"title":"order by","topicId":"db/sql-text","ref":"db/sql-text.html#head4"}]}]  </script>
+mdoc.tocTopic=[{"title":"Заменяемые части sql","topicId":"db/sql-text","ref":"db/sql-text.html#head1","items":[{"title":"select","topicId":"db/sql-text","ref":"db/sql-text.html#head2"},{"title":"where","topicId":"db/sql-text","ref":"db/sql-text.html#head3"},{"title":"order by","topicId":"db/sql-text","ref":"db/sql-text.html#head4"},{"title":"part","topicId":"db/sql-text","ref":"db/sql-text.html#head5"}]}]  </script>
   <script src="../toc.js"></script>
 </head>
 
@@ -96,6 +96,7 @@ mdoc.tocTopic=[{"title":"Заменяемые части sql","topicId":"db/sql-
     <ul><li class="folder "><a href="sql-text.html#head1">Заменяемые части sql</a><ul><li class=""><a href="sql-text.html#head2">select</a></li>
 <li class=""><a href="sql-text.html#head3">where</a></li>
 <li class=""><a href="sql-text.html#head4">order by</a></li>
+<li class=""><a href="sql-text.html#head5">part</a></li>
 </ul></li>
 </ul>
   </div>
@@ -145,6 +146,11 @@ select * from aaa where 0=0 and
 </code></pre>
 </div></div>
 <p>Используется для подмены сортировки или ее исключения.</p>
+<h3 id="head5">part</h3>
+<p>Место вставки произвольного фрагмента sql. Текст вставляется после коментария <code>/*part:XXX*/</code>.</p>
+<div class="codeblock" data-language="sql"><div class="codeblock--content"><pre><code class="language-sql">select * from aaa /*part:join1*/ where p1=1 /*part:where1*/
+</code></pre>
+</div></div>
 
 </div>
     </div>
